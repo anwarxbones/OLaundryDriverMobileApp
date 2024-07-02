@@ -36,6 +36,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     FocusNode(),
     FocusNode(),
     FocusNode(),
+    FocusNode(),
+    FocusNode(),
   ];
   final GlobalKey<FormBuilderState> _formkey = GlobalKey<FormBuilderState>();
   bool obsecureText = true;
@@ -92,7 +94,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         focusNode: fNodes[0],
                         name: 'first_name',
                         decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                          hintText: S.of(context).fullName,
+                          hintText: 'First Name',
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        validator: FormBuilderValidators.compose(
+                          [
+                            FormBuilderValidators.required(
+                              errorText:
+                                  validationError(fieldName: 'First Name'),
+                            ),
+                          ],
+                        ),
+                      ),
+                      AppSpacerH(20.h),
+                      FormBuilderTextField(
+                        focusNode: fNodes[1],
+                        name: 'last_name',
+                        decoration: AppInputDecor.loginPageInputDecor.copyWith(
+                          hintText: "Last Name",
                         ),
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
@@ -108,6 +128,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       AppSpacerH(20.h),
                       FormBuilderTextField(
                         focusNode: fNodes[2],
+                        name: 'business_name',
+                        decoration: AppInputDecor.loginPageInputDecor.copyWith(
+                          hintText: "Business Name",
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                      ),
+                      AppSpacerH(20.h),
+                      FormBuilderTextField(
+                        focusNode: fNodes[3],
                         name: 'email',
                         decoration: AppInputDecor.loginPageInputDecor.copyWith(
                           hintText: S.of(context).email,
@@ -125,7 +155,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       AppSpacerH(20.h),
                       FormBuilderTextField(
-                        focusNode: fNodes[3],
+                        focusNode: fNodes[4],
                         name: 'mobile',
                         decoration: AppInputDecor.loginPageInputDecor.copyWith(
                           hintText: S.of(context).phoneNumber,
@@ -144,7 +174,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       AppSpacerH(20.h),
                       FormBuilderTextField(
-                        focusNode: fNodes[4],
+                        focusNode: fNodes[5],
                         name: 'password',
                         obscureText: obsecureText,
                         decoration: AppInputDecor.loginPageInputDecor.copyWith(
@@ -175,7 +205,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       AppSpacerH(20.h),
                       FormBuilderTextField(
-                        focusNode: fNodes[5],
+                        focusNode: fNodes[6],
                         name: 'password_confirmation',
                         obscureText: obsecureTextTwo,
                         decoration: AppInputDecor.loginPageInputDecor.copyWith(
