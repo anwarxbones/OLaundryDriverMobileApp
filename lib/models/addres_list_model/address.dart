@@ -13,6 +13,9 @@ class Address {
   dynamic districtId;
   String? addressLine;
   String? addressLine2;
+  String? city;
+  String? state;
+  String? zipCode;
   String? deliveryNote;
   String? postCode;
   dynamic latitude;
@@ -31,6 +34,9 @@ class Address {
     this.districtId,
     this.addressLine,
     this.addressLine2,
+    this.city,
+    this.state,
+    this.zipCode,
     this.deliveryNote,
     this.postCode,
     this.latitude,
@@ -50,6 +56,9 @@ class Address {
         districtId: data['district_id'] as dynamic,
         addressLine: data['address_line'] as String?,
         addressLine2: data['address_line2'] as String?,
+        city: data['city'] as String?,
+        state: data['state'] as String?,
+        zipCode: data['zip_code'] as String?,
         deliveryNote: data['delivery_note'] as String?,
         postCode: data['post_code'] as String?,
         latitude: data['latitude'] as dynamic,
@@ -69,6 +78,9 @@ class Address {
         'district_id': districtId,
         'address_line': addressLine,
         'address_line2': addressLine2,
+        'city': city,
+        'state': state,
+        'zip_code': zipCode,
         'delivery_note': deliveryNote,
         'post_code': postCode,
         'latitude': latitude,
@@ -100,6 +112,9 @@ class Address {
     dynamic districtId,
     String? addressLine,
     String? addressLine2,
+    String? city,
+    String? state,
+    String? zipCode,
     String? deliveryNote,
     String? postCode,
     dynamic latitude,
@@ -118,6 +133,9 @@ class Address {
       districtId: districtId ?? this.districtId,
       addressLine: addressLine ?? this.addressLine,
       addressLine2: addressLine2 ?? this.addressLine2,
+      city: city ?? this.city,
+      state: state ?? this.state,
+      zipCode: zipCode ?? this.zipCode,
       deliveryNote: deliveryNote ?? this.deliveryNote,
       postCode: postCode ?? this.postCode,
       latitude: latitude ?? this.latitude,

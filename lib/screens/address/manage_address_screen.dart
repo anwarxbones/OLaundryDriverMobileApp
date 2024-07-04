@@ -67,11 +67,12 @@ class _ManageAddressScreenState extends ConsumerState<ManageAddressScreen> {
                           loaded: (_) => SingleChildScrollView(
                             child: Column(
                               children: [
-                                ..._.data.data!.addresses!
-                                    .map(
-                                      (e) => AddressCard(address: e),
-                                    )
-                                    ,
+                                ..._.data.data!.addresses!.map(
+                                  (e) {
+                                    print(e.toJson());
+                                    return AddressCard(address: e);
+                                  },
+                                ),
                               ],
                             ),
                           ),
@@ -81,17 +82,23 @@ class _ManageAddressScreenState extends ConsumerState<ManageAddressScreen> {
                 ],
               ),
             ),
-            Positioned(
-              bottom: 34.h,
-              child: SizedBox(
-                width: 375.w,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: AppTextButton(
-                    title: S.of(context).adadres,
-                    onTap: () {
-                      context.nav.pushNamed(Routes.addOrUpdateAddressScreen);
-                    },
+            Visibility(
+              visible: ref.watch(addresListProvider).whenOrNull(
+                        loaded: (_) => _.data!.addresses!.isEmpty,
+                      ) ??
+                  false,
+              child: Positioned(
+                bottom: 34.h,
+                child: SizedBox(
+                  width: 375.w,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: AppTextButton(
+                      title: S.of(context).adadres,
+                      onTap: () {
+                        context.nav.pushNamed(Routes.addOrUpdateAddressScreen);
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -120,7 +127,7 @@ class _AddressCardState extends ConsumerState<AddressCard> {
     return Padding(
       padding: EdgeInsets.only(top: 15.h),
       child: Container(
-        height: 93.h,
+        height: 110.h,
         width: 335.w,
         padding: EdgeInsets.symmetric(
           horizontal: 10.w,
@@ -152,6 +159,11 @@ class _AddressCardState extends ConsumerState<AddressCard> {
                   ),
                   Text(
                     processAddess(),
+                  ),
+                  Text(
+                    widget.address.deliveryNote.toString(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -190,16 +202,7 @@ class _AddressCardState extends ConsumerState<AddressCard> {
   }
 
   String processAddess() {
-    String address = '';
-
-    if (widget.address.addressLine2 == null) {
-      address =
-          "${widget.address.addressName}, ${widget.address.area}, ${widget.address.postCode}";
-    } else {
-      address =
-          "${widget.address.addressName}, ${widget.address.area}, ${widget.address.addressLine2 ?? ''}, ${widget.address.postCode}";
-    }
-    return address;
+    return '${widget.address.addressLine}, ${widget.address.addressLine2}, ${widget.address.city}, ${widget.address.state}, ${widget.address.zipCode}';
   }
 }
 

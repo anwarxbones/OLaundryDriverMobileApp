@@ -31,6 +31,14 @@ class AddOrEditAddress extends ConsumerStatefulWidget {
 
 class _AddOrEditAddressState extends ConsumerState<AddOrEditAddress> {
   final GlobalKey<FormBuilderState> _formkey = GlobalKey<FormBuilderState>();
+  final List<FocusNode> focusNodes = [
+    FocusNode(),
+    FocusNode(),
+    FocusNode(),
+    FocusNode(),
+    FocusNode(),
+    FocusNode(),
+  ];
   List postCodelist = [];
   bool isMatchFound = false;
 
@@ -136,24 +144,9 @@ class _AddOrEditAddressState extends ConsumerState<AddOrEditAddress> {
                       children: [
                         AppSpacerH(20.h),
                         FormBuilderTextField(
+                          focusNode: focusNodes[0],
                           cursorColor: AppColors.primary,
-                          name: 'address_name',
-                          decoration:
-                              AppInputDecor.loginPageInputDecor.copyWith(
-                            hintText: "House Name or number",
-                            prefixIcon: const Icon(Icons.home),
-                          ),
-                          validator: FormBuilderValidators.compose(
-                            [
-                              FormBuilderValidators.required(
-                                errorText: validationError(fieldName: 'House'),
-                              ),
-                            ],
-                          ),
-                        ),
-                        AppSpacerH(20.h),
-                        FormBuilderTextField(
-                          cursorColor: AppColors.primary,
+                          textInputAction: TextInputAction.next,
                           name: 'address_line',
                           decoration:
                               AppInputDecor.loginPageInputDecor.copyWith(
@@ -171,26 +164,19 @@ class _AddOrEditAddressState extends ConsumerState<AddOrEditAddress> {
                         ),
                         AppSpacerH(20.h),
                         FormBuilderTextField(
+                          focusNode: focusNodes[1],
+                          textInputAction: TextInputAction.next,
                           cursorColor: AppColors.primary,
                           name: "address_line2",
                           decoration:
                               AppInputDecor.loginPageInputDecor.copyWith(
-                            hintText: "Address Line 2 (optional)",
-                          ),
-                        ),
-                        AppSpacerH(20.h),
-                        FormBuilderTextField(
-                          cursorColor: AppColors.primary,
-                          name: 'area',
-                          decoration:
-                              AppInputDecor.loginPageInputDecor.copyWith(
-                            hintText: "Area (Ex: Cheltenham)",
+                            hintText: "Address Line 2 ",
                           ),
                           validator: FormBuilderValidators.compose(
                             [
                               FormBuilderValidators.required(
                                 errorText: validationError(
-                                  fieldName: 'Area',
+                                  fieldName: 'Address Line 2',
                                 ),
                               ),
                             ],
@@ -198,65 +184,75 @@ class _AddOrEditAddressState extends ConsumerState<AddOrEditAddress> {
                         ),
                         AppSpacerH(20.h),
                         FormBuilderTextField(
+                          focusNode: focusNodes[2],
+                          textInputAction: TextInputAction.next,
                           cursorColor: AppColors.primary,
-                          name: 'post_code',
+                          name: "city",
                           decoration:
                               AppInputDecor.loginPageInputDecor.copyWith(
-                            hintText: "Post Code",
+                            hintText: "City",
                           ),
                           validator: FormBuilderValidators.compose(
                             [
                               FormBuilderValidators.required(
                                 errorText: validationError(
-                                  fieldName: 'Post Code',
+                                  fieldName: 'City',
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        // AppSpacerH(20.h),
-                        // SizedBox(
-                        //   width: 335.w,
-                        //   child: Row(
-                        //     children: [
-                        //       Expanded(
-                        //         child: FormBuilderTextField(
-                        //           cursorColor: AppColors.primary,
-                        //           name: 'flat_no',
-                        //           decoration: AppInputDecor.loginPageInputDecor
-                        //               .copyWith(
-                        //             hintText: S.of(context).flat,
-                        //           ),
-                        //         ),
-                        //       ),
-                        //       AppSpacerW(5.w),
-                        //       Expanded(
-                        //         child: FormBuilderTextField(
-                        //           cursorColor: AppColors.primary,
-                        //           name: 'house_no',
-                        //           decoration: AppInputDecor.loginPageInputDecor
-                        //               .copyWith(
-                        //             hintText: S.of(context).houseno,
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        // AppSpacerH(20.h),
-                        // FormBuilderTextField(
-                        //   cursorColor: AppColors.primary,
-                        //   onTap: () {},
-                        //   validator: FormBuilderValidators.compose(
-                        //     [FormBuilderValidators.required()],
-                        //   ),
-                        //   name: 'post_code',
-                        //   decoration:
-                        //       AppInputDecor.loginPageInputDecor.copyWith(
-                        //     hintText: S.of(context).postcode,
-                        //   ),
-                        // ),
-
+                        AppSpacerH(20.h),
+                        FormBuilderTextField(
+                          focusNode: focusNodes[3],
+                          textInputAction: TextInputAction.next,
+                          cursorColor: AppColors.primary,
+                          name: "state",
+                          decoration:
+                              AppInputDecor.loginPageInputDecor.copyWith(
+                            hintText: "State",
+                          ),
+                          validator: FormBuilderValidators.compose(
+                            [
+                              FormBuilderValidators.required(
+                                errorText: validationError(
+                                  fieldName: 'State',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        AppSpacerH(20.h),
+                        FormBuilderTextField(
+                          focusNode: focusNodes[4],
+                          textInputAction: TextInputAction.next,
+                          cursorColor: AppColors.primary,
+                          name: 'zip_code',
+                          decoration:
+                              AppInputDecor.loginPageInputDecor.copyWith(
+                            hintText: "Zip Code",
+                          ),
+                          validator: FormBuilderValidators.compose(
+                            [
+                              FormBuilderValidators.required(
+                                errorText: validationError(
+                                  fieldName: 'Zip',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        AppSpacerH(20.h),
+                        FormBuilderTextField(
+                          focusNode: focusNodes[5],
+                          textInputAction: TextInputAction.done,
+                          cursorColor: AppColors.primary,
+                          name: 'delivery_note',
+                          decoration:
+                              AppInputDecor.loginPageInputDecor.copyWith(
+                            hintText: "Notes or instructions",
+                          ),
+                        ),
                         AppSpacerH(40.h),
                         if (widget.address == null)
                           SizedBox(
@@ -267,14 +263,6 @@ class _AddOrEditAddressState extends ConsumerState<AddOrEditAddress> {
                                     onTap: () {
                                       if (_formkey.currentState!
                                           .saveAndValidate()) {
-                                        // final postCodeText = _formkey
-                                        //     .currentState!.value['post_code'];
-                                        // final postCode = postCodeText
-                                        //     .toString()
-                                        //     .toLowerCase()
-                                        //     .replaceAll(' ', '');
-
-                                        // postCodeValidation(postCode: postCode);
                                         ref
                                             .watch(
                                               addAddresProvider.notifier,
