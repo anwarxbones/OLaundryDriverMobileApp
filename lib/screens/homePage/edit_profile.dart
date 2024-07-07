@@ -47,6 +47,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
           unprocessedData.forEach((key, value) {
             processedData[key.toString()] = value;
           });
+          print("processedData: $processedData");
           return ValueListenableBuilder(
             valueListenable: Hive.box(AppHSC.authBox).listenable(),
             builder: (context, Box authBox, Widget? child) {
@@ -169,30 +170,22 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                                     hintText: S.of(context).frstnm,
                                   ),
                                 ),
-                                // AppSpacerH(20.h),
-                                // FormBuilderTextField(
-                                //   name: 'last_name',
-                                //   decoration: AppInputDecor.loginPageInputDecor
-                                //       .copyWith(
-                                //     hintText: 'Last Name',
-                                //   ),
-                                // ),
-                                // AppSpacerH(20.h),
-                                // FormBuilderDropdown(
-                                //   name: 'gender',
-                                //   decoration: AppInputDecor.loginPageInputDecor
-                                //       .copyWith(
-                                //     hintText: S.of(context).gndr,
-                                //   ),
-                                //   items: ['Male', 'Female']
-                                //       .map(
-                                //         (e) => DropdownMenuItem(
-                                //           value: e,
-                                //           child: Text(e),
-                                //         ),
-                                //       )
-                                //       .toList(),
-                                // ),
+                                AppSpacerH(20.h),
+                                FormBuilderTextField(
+                                  name: 'last_name',
+                                  decoration: AppInputDecor.loginPageInputDecor
+                                      .copyWith(
+                                    hintText: 'Last Name',
+                                  ),
+                                ),
+                                AppSpacerH(20.h),
+                                FormBuilderTextField(
+                                  name: 'business_name',
+                                  decoration: AppInputDecor.loginPageInputDecor
+                                      .copyWith(
+                                    hintText: 'Business Name',
+                                  ),
+                                ),
                                 AppSpacerH(20.h),
                                 FormBuilderTextField(
                                   validator: FormBuilderValidators.compose([
@@ -227,7 +220,6 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                                   ),
                                 ),
                                 AppSpacerH(50.h),
-
                                 AppTextButton(
                                   onTap: () {
                                     context.nav

@@ -181,6 +181,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       box.putAll(_.data.data!.access!.toMap());
                                       userBox
                                           .putAll(_.data.data!.user!.toMap());
+                                      print(
+                                        "Login Successfull: ${_.data.data!.user!.toMap()}",
+                                      );
                                       Future.delayed(transissionDuration)
                                           .then((value) {
                                         ref.refresh(

@@ -4,6 +4,7 @@ class User {
   int? id;
   String? firstName;
   String? lastName;
+  String? businessName;
   String? name;
   dynamic email;
   String? mobile;
@@ -17,6 +18,7 @@ class User {
     this.id,
     this.firstName,
     this.lastName,
+    this.businessName,
     this.name,
     this.email,
     this.mobile,
@@ -36,6 +38,7 @@ class User {
         id: data['id'] as int?,
         firstName: data['first_name'] as String?,
         lastName: data['last_name'] as String?,
+        businessName: data['business_name'] as String?,
         name: data['name'] as String?,
         email: data['email'] as dynamic,
         mobile: data['mobile'] as String?,
@@ -54,6 +57,7 @@ class User {
         'id': id,
         'first_name': firstName,
         'last_name': lastName,
+        'business_name': businessName,
         'name': name,
         'email': email,
         'mobile': mobile,

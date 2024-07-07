@@ -1,7 +1,7 @@
 class AppConfig {
   AppConfig._();
 
-  static const String baseUrl = 'https://olaundryadmin.razinsoft.com/api';
+  static const String baseUrl = 'http://161.35.188.114/api';
 
   //Stripe Keys For App - Replace With Yours
   static const String secretKey =
