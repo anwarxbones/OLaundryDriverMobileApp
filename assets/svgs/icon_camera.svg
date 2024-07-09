@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <g id="Group_11101" data-name="Group 11101" transform="translate(-196.923 -164.923)">
+    <g id="Rectangle_206" data-name="Rectangle 206" transform="translate(197.923 165.923)" fill="#ff3537" stroke="#fff" stroke-width="1">
+      <rect width="26" height="26" rx="13" stroke="none"/>
+      <rect x="-0.5" y="-0.5" width="27" height="27" rx="13.5" fill="none"/>
+    </g>
+    <g id="Icons_Fill_Camera" data-name="Icons/Fill/Camera" transform="translate(203.923 172.923)">
+      <path id="Shape" d="M12.445,12H1.555A1.577,1.577,0,0,1,0,10.512L0,10.4V3.968A1.585,1.585,0,0,1,1.449,2.374l.106,0H2.3a1.531,1.531,0,0,0,1.226-.614l.07-.1L4.205.714A1.54,1.54,0,0,1,5.382,0L5.5,0H8.517a1.532,1.532,0,0,1,1.21.593L9.8.69l.667.991a1.54,1.54,0,0,0,1.162.685l.117,0h.721A1.558,1.558,0,0,1,14,3.836l0,.112V10.4A1.584,1.584,0,0,1,12.551,12ZM7,3.53a3.529,3.529,0,1,0,3.5,3.529A3.518,3.518,0,0,0,7,3.53ZM7,9.176A2.117,2.117,0,1,1,9.1,7.059,2.111,2.111,0,0,1,7,9.176Z" fill="#fff"/>
+    </g>
+  </g>
+</svg>
