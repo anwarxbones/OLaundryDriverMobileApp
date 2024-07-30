@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:laundry_customer/models/login_model/access.dart';
-import 'package:laundry_customer/models/login_model/user.dart';
+import 'package:laundry_customer/models/register_model/user.dart';
 
 class Data {
   User? user;

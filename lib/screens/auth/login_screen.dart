@@ -97,10 +97,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               } else if (int.tryParse(value) == null) {
                                 // Not an email or a valid number
                                 return 'Invalid input';
-                              } else if (value.length < 6 ||
-                                  value.length > 11) {
-                                // Number with invalid length
-                                return 'Number must be between 6 and 11 characters long';
                               }
                             } else {
                               return "This field cannot be empty";
