@@ -41,6 +41,7 @@ final productsProvider = StateNotifierProvider.autoDispose<ProductsNotifier,
     ref.watch(productsFilterProvider),
   );
 });
+
 //
 //Gets All Products
 final productsFilterProvider =

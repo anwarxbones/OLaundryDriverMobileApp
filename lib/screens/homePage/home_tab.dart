@@ -12,6 +12,7 @@ import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/misc/misc_global_variables.dart';
 import 'package:laundry_customer/models/all_orders_model/order.dart';
+import 'package:laundry_customer/providers/category_provider.dart';
 import 'package:laundry_customer/providers/guest_providers.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
 import 'package:laundry_customer/providers/order_providers.dart';
@@ -91,10 +92,6 @@ class _HomeTabState extends ConsumerState<HomeTab> {
               return Column(
                 children: [
                   ClipRRect(
-                    // borderRadius: BorderRadius.only(
-                    //   bottomLeft: Radius.circular(20.h),
-                    //   bottomRight: Radius.circular(20.h),
-                    // ),
                     child: Container(
                       color: AppColors.white,
                       width: 375.w,
@@ -113,7 +110,6 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                                   width: 48.w,
                                 ),
                                 AppSpacerW(15.w),
-                                // if (authBox.get('token') != null)
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,6 +179,18 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                       ),
                     ),
                   ),
+                  AppSpacerH(20.h),
+                  ref.watch(categoryProvider).map(
+                        initial: (_) => const SizedBox(),
+                        loading: (_) => const SizedBox(),
+                        loaded: (data) {
+                          return Text(
+                            'Length Of Categories: ${data.data.length}',
+                            style: AppTextDecor.osRegular14black,
+                          );
+                        },
+                        error: (error) => Text(error.error),
+                      ),
                   Expanded(
                     child: ListView(
                       padding: EdgeInsets.zero,

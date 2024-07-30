@@ -29,8 +29,9 @@ class MasterDataNotifier extends StateNotifier<ApiState<MasterModel>> {
       );
     } catch (e, StackTrace) {
       debugPrint("error is $e");
-      throw StackTrace;
+
       state = ApiState.error(error: NetworkExceptions.errorText(e));
+      throw StackTrace;
     }
   }
 }

@@ -15,14 +15,18 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Box appSettingsBox = Hive.box(AppHSC.appSettingsBox);
+  Box authBox = Hive.box(AppHSC.authBox);
   @override
   void initState() {
     super.initState();
+
     Future.delayed(const Duration(seconds: 3), () {
       context.nav.pushNamedAndRemoveUntil(
         appSettingsBox.get(AppHSC.hasSeenSplashScreen) != null
             // ? Routes.homeScreen
-            ? Routes.loginScreen
+            ? authBox.get('token') != null
+                ? Routes.homeScreen
+                : Routes.loginScreen
             : Routes.onBoarding,
         (route) => false,
       );
