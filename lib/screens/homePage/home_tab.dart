@@ -106,22 +106,14 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                                     textAlign: TextAlign.start,
                                   ),
                                 ),
-                                // Text(
-                                //   address,
-                                //   style: AppTextDecor.osRegular14white,
-                                // )
                               ],
                             ),
                             const Expanded(child: SizedBox()),
                             if (authBox.get('token') != null)
                               Container(
-                                // padding: const EdgeInsets.all(1),
                                 width: 39.h,
                                 height: 39.h,
                                 decoration: BoxDecoration(
-                                  // border: Border.all(
-                                  //   color: AppColors.gray,
-                                  // ),
                                   borderRadius: BorderRadius.circular(18.r),
                                 ),
                                 child: ClipRRect(
@@ -198,7 +190,12 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                     itemBuilder: (BuildContext context, int index) {
                       return _buildServiceCard(
                         category: categories.data[index],
-                        callback: () {},
+                        callback: () {
+                          context.nav.pushNamed(
+                            Routes.chooseItemScreen,
+                            arguments: categories.data[index],
+                          );
+                        },
                       );
                     },
                   ),

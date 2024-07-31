@@ -10,15 +10,15 @@ import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/misc/global_functions.dart';
 import 'package:laundry_customer/misc/misc_global_variables.dart';
-import 'package:laundry_customer/models/all_service_model/service.dart';
+import 'package:laundry_customer/models/category_model/category.dart';
 import 'package:laundry_customer/models/hive_cart_item_model.dart';
 import 'package:laundry_customer/models/products_model/product.dart';
-import 'package:laundry_customer/models/variations_model/variant.dart';
 import 'package:laundry_customer/notfiers/guest_notfiers.dart';
 import 'package:laundry_customer/providers/address_provider.dart';
 import 'package:laundry_customer/providers/guest_providers.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
 import 'package:laundry_customer/providers/order_update_provider.dart';
+import 'package:laundry_customer/providers/product_provider.dart';
 import 'package:laundry_customer/providers/settings_provider.dart';
 import 'package:laundry_customer/screens/homePage/subProductBottomSheet/sub_product_bottom_sheet.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
@@ -33,46 +33,46 @@ import 'package:laundry_customer/widgets/screen_wrapper.dart';
 class ChooseItems extends ConsumerWidget {
   const ChooseItems({
     super.key,
-    required this.service,
+    required this.category,
   });
-  final Service service;
+  final CategoryModel category;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final finalIndex = ref.watch(itemSelectMenuIndexProvider);
-    ref.watch(servicesVariationsProvider(service.id.toString()));
+    // ref.watch(servicesVariationsProvider(service.id.toString()));
     final ProducServiceVariavtionDataModel productFilter =
         ref.watch(productsFilterProvider);
     if (productFilter.servieID == '') {
       Future.delayed(buildDuration).then((value) {
-        ref.watch(productsFilterProvider.notifier).update((state) {
-          return state.copyWith(servieID: service.id!.toString());
-        });
+        // ref.watch(productsFilterProvider.notifier).update((state) {
+        //   // return state.copyWith(servieID: service.id!.toString());
+        // });
       });
     }
 
-    if (productFilter.variationID == '') {
-      ref
-          .watch(
-            servicesVariationsProvider(service.id.toString()),
-          )
-          .maybeWhen(
-            orElse: () {},
-            loaded: (_) {
-              Future.delayed(buildDuration).then((value) {
-                ref.watch(productsFilterProvider.notifier).update((state) {
-                  final List<Variant> variations = _.data!.variants!;
-                  variations.sort(
-                    (a, b) => a.id!.compareTo(b.id!),
-                  );
-                  return state.copyWith(
-                    variationID: variations.first.id!.toString(),
-                  );
-                });
-              });
-            },
-          );
-    }
+    // if (productFilter.variationID == '') {
+    //   ref
+    //       .watch(
+    //         servicesVariationsProvider(service.id.toString()),
+    //       )
+    //       .maybeWhen(
+    //         orElse: () {},
+    //         loaded: (_) {
+    //           Future.delayed(buildDuration).then((value) {
+    //             ref.watch(productsFilterProvider.notifier).update((state) {
+    //               final List<Variant> variations = _.data!.variants!;
+    //               variations.sort(
+    //                 (a, b) => a.id!.compareTo(b.id!),
+    //               );
+    //               return state.copyWith(
+    //                 variationID: variations.first.id!.toString(),
+    //               );
+    //             });
+    //           });
+    //         },
+    //       );
+    // }
 
     ref.watch(productsProvider);
 
@@ -114,20 +114,10 @@ class ChooseItems extends ConsumerWidget {
                         AppSpacerH(44.h),
                         AppNavbar(
                           backButtionColor: AppColors.black,
-                          title:
-                              // Hive.box(AppHSC.appSettingsBox)
-                              //             .get(AppHSC.appLocal)
-                              //             .toString() ==
-                              //         "en"
-                              //     ?
-
-                              getLng(
-                            en: service.name,
-                            changeLang: service.nameBn.toString(),
-                          )
-                          // : service.nameBn.toString()
-
-                          ,
+                          title: getLng(
+                            en: category.name,
+                            changeLang: category.name,
+                          ),
                           onBack: () {
                             context.nav.pop();
                           },
@@ -135,142 +125,149 @@ class ChooseItems extends ConsumerWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: 375.w,
-                    height: 45.h,
-                    child: Consumer(
-                      builder: (context, ref, child) {
-                        return ref
-                            .watch(
-                              servicesVariationsProvider(service.id.toString()),
-                            )
-                            .map(
-                              initial: (_) => const SizedBox(),
-                              loading: (_) => const SizedBox(),
-                              loaded: (_) {
-                                final List<Variant> variations =
-                                    _.data.data!.variants!;
-                                variations.sort(
-                                  (a, b) => a.id!.compareTo(b.id!),
-                                );
-                                return ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: variations.length,
-                                  itemBuilder: (context, index) {
-                                    // if (productFilter.variationID == '') {
-                                    //   ref
-                                    //       .watch(productsFilterProvider.notifier)
-                                    //       .update((state) {
-                                    //     final ProducServiceVariavtionDataModel
-                                    //         data = state;
-                                    //     data.variationID = _
-                                    //         .data.data!.variants!.first.id!
-                                    //         .toString();
-                                    //     return data;
-                                    //   });
-                                    // }
-                                    final Variant vdata = variations[index];
-                                    return GestureDetector(
-                                      onTap: () {
-                                        ref
-                                            .watch(
-                                          productsFilterProvider.notifier,
-                                        )
-                                            .update((state) {
-                                          final ProducServiceVariavtionDataModel
-                                              data = state;
-                                          data.variationID =
-                                              vdata.id!.toString();
-                                          return data;
-                                        });
-                                        ref.refresh(productsProvider);
+                  // SizedBox(
+                  //   width: 375.w,
+                  //   height: 45.h,
+                  //   child: Consumer(
+                  //     builder: (context, ref, child) {
+                  //       return ref
+                  //           .watch(
+                  //             servicesVariationsProvider(service.id.toString()),
+                  //           )
+                  //           .map(
+                  //             initial: (_) => const SizedBox(),
+                  //             loading: (_) => const SizedBox(),
+                  //             loaded: (_) {
+                  //               final List<Variant> variations =
+                  //                   _.data.data!.variants!;
+                  //               variations.sort(
+                  //                 (a, b) => a.id!.compareTo(b.id!),
+                  //               );
+                  //               return ListView.builder(
+                  //                 scrollDirection: Axis.horizontal,
+                  //                 itemCount: variations.length,
+                  //                 itemBuilder: (context, index) {
+                  //                   // if (productFilter.variationID == '') {
+                  //                   //   ref
+                  //                   //       .watch(productsFilterProvider.notifier)
+                  //                   //       .update((state) {
+                  //                   //     final ProducServiceVariavtionDataModel
+                  //                   //         data = state;
+                  //                   //     data.variationID = _
+                  //                   //         .data.data!.variants!.first.id!
+                  //                   //         .toString();
+                  //                   //     return data;
+                  //                   //   });
+                  //                   // }
+                  //                   final Variant vdata = variations[index];
+                  //                   return GestureDetector(
+                  //                     onTap: () {
+                  //                       ref
+                  //                           .watch(
+                  //                         productsFilterProvider.notifier,
+                  //                       )
+                  //                           .update((state) {
+                  //                         final ProducServiceVariavtionDataModel
+                  //                             data = state;
+                  //                         data.variationID =
+                  //                             vdata.id!.toString();
+                  //                         return data;
+                  //                       });
+                  //                       ref.refresh(productsProvider);
 
-                                        ref
-                                            .watch(
-                                              itemSelectMenuIndexProvider
-                                                  .notifier,
-                                            )
-                                            .state = index;
-                                      },
-                                      child: Container(
-                                        height: 45.h,
-                                        color: finalIndex == index
-                                            ? AppColors.primary
-                                            : AppColors.white,
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 15.w,
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            // Hive.box(
-                                            //           AppHSC.appSettingsBox,
-                                            //         )
-                                            //             .get(
-                                            //               AppHSC.appLocal,
-                                            //             )
-                                            //             .toString() ==
-                                            //         "en"
-                                            //     ?
+                  //                       ref
+                  //                           .watch(
+                  //                             itemSelectMenuIndexProvider
+                  //                                 .notifier,
+                  //                           )
+                  //                           .state = index;
+                  //                     },
+                  //                     child: Container(
+                  //                       height: 45.h,
+                  //                       color: finalIndex == index
+                  //                           ? AppColors.primary
+                  //                           : AppColors.white,
+                  //                       padding: EdgeInsets.symmetric(
+                  //                         horizontal: 15.w,
+                  //                       ),
+                  //                       child: Center(
+                  //                         child: Text(
+                  //                           // Hive.box(
+                  //                           //           AppHSC.appSettingsBox,
+                  //                           //         )
+                  //                           //             .get(
+                  //                           //               AppHSC.appLocal,
+                  //                           //             )
+                  //                           //             .toString() ==
+                  //                           //         "en"
+                  //                           //     ?
 
-                                            getLng(
-                                              en: vdata.name,
-                                              changeLang:
-                                                  vdata.nameBn.toString(),
-                                            )
-                                            // : vdata.nameBn!.toString()
+                  //                           getLng(
+                  //                             en: vdata.name,
+                  //                             changeLang:
+                  //                                 vdata.nameBn.toString(),
+                  //                           )
+                  //                           // : vdata.nameBn!.toString()
 
-                                            ,
-                                            style: finalIndex == index
-                                                ? AppTextDecor.osBold14white
-                                                    .copyWith(
-                                                    color: AppColors.white,
-                                                  )
-                                                : AppTextDecor.osRegular14black,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                              error: (_) => ErrorTextWidget(error: _.error),
-                            );
-                      },
-                    ),
-                  ),
-                  Container(
-                    height: 563.h,
-                    width: 375.w,
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: Consumer(
-                      builder: (context, ref, child) {
-                        return ref
-                            .watch(
-                              productsProvider,
-                            )
-                            .map(
-                              initial: (_) => const SizedBox(),
-                              loading: (_) => const LoadingWidget(),
-                              loaded: (_) => ListView.builder(
-                                padding: EdgeInsets.zero,
-                                itemCount: _.data.data!.products!.length + 1,
-                                itemBuilder: (context, index) {
-                                  if (index == _.data.data!.products!.length) {
-                                    return AppSpacerH(10.h);
-                                  } else {
-                                    final Product product =
-                                        _.data.data!.products![index];
-                                    return ChooseItemCard(
-                                      product: product,
-                                    );
-                                  }
-                                },
-                              ),
-                              error: (_) => ErrorTextWidget(error: _.error),
-                            );
-                      },
-                    ),
-                  ),
+                  //                           ,
+                  //                           style: finalIndex == index
+                  //                               ? AppTextDecor.osBold14white
+                  //                                   .copyWith(
+                  //                                   color: AppColors.white,
+                  //                                 )
+                  //                               : AppTextDecor.osRegular14black,
+                  //                         ),
+                  //                       ),
+                  //                     ),
+                  //                   );
+                  //                 },
+                  //               );
+                  //             },
+                  //             error: (_) => ErrorTextWidget(error: _.error),
+                  //           );
+                  //     },
+                  //   ),
+                  // ),
+
+                  // Container(
+                  //   height: 563.h,
+                  //   width: 375.w,
+                  //   padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  //   child: Consumer(
+                  //     builder: (context, ref, child) {
+                  //       return ref
+                  //           .watch(
+                  //             productsProvider,
+                  //           )
+                  //           .map(
+                  //             initial: (_) => const SizedBox(),
+                  //             loading: (_) => const LoadingWidget(),
+                  //             loaded: (_) => ListView.builder(
+                  //               padding: EdgeInsets.zero,
+                  //               itemCount: _.data.data!.products!.length + 1,
+                  //               itemBuilder: (context, index) {
+                  //                 if (index == _.data.data!.products!.length) {
+                  //                   return AppSpacerH(10.h);
+                  //                 } else {
+                  //                   final Product product =
+                  //                       _.data.data!.products![index];
+                  //                   return ChooseItemCard(
+                  //                     product: product,
+                  //                   );
+                  //                 }
+                  //               },
+                  //             ),
+                  //             error: (_) => ErrorTextWidget(error: _.error),
+                  //           );
+                  //     },
+                  //   ),
+                  // ),
+                  ref.watch(productProvider(category.id)).map(
+                        initial: (_) => const SizedBox(),
+                        loading: (_) => const LoadingWidget(),
+                        loaded: (data) => const Text('Loaded'),
+                        error: (error) => Text(error.error),
+                      ),
                 ],
               ),
             ),

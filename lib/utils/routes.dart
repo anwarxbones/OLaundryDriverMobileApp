@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:laundry_customer/misc/misc_global_variables.dart';
 import 'package:laundry_customer/models/addres_list_model/address.dart';
-import 'package:laundry_customer/models/all_service_model/service.dart';
+import 'package:laundry_customer/models/category_model/category.dart';
 import 'package:laundry_customer/screens/address/add_update_address.dart';
 import 'package:laundry_customer/screens/address/manage_address_screen.dart';
 import 'package:laundry_customer/screens/auth/login_screen.dart';
@@ -54,16 +54,11 @@ class Routes {
   static const signUpComeplete = '/signUpComplete';
   static const homeScreen = '/homeScreen';
   static const orderDetails = '/orderDetails';
-  // static const messageScreen = '/messageScreen';
   static const checkOutScreen = '/checkOutScreen';
   static const orderSuccessScreen = '/orderSuccessScreen';
-
-  //Functionality
   static const chooseItemScreen = '/chooseItemScreen';
-  //Functionality
   static const manageAddressScreen = '/manageAddressScreen';
   static const addOrUpdateAddressScreen = '/addOrUpdateAddressScreen';
-  //others
   static const privacyPolicyScreen = '/privacyPolicyScreen';
   static const termsOfServiceScreen = '/termsOfServiceScreen';
   static const aboutUsScreen = '/aboutUsScreen';
@@ -71,10 +66,7 @@ class Routes {
   static const changePasswordScreen = '/changePasswordScreen';
   static const schedulePickerScreen = '/schedulePickerScreen';
   static const deilverySchedulePickerScreen = '/deilverySchedulePickerScreen';
-
-  //Card
   static const addCardScreen = '/addCardScreen';
-
   static const editProfileScreen = '/editProfileScreen';
 }
 
@@ -124,31 +116,23 @@ Route generatedRoutes(RouteSettings settings) {
         orderID: arg.orderId,
         orderStatus: arg.orderStatus,
       );
-    // case Routes.messageScreen:
-    //   final messageScreenArgument = settings.arguments as MessageScreenArgument;
-    //   child = MessageScreen(
-    //     messageScreenArgument: messageScreenArgument,
-    //   );
-    // break;
+
     case Routes.checkOutScreen:
       child = const CheckOutScreen();
     case Routes.orderSuccessScreen:
       child = OrderSuccessScreen(
         details: settings.arguments! as Map<String, dynamic>,
       );
-    //Functionality
     case Routes.chooseItemScreen:
       child = ChooseItems(
-        service: settings.arguments! as Service,
+        category: settings.arguments! as CategoryModel,
       );
-    //Functionality
     case Routes.manageAddressScreen:
       child = const ManageAddressScreen();
     case Routes.addOrUpdateAddressScreen:
       child = AddOrEditAddress(
         address: settings.arguments as Address?,
       );
-    //Others
     case Routes.privacyPolicyScreen:
       child = const PrivacyPolicy();
     case Routes.termsOfServiceScreen:
