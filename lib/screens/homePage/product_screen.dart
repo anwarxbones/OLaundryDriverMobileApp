@@ -12,6 +12,7 @@ import 'package:laundry_customer/misc/global_functions.dart';
 import 'package:laundry_customer/misc/misc_global_variables.dart';
 import 'package:laundry_customer/models/category_model/category.dart';
 import 'package:laundry_customer/models/hive_cart_item_model.dart';
+import 'package:laundry_customer/models/product/product_mode.dart';
 import 'package:laundry_customer/providers/address_provider.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
 import 'package:laundry_customer/providers/order_update_provider.dart';
@@ -82,8 +83,9 @@ class ProductScreen extends ConsumerWidget {
                   ref.watch(productProvider(category.id)).map(
                         initial: (_) => const SizedBox(),
                         loading: (_) => const LoadingWidget(),
-                        loaded: (data) => _buildProductListWidget(),
-                        error: (error) => _buildProductListWidget(),
+                        loaded: (data) =>
+                            _buildProductListWidget(products: data.data),
+                        error: (error) => Text(error.error),
                       ),
                 ],
               ),
@@ -232,12 +234,14 @@ class ProductScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildProductListWidget() {
+  Widget _buildProductListWidget({required List<ProductModel> products}) {
     return Expanded(
       child: ListView.separated(
         padding: EdgeInsets.only(bottom: 120.h, top: 16.h),
-        itemCount: 10,
-        itemBuilder: (context, index) => const ProductCard(),
+        itemCount: products.length,
+        itemBuilder: (context, index) => ProductCard(
+          productModel: products[index],
+        ),
         separatorBuilder: (context, index) => const Divider(
           height: 0,
         ),

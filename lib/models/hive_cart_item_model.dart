@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:laundry_customer/models/products_model/sub_product.dart';
@@ -111,35 +110,3 @@ class CarItemHiveModel {
         subProduct.hashCode;
   }
 }
-
-// class SubProduct {
-//   int id;
-//   String name;
-//   double price;
-//   String? description;
-
-//   SubProduct({
-//     required this.id,
-//     required this.name,
-//     required this.price,
-//     this.description,
-//   });
-
-//   factory SubProduct.fromMap(Map<String, dynamic> map) {
-//     return SubProduct(
-//       id: map['id'] as int,
-//       name: map['name'] as String,
-//       price: map['price'] as double,
-//       description: map['description'] as String?,
-//     );
-//   }
-
-//   Map<String, dynamic> toMap() {
-//     return {
-//       'id': id,
-//       'name': name,
-//       'price': price,
-//       'description': description,
-//     };
-//   }
-// }
