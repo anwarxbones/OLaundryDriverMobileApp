@@ -8,6 +8,7 @@ import 'package:laundry_customer/constants/input_field_decorations.dart';
 import 'package:laundry_customer/misc/global_functions.dart';
 import 'package:laundry_customer/models/cart/cart_model.dart';
 import 'package:laundry_customer/models/product/product_mode.dart';
+import 'package:laundry_customer/services/local_service.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
 import 'package:laundry_customer/widgets/buttons/full_width_button.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
@@ -139,7 +140,8 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
                               as String,
                           addOns: _addOns.toList(),
                         );
-                        debugPrint(cartModel.toMap().toString());
+                        LocalService().addToCart(cartModel: cartModel);
+                        context.nav.pop();
                       }
                     },
                   ),

@@ -1,8 +1,21 @@
-class CartModel {
+import 'package:hive/hive.dart';
+
+part 'cart_model.g.dart';
+
+@HiveType(typeId: 0)
+class CartModel extends HiveObject {
+  @HiveField(0)
   final int productId;
+
+  @HiveField(1)
   final int quantity;
+
+  @HiveField(2)
   final List<int> addOns;
+
+  @HiveField(3)
   final String? note;
+
   CartModel({
     required this.productId,
     required this.quantity,

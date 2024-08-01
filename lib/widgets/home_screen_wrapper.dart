@@ -2,10 +2,8 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:laundry_customer/constants/app_colors.dart';
 import 'package:laundry_customer/constants/app_text_decor.dart';
-import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/misc/global_functions.dart';
 import 'package:laundry_customer/misc/misc_global_variables.dart';
@@ -16,14 +14,14 @@ import 'package:upgrader/upgrader.dart';
 
 // ignore: must_be_immutable
 class HomeScreenWrapper extends ConsumerWidget {
-  HomeScreenWrapper({
+  const HomeScreenWrapper({
     super.key,
     this.color = AppColors.grayBG,
     required this.child,
   });
   final Color color;
   final Widget child;
-  final Box cartsBox = Hive.box(AppHSC.cartBox);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<Map<String, dynamic>> bottomItems = [
@@ -74,7 +72,6 @@ class HomeScreenWrapper extends ConsumerWidget {
             );
             ref.watch(homeScreenIndexProvider.notifier).state = 4;
             if (ref.watch(orderIdProvider) != '') {
-              cartsBox.clear();
               ref.watch(orderIdProvider.notifier).state = '';
             }
           },

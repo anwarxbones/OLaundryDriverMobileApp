@@ -19,6 +19,7 @@ import 'package:laundry_customer/constants/config.dart';
 import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/firebase_options.dart';
 import 'package:laundry_customer/generated/l10n.dart';
+import 'package:laundry_customer/models/cart/cart_model.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
 import 'package:laundry_customer/utils/routes.dart';
@@ -191,10 +192,11 @@ void main() async {
   Stripe.publishableKey = AppConfig.publicKey;
   // await oneSignalHandler();
   await Hive.initFlutter();
+  Hive.registerAdapter(CartModelAdapter());
   await Hive.openBox(AppHSC.appSettingsBox);
   await Hive.openBox(AppHSC.authBox);
   await Hive.openBox(AppHSC.userBox);
-  await Hive.openBox(AppHSC.cartBox);
+  await Hive.openBox<CartModel>(AppHSC.cartBox);
   HttpOverrides.global = MyHttpOverrides();
   runApp(
     const ProviderScope(

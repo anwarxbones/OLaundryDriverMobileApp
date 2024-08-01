@@ -6,9 +6,12 @@ import 'package:laundry_customer/constants/app_colors.dart';
 import 'package:laundry_customer/constants/app_text_decor.dart';
 import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/misc/global_functions.dart';
+import 'package:laundry_customer/models/cart/cart_model.dart';
 import 'package:laundry_customer/models/product/product_mode.dart';
 import 'package:laundry_customer/screens/homePage/widgets/add_ons_bottom_sheet.dart';
 import 'package:laundry_customer/screens/homePage/widgets/inc_dec_button.dart';
+import 'package:laundry_customer/services/local_service.dart';
+import 'package:laundry_customer/widgets/buttons/cart_item_inc_dec_button.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
 
 class ProductCard extends StatefulWidget {
@@ -31,19 +34,29 @@ class _ProductCardState extends State<ProductCard> {
   final Box appSettingsBox = Hive.box(AppHSC.appSettingsBox);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-      color: AppColors.white,
-      height: 90.h,
-      child: Row(
-        children: [
-          _buildImageWidget(),
-          AppSpacerW(8.w),
-          _buildProductInfoColumn(),
-          const Spacer(),
-          _buildCartFunctionWidget(),
-        ],
-      ),
+    return ValueListenableBuilder(
+      valueListenable: Hive.box<CartModel>(AppHSC.cartBox).listenable(),
+      builder: (context, Box<CartModel> box, _) {
+        final CartModel? cartModel = box.get(widget.productModel.productId);
+        final bool inCart = cartModel != null;
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          color: AppColors.white,
+          height: 90.h,
+          child: Row(
+            children: [
+              _buildImageWidget(),
+              AppSpacerW(8.w),
+              _buildProductInfoColumn(),
+              const Spacer(),
+              _buildCartFunctionWidget(
+                inCart: inCart,
+                cartCount: cartModel?.quantity,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -97,7 +110,10 @@ class _ProductCardState extends State<ProductCard> {
     );
   }
 
-  Widget _buildCartFunctionWidget() {
+  Widget _buildCartFunctionWidget({
+    required bool inCart,
+    required int? cartCount,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -120,8 +136,17 @@ class _ProductCardState extends State<ProductCard> {
             ),
           ),
         const Spacer(),
-        IncDecButton(ontap: () => _showAddOnsBottomSheet(), icon: Icons.add),
-        // IncDecButtonWithValueV2(value: 1, onInc: () {}, onDec: () {}),
+        if (!inCart) ...[
+          IncDecButton(ontap: () => _showAddOnsBottomSheet(), icon: Icons.add),
+        ] else ...[
+          IncDecButtonWithValueV2(
+            value: cartCount!,
+            onInc: () => LocalService()
+                .incrementQuantity(productId: widget.productModel.productId),
+            onDec: () => LocalService()
+                .decrementQuantity(productId: widget.productModel.productId),
+          ),
+        ],
       ],
     );
   }
