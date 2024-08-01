@@ -177,4 +177,8 @@ class AppGFunctions {
   static String convertToFixedTwo(num number) {
     return number.toStringAsFixed(2);
   }
+
+  static String getCurrency() {
+    return Hive.box(AppHSC.appSettingsBox).get('currency') as String? ?? '\$';
+  }
 }

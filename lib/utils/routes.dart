@@ -14,10 +14,10 @@ import 'package:laundry_customer/screens/auth/sign_up_otp_image_upload.dart';
 import 'package:laundry_customer/screens/auth/sign_up_otp_verification.dart';
 import 'package:laundry_customer/screens/auth/sign_up_screen.dart';
 import 'package:laundry_customer/screens/auth/sign_up_success.dart';
-import 'package:laundry_customer/screens/homePage/choose_items.dart';
 import 'package:laundry_customer/screens/homePage/create_password_screen.dart';
 import 'package:laundry_customer/screens/homePage/edit_profile.dart';
 import 'package:laundry_customer/screens/homePage/home_screen.dart';
+import 'package:laundry_customer/screens/homePage/product_screen.dart';
 import 'package:laundry_customer/screens/onBoarding/on_boarding.dart';
 import 'package:laundry_customer/screens/onBoarding/splash_screen.dart';
 import 'package:laundry_customer/screens/order/delivery_schedule_picker.dart';
@@ -124,7 +124,7 @@ Route generatedRoutes(RouteSettings settings) {
         details: settings.arguments! as Map<String, dynamic>,
       );
     case Routes.chooseItemScreen:
-      child = ChooseItems(
+      child = ProductScreen(
         category: settings.arguments! as CategoryModel,
       );
     case Routes.manageAddressScreen:

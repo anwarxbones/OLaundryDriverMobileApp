@@ -229,9 +229,9 @@ class _HomeTabState extends ConsumerState<HomeTab> {
           children: [
             const CircleAvatar(
               radius: 45,
-              backgroundImage: CachedNetworkImageProvider(
-                '',
-              ),
+              // backgroundImage: CachedNetworkImageProvider(
+              //   '',
+              // ),
             ),
             AppSpacerH(10.h),
             Text(

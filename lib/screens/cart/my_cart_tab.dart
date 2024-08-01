@@ -157,13 +157,11 @@ class MyCartTab extends ConsumerWidget {
                                     ? ListView(
                                         padding: EdgeInsets.zero,
                                         children: [
-                                          ...cartItems
-                                              .map(
-                                                (e) => MyCartItemImageCard(
-                                                  carItemHiveModel: e,
-                                                ),
-                                              )
-                                              ,
+                                          ...cartItems.map(
+                                            (e) => MyCartItemImageCard(
+                                              carItemHiveModel: e,
+                                            ),
+                                          ),
                                           AppSpacerH(25.h),
                                           if (orderId != '')
                                             const SizedBox()

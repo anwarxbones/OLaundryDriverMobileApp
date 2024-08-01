@@ -9,7 +9,7 @@ import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/models/hive_cart_item_model.dart';
 import 'package:laundry_customer/models/products_model/product.dart';
 import 'package:laundry_customer/models/products_model/sub_product.dart';
-import 'package:laundry_customer/screens/homePage/choose_items.dart';
+import 'package:laundry_customer/screens/homePage/product_screen.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
 import 'package:laundry_customer/widgets/buttons/cart_item_inc_dec_button.dart';
 import 'package:laundry_customer/widgets/buttons/full_width_button.dart';
