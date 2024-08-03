@@ -39,21 +39,28 @@ class _ProductCardState extends State<ProductCard> {
       builder: (context, Box<CartModel> box, _) {
         final CartModel? cartModel = box.get(widget.productModel.productId);
         final bool inCart = cartModel != null;
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-          color: AppColors.white,
-          height: 90.h,
-          child: Row(
-            children: [
-              _buildImageWidget(),
-              AppSpacerW(8.w),
-              _buildProductInfoColumn(),
-              const Spacer(),
-              _buildCartFunctionWidget(
-                inCart: inCart,
-                cartCount: cartModel?.quantity,
-              ),
-            ],
+        return GestureDetector(
+          onTap: () {
+            if (inCart) {
+              _showAddOnsBottomSheet(cartModel: cartModel);
+            }
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            color: AppColors.white,
+            height: 90.h,
+            child: Row(
+              children: [
+                _buildImageWidget(),
+                AppSpacerW(8.w),
+                _buildProductInfoColumn(),
+                const Spacer(),
+                _buildCartFunctionWidget(
+                  inCart: inCart,
+                  cartCount: cartModel?.quantity,
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -104,6 +111,10 @@ class _ProductCardState extends State<ProductCard> {
                 color: AppColors.primary,
               ),
             ),
+            Text(
+              ' /${AppGFunctions.soldBy(widget.productModel.soldBy)}',
+              style: AppTextDecor.osRegular14Navy,
+            ),
           ],
         ),
       ],
@@ -112,7 +123,7 @@ class _ProductCardState extends State<ProductCard> {
 
   Widget _buildCartFunctionWidget({
     required bool inCart,
-    required int? cartCount,
+    required double? cartCount,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -137,21 +148,29 @@ class _ProductCardState extends State<ProductCard> {
           ),
         const Spacer(),
         if (!inCart) ...[
-          IncDecButton(ontap: () => _showAddOnsBottomSheet(), icon: Icons.add),
+          IncDecButton(
+            ontap: () => _showAddOnsBottomSheet(cartModel: null),
+            icon: Icons.add,
+          ),
         ] else ...[
           IncDecButtonWithValueV2(
             value: cartCount!,
-            onInc: () => LocalService()
-                .incrementQuantity(productId: widget.productModel.productId),
-            onDec: () => LocalService()
-                .decrementQuantity(productId: widget.productModel.productId),
+            onInc: () => LocalService().incrementQuantity(
+              productId: widget.productModel.productId,
+              isPerPiece: AppGFunctions.isPerPiece(widget.productModel.soldBy),
+            ),
+            onDec: () => LocalService().decrementQuantity(
+              productId: widget.productModel.productId,
+              isPerPiece: AppGFunctions.isPerPiece(widget.productModel.soldBy),
+            ),
+            isPiece: AppGFunctions.isPerPiece(widget.productModel.soldBy),
           ),
         ],
       ],
     );
   }
 
-  Future _showAddOnsBottomSheet() {
+  Future _showAddOnsBottomSheet({required CartModel? cartModel}) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -164,6 +183,7 @@ class _ProductCardState extends State<ProductCard> {
       backgroundColor: AppColors.white,
       builder: (context) => AddOnsBottomSheet(
         product: widget.productModel,
+        cartModel: cartModel,
       ),
     );
   }

@@ -12,12 +12,14 @@ class IncDecButtonWithValueV2 extends ConsumerWidget {
     required this.value,
     required this.onInc,
     required this.onDec,
+    required this.isPiece,
   });
-  final int value;
+  final double value;
   final Function() onInc;
   final Function() onDec;
   final double? width;
   final double? height;
+  final bool isPiece;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,7 +39,7 @@ class IncDecButtonWithValueV2 extends ConsumerWidget {
             child: const Icon(Icons.remove),
           ),
           Text(
-            value.toString(),
+            value.toStringAsFixed(isPiece ? 0 : 2),
             style: AppTextDecor.osSemiBold18black,
           ),
           GestureDetector(

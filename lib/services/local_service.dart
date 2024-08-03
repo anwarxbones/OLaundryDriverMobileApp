@@ -19,29 +19,39 @@ class LocalService {
     await box.delete(productId);
   }
 
-  Future<void> incrementQuantity({required int productId}) async {
+  Future<void> incrementQuantity({
+    required int productId,
+    required bool isPerPiece,
+  }) async {
     final box = Hive.box<CartModel>(AppHSC.cartBox);
     final CartModel? cartModel = box.get(productId);
     if (cartModel != null) {
       await box.put(
         productId,
-        cartModel.copyWith(quantity: cartModel.quantity + 1),
+        cartModel.copyWith(
+          quantity: cartModel.quantity + (isPerPiece ? 1 : .1),
+        ),
       );
     }
   }
 
-  Future<void> decrementQuantity({required int productId}) async {
+  Future<void> decrementQuantity({
+    required int productId,
+    required bool isPerPiece,
+  }) async {
     final box = Hive.box<CartModel>(AppHSC.cartBox);
     final CartModel? cartModel = box.get(productId);
-    if (cartModel?.quantity == 1) {
+    if (cartModel?.quantity == 1 ||
+        cartModel!.quantity < 1 ||
+        cartModel.quantity.isNegative == true) {
       await box.delete(productId);
     } else {
-      if (cartModel != null) {
-        await box.put(
-          productId,
-          cartModel.copyWith(quantity: cartModel.quantity - 1),
-        );
-      }
+      await box.put(
+        productId,
+        cartModel.copyWith(
+          quantity: cartModel.quantity - (isPerPiece ? 1 : .1),
+        ),
+      );
     }
   }
 

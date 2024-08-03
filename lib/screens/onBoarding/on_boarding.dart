@@ -73,7 +73,7 @@ class OnBoardingScreen extends ConsumerWidget {
                     final Box appSettingsBox = Hive.box(AppHSC.appSettingsBox);
                     appSettingsBox.put(AppHSC.hasSeenSplashScreen, true);
                     context.nav.pushNamedAndRemoveUntil(
-                      Routes.homeScreen,
+                      Routes.loginScreen,
                       (route) => false,
                     );
                   }
@@ -96,7 +96,7 @@ class OnBoardingScreen extends ConsumerWidget {
                   final Box appSettingsBox = Hive.box(AppHSC.appSettingsBox);
                   appSettingsBox.put(AppHSC.hasSeenSplashScreen, true);
                   context.nav.pushNamedAndRemoveUntil(
-                    Routes.homeScreen,
+                    Routes.loginScreen,
                     (route) => false,
                   );
                 },

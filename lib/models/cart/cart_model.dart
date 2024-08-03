@@ -9,7 +9,7 @@ class CartModel extends HiveObject {
   final int productId;
 
   @HiveField(1)
-  final int quantity;
+  final double quantity;
 
   @HiveField(2)
   final List<AddOns> addOns;
@@ -35,6 +35,9 @@ class CartModel extends HiveObject {
   @HiveField(9)
   final String categoryName;
 
+  @HiveField(10)
+  final String soldBy;
+
   CartModel({
     required this.productId,
     required this.quantity,
@@ -46,11 +49,12 @@ class CartModel extends HiveObject {
     required this.name,
     required this.image,
     required this.categoryName,
+    required this.soldBy,
   });
 
   CartModel copyWith({
     int? productId,
-    int? quantity,
+    double? quantity,
     List<AddOns>? addOns,
     double? price,
     String? note,
@@ -59,6 +63,7 @@ class CartModel extends HiveObject {
     String? name,
     String? image,
     String? categoryName,
+    String? soldBy,
   }) {
     return CartModel(
       productId: productId ?? this.productId,
@@ -71,6 +76,7 @@ class CartModel extends HiveObject {
       name: name ?? this.name,
       image: image ?? this.image,
       categoryName: categoryName ?? this.categoryName,
+      soldBy: soldBy ?? this.soldBy,
     );
   }
 
@@ -86,13 +92,14 @@ class CartModel extends HiveObject {
       'name': name,
       'image': image,
       'category_name': categoryName,
+      'sold_by': soldBy,
     };
   }
 
   factory CartModel.fromMap(Map<String, dynamic> map) {
     return CartModel(
       productId: map['product_id'] as int,
-      quantity: map['quantity'] as int,
+      quantity: map['quantity'] as double,
       addOns: map['add_ons'] != null
           ? List<AddOns>.from(
               (map['add_ons'] as List<dynamic>).map<AddOns>(
@@ -111,6 +118,7 @@ class CartModel extends HiveObject {
       name: map['name'] as String,
       image: map['image'] as String,
       categoryName: map['category_name'] as String,
+      soldBy: map['sold_by'] as String,
     );
   }
 }

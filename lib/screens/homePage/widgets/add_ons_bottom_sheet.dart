@@ -16,9 +16,11 @@ import 'package:laundry_customer/widgets/misc_widgets.dart';
 
 class AddOnsBottomSheet extends StatefulWidget {
   final ProductModel product;
+  final CartModel? cartModel;
   const AddOnsBottomSheet({
     super.key,
     required this.product,
+    required this.cartModel,
   });
 
   @override
@@ -36,6 +38,21 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
   final Set<AddOns> _addOns = {};
 
   @override
+  void initState() {
+    _init();
+    super.initState();
+  }
+
+  void _init() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.cartModel != null) {
+        setState(() {
+          _addOns.addAll(widget.cartModel!.addOns);
+        });
+      }
+    });
+  }
+
   @override
   void dispose() {
     _addOns.clear();
@@ -50,112 +67,124 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w)
             .copyWith(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.product.productName,
-                  style: AppTextDecor.osRegular14black
-                      .copyWith(fontWeight: FontWeight.w600),
-                ),
-                IconButton(
-                  onPressed: () => context.nav.pop(),
-                  icon: const Icon(Icons.close),
-                ),
-              ],
-            ),
-            const Divider(
-              height: 0.5,
-              color: AppColors.gray,
-            ),
-            AppSpacerH(24.h),
-            FormBuilderTextField(
-              focusNode: fNodes[0],
-              name: 'quantity',
-              decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                hintText: 'Quantity',
-              ),
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.done,
-              validator: FormBuilderValidators.compose(
-                [
-                  FormBuilderValidators.required(),
-                  FormBuilderValidators.numeric(),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.product.productName,
+                    style: AppTextDecor.osRegular14black
+                        .copyWith(fontWeight: FontWeight.w600),
+                  ),
+                  IconButton(
+                    onPressed: () => context.nav.pop(),
+                    icon: const Icon(Icons.close),
+                  ),
                 ],
               ),
-            ),
-            AppSpacerH(24.h),
-            const Text('Add-ons'),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.product.subProducts.length,
-              itemBuilder: (context, index) => _buildAddOnsWidget(
-                subProduct: widget.product.subProducts[index],
+              const Divider(
+                height: 0.5,
+                color: AppColors.gray,
               ),
-            ),
-            AppSpacerH(12.h),
-            FormBuilderTextField(
-              focusNode: fNodes[1],
-              name: 'note',
-              maxLines: 3,
-              decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                hintText: 'Note',
+              AppSpacerH(24.h),
+              FormBuilderTextField(
+                focusNode: fNodes[0],
+                name: 'quantity',
+                initialValue: widget.cartModel?.quantity.toStringAsFixed(
+                  AppGFunctions.isPerPiece(widget.cartModel?.soldBy ?? '')
+                      ? 0
+                      : 2,
+                ),
+                decoration: AppInputDecor.loginPageInputDecor.copyWith(
+                  hintText: 'Quantity',
+                ),
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.done,
+                validator: FormBuilderValidators.compose(
+                  [
+                    FormBuilderValidators.required(),
+                    FormBuilderValidators.numeric(),
+                    if (AppGFunctions.isPerPiece(widget.product.soldBy))
+                      FormBuilderValidators.integer(),
+                  ],
+                ),
               ),
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.done,
-            ),
-            AppSpacerH(24.h),
-            const Divider(
-              height: 0.5,
-              color: AppColors.gray,
-            ),
-            AppSpacerH(24.h),
-            Row(
-              children: [
-                Flexible(
-                  child: AppTextButton(
-                    title: 'Close',
-                    buttonColor: AppColors.grayBG,
-                    titleColor: AppColors.black,
-                    onTap: () => context.nav.pop(),
-                  ),
+              AppSpacerH(24.h),
+              const Text('Add-ons'),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: widget.product.subProducts.length,
+                itemBuilder: (context, index) => _buildAddOnsWidget(
+                  subProduct: widget.product.subProducts[index],
                 ),
-                AppSpacerW(10.w),
-                Flexible(
-                  child: AppTextButton(
-                    title: 'Add to Cart',
-                    onTap: () {
-                      _unfocus();
-                      if (_formkey.currentState!.saveAndValidate()) {
-                        final CartModel cartModel = CartModel(
-                          productId: widget.product.productId,
-                          name: widget.product.productName,
-                          image: widget.product.image,
-                          categoryName: widget.product.categoryName,
-                          discountPercentage: widget.product.discountPercentage,
-                          quantity: int.parse(
-                            _formkey.currentState!.fields['quantity']!.value
-                                .toString(),
-                          ),
-                          price: widget.product.price,
-                          note: _formkey.currentState?.fields['note']?.value
-                              as String,
-                          addOns: _addOns.toList(),
-                        );
-                        LocalService().addToCart(cartModel: cartModel);
-                        context.nav.pop();
-                      }
-                    },
-                  ),
+              ),
+              AppSpacerH(12.h),
+              FormBuilderTextField(
+                initialValue: widget.cartModel?.note,
+                focusNode: fNodes[1],
+                name: 'note',
+                maxLines: 3,
+                decoration: AppInputDecor.loginPageInputDecor.copyWith(
+                  hintText: 'Note',
                 ),
-              ],
-            ),
-            AppSpacerH(24.h),
-          ],
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.done,
+              ),
+              AppSpacerH(24.h),
+              const Divider(
+                height: 0.5,
+                color: AppColors.gray,
+              ),
+              AppSpacerH(24.h),
+              Row(
+                children: [
+                  Flexible(
+                    child: AppTextButton(
+                      title: 'Close',
+                      buttonColor: AppColors.grayBG,
+                      titleColor: AppColors.black,
+                      onTap: () => context.nav.pop(),
+                    ),
+                  ),
+                  AppSpacerW(10.w),
+                  Flexible(
+                    child: AppTextButton(
+                      title: 'Add to Cart',
+                      onTap: () {
+                        _unfocus();
+                        if (_formkey.currentState!.saveAndValidate()) {
+                          final CartModel cartModel = CartModel(
+                            productId: widget.product.productId,
+                            name: widget.product.productName,
+                            image: widget.product.image,
+                            categoryName: widget.product.categoryName,
+                            discountPercentage:
+                                widget.product.discountPercentage,
+                            quantity: double.parse(
+                              _formkey.currentState!.fields['quantity']!.value
+                                  as String,
+                            ),
+                            price: widget.product.price,
+                            note: _formkey.currentState?.fields['note']?.value
+                                as String?,
+                            addOns: _addOns.toList(),
+                            soldBy: widget.product.soldBy,
+                          );
+                          LocalService().addToCart(cartModel: cartModel);
+                          context.nav.pop();
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              AppSpacerH(24.h),
+            ],
+          ),
         ),
       ),
     );
@@ -173,6 +202,7 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
                 final AddOns addOns = AddOns(
                   id: subProduct.id,
                   price: subProduct.price,
+                  name: subProduct.name,
                 );
                 _addOns.add(addOns);
               } else {

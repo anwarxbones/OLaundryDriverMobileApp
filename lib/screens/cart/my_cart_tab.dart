@@ -19,9 +19,7 @@ import 'package:laundry_customer/widgets/nav_bar.dart';
 import 'package:laundry_customer/widgets/screen_wrapper.dart';
 
 class MyCartTab extends ConsumerWidget {
-  MyCartTab({super.key});
-  final Box appSettingsBox = Hive.box(AppHSC.appSettingsBox);
-  final TextEditingController coupon = TextEditingController();
+  const MyCartTab({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

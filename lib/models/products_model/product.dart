@@ -7,6 +7,7 @@ import 'package:laundry_customer/models/products_model/variant.dart';
 class Product {
   int? id;
   String? name;
+
   dynamic nameBn;
   String? slug;
   int? currentPrice;

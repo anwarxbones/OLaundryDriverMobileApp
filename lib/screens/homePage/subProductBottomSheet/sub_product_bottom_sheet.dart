@@ -10,7 +10,6 @@ import 'package:laundry_customer/models/hive_cart_item_model.dart';
 import 'package:laundry_customer/models/products_model/product.dart';
 import 'package:laundry_customer/models/products_model/sub_product.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
-import 'package:laundry_customer/widgets/buttons/cart_item_inc_dec_button.dart';
 import 'package:laundry_customer/widgets/buttons/full_width_button.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
 
@@ -261,44 +260,8 @@ class _SubPrductBottomSheetState extends State<SubPrductBottomSheet> {
                     processedData,
                   );
 
-                  return Row(
+                  return const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IncDecButtonWithValueV2(
-                        height: 36.h,
-                        width: 120.w,
-                        value: data.productsQTY,
-                        onDec: () {
-                          if (data.productsQTY <= 1) {
-                            cartbox.deleteAt(
-                              keyAt!,
-                            );
-                            keyAt = null;
-                            inCart = false;
-                          } else {
-                            cartbox.putAt(
-                              keyAt!,
-                              data
-                                  .copyWith(
-                                    productsQTY: data.productsQTY - 1,
-                                  )
-                                  .toMap(),
-                            );
-                            inCart = true;
-                          }
-                        },
-                        onInc: () {
-                          cartbox.putAt(
-                            keyAt!,
-                            data
-                                .copyWith(
-                                  productsQTY: data.productsQTY + 1,
-                                )
-                                .toMap(),
-                          );
-                        },
-                      ),
-                    ],
                   );
                 } else {
                   return Row(

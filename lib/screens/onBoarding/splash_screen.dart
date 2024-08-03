@@ -23,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 3), () {
       context.nav.pushNamedAndRemoveUntil(
         appSettingsBox.get(AppHSC.hasSeenSplashScreen) != null
-            // ? Routes.homeScreen
             ? authBox.get('token') != null
                 ? Routes.homeScreen
                 : Routes.loginScreen

@@ -32,27 +32,22 @@ class _ProductCartCardState extends State<ProductCartCard> {
   final Box appSettingsBox = Hive.box(AppHSC.appSettingsBox);
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: Hive.box<CartModel>(AppHSC.cartBox).listenable(),
-      builder: (context, Box<CartModel> box, _) {
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-          color: AppColors.white,
-          height: 90.h,
-          child: Row(
-            children: [
-              _buildImageWidget(),
-              AppSpacerW(8.w),
-              _buildProductInfoColumn(),
-              const Spacer(),
-              _buildCartFunctionWidget(
-                inCart: true,
-                cartCount: 5,
-              ),
-            ],
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+      color: AppColors.white,
+      height: 90.h,
+      child: Row(
+        children: [
+          _buildImageWidget(),
+          AppSpacerW(8.w),
+          _buildProductInfoColumn(),
+          const Spacer(),
+          _buildCartFunctionWidget(
+            inCart: true,
+            cartCount: 5,
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 
@@ -100,6 +95,10 @@ class _ProductCartCardState extends State<ProductCartCard> {
                 color: AppColors.primary,
               ),
             ),
+            Text(
+              ' /${AppGFunctions.soldBy(widget.cartModel.soldBy)}',
+              style: AppTextDecor.osRegular14Navy,
+            ),
           ],
         ),
       ],
@@ -137,30 +136,18 @@ class _ProductCartCardState extends State<ProductCartCard> {
         ] else ...[
           IncDecButtonWithValueV2(
             value: widget.cartModel.quantity,
-            onInc: () => LocalService()
-                .incrementQuantity(productId: widget.cartModel.productId),
-            onDec: () => LocalService()
-                .decrementQuantity(productId: widget.cartModel.productId),
+            onInc: () => LocalService().incrementQuantity(
+              productId: widget.cartModel.productId,
+              isPerPiece: AppGFunctions.isPerPiece(widget.cartModel.soldBy),
+            ),
+            onDec: () => LocalService().decrementQuantity(
+              productId: widget.cartModel.productId,
+              isPerPiece: AppGFunctions.isPerPiece(widget.cartModel.soldBy),
+            ),
+            isPiece: AppGFunctions.isPerPiece(widget.cartModel.soldBy),
           ),
         ],
       ],
     );
   }
-
-  // Future _showAddOnsBottomSheet() {
-  //   return showModalBottomSheet(
-  //     context: context,
-  //     isScrollControlled: true,
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.only(
-  //         topLeft: Radius.circular(12.r),
-  //         topRight: Radius.circular(12.r),
-  //       ),
-  //     ),
-  //     backgroundColor: AppColors.white,
-  //     builder: (context) => AddOnsBottomSheet(
-  //       product: widget.productModel,
-  //     ),
-  //   );
-  // }
 }

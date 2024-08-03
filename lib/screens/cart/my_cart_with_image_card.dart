@@ -8,7 +8,6 @@ import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/misc/global_functions.dart';
 import 'package:laundry_customer/models/hive_cart_item_model.dart';
-import 'package:laundry_customer/widgets/buttons/cart_item_inc_dec_button.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
 
 class MyCartItemImageCard extends ConsumerStatefulWidget {
@@ -120,42 +119,42 @@ class _MyCartItemImageCardState extends ConsumerState<MyCartItemImageCard> {
                               ],
                             ),
                           ),
-                          IncDecButtonWithValueV2(
-                            height: 36.h,
-                            width: 120.w,
-                            value: widget.carItemHiveModel.productsQTY,
-                            onDec: () {
-                              if (widget.carItemHiveModel.productsQTY <= 1) {
-                                cartbox.deleteAt(keyAt!);
-                                keyAt = null;
-                                inCart = false;
-                                checkProduct();
-                              } else {
-                                cartbox.putAt(
-                                  keyAt!,
-                                  widget.carItemHiveModel
-                                      .copyWith(
-                                        productsQTY: widget
-                                                .carItemHiveModel.productsQTY -
-                                            1,
-                                      )
-                                      .toMap(),
-                                );
-                              }
-                            },
-                            onInc: () {
-                              cartbox.putAt(
-                                keyAt!,
-                                widget.carItemHiveModel
-                                    .copyWith(
-                                      productsQTY:
-                                          widget.carItemHiveModel.productsQTY +
-                                              1,
-                                    )
-                                    .toMap(),
-                              );
-                            },
-                          ),
+                          // IncDecButtonWithValueV2(
+                          //   height: 36.h,
+                          //   width: 120.w,
+                          //   value: widget.carItemHiveModel.productsQTY,
+                          //   onDec: () {
+                          //     if (widget.carItemHiveModel.productsQTY <= 1) {
+                          //       cartbox.deleteAt(keyAt!);
+                          //       keyAt = null;
+                          //       inCart = false;
+                          //       checkProduct();
+                          //     } else {
+                          //       cartbox.putAt(
+                          //         keyAt!,
+                          //         widget.carItemHiveModel
+                          //             .copyWith(
+                          //               productsQTY: widget
+                          //                       .carItemHiveModel.productsQTY -
+                          //                   1,
+                          //             )
+                          //             .toMap(),
+                          //       );
+                          //     }
+                          //   },
+                          //   onInc: () {
+                          //     cartbox.putAt(
+                          //       keyAt!,
+                          //       widget.carItemHiveModel
+                          //           .copyWith(
+                          //             productsQTY:
+                          //                 widget.carItemHiveModel.productsQTY +
+                          //                     1,
+                          //           )
+                          //           .toMap(),
+                          //     );
+                          //   },
+                          // ),
                         ],
                       ),
                     ],

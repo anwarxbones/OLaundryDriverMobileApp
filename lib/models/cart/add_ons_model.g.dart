@@ -19,17 +19,20 @@ class AddOnsAdapter extends TypeAdapter<AddOns> {
     return AddOns(
       id: fields[0] as int,
       price: fields[1] as double,
+      name: fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, AddOns obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.price);
+      ..write(obj.price)
+      ..writeByte(2)
+      ..write(obj.name);
   }
 
   @override

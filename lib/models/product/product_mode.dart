@@ -3,6 +3,7 @@ import 'dart:convert';
 class ProductModel {
   final int productId;
   final String productName;
+  final String soldBy;
   final String categoryName;
   final double price;
   final double? discountPrice;
@@ -12,6 +13,7 @@ class ProductModel {
   ProductModel({
     required this.productId,
     required this.productName,
+    required this.soldBy,
     required this.categoryName,
     required this.price,
     required this.discountPrice,
@@ -23,6 +25,7 @@ class ProductModel {
   ProductModel copyWith({
     int? productId,
     String? productName,
+    String? soldBy,
     String? categoryName,
     double? price,
     double? discountPrice,
@@ -33,6 +36,7 @@ class ProductModel {
     return ProductModel(
       productId: productId ?? this.productId,
       productName: productName ?? this.productName,
+      soldBy: soldBy ?? this.soldBy,
       categoryName: categoryName ?? this.categoryName,
       price: price ?? this.price,
       discountPrice: discountPrice ?? this.discountPrice,
@@ -46,6 +50,7 @@ class ProductModel {
     return <String, dynamic>{
       'product_id': productId,
       'product_name': productName,
+      'sold_by': soldBy,
       'category_name': categoryName,
       'price': price,
       'discount_price': discountPrice,
@@ -59,6 +64,7 @@ class ProductModel {
     return ProductModel(
       productId: map['product_id'] as int,
       productName: map['product_name'] as String,
+      soldBy: map['sold_by'] as String,
       categoryName: map['category_name'] as String,
       price: (map['price'] as num).toDouble(),
       discountPrice: map['discount_price'] != null

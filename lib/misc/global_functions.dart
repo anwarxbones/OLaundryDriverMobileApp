@@ -181,4 +181,12 @@ class AppGFunctions {
   static String getCurrency() {
     return Hive.box(AppHSC.appSettingsBox).get('currency') as String? ?? '\$';
   }
+
+  static String soldBy(String soldBy) {
+    return soldBy.contains('ea') ? 'item' : 'lbs';
+  }
+
+  static bool isPerPiece(String soldBy) {
+    return soldBy.contains('ea');
+  }
 }
