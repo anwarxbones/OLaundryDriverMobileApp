@@ -5,7 +5,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:laundry_customer/constants/app_colors.dart';
 import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/generated/l10n.dart';
-import 'package:laundry_customer/screens/cart/my_cart_tab.dart';
 import 'package:laundry_customer/screens/order/my_orders_tab_signed.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
 import 'package:laundry_customer/widgets/nav_bar.dart';
@@ -40,9 +39,7 @@ class MyOrdersTab extends ConsumerWidget {
               child: ValueListenableBuilder(
                 valueListenable: Hive.box(AppHSC.authBox).listenable(),
                 builder: (BuildContext context, Box authbox, Widget? child) {
-                  return authbox.get(AppHSC.authToken) != null
-                      ? const MyOrdersSignedIn()
-                      : const NotSignedInwidget();
+                  return const MyOrdersSignedIn();
                 },
               ),
             ),

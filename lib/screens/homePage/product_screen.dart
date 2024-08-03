@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_flutter/adapters.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:laundry_customer/constants/app_box_decoration.dart';
 import 'package:laundry_customer/constants/app_colors.dart';
+import 'package:laundry_customer/constants/app_text_decor.dart';
 import 'package:laundry_customer/constants/hive_contants.dart';
+import 'package:laundry_customer/generated/l10n.dart';
+import 'package:laundry_customer/misc/global_functions.dart';
+import 'package:laundry_customer/models/cart/cart_model.dart';
 import 'package:laundry_customer/models/category_model/category.dart';
-import 'package:laundry_customer/models/hive_cart_item_model.dart';
 import 'package:laundry_customer/models/product/product_mode.dart';
 import 'package:laundry_customer/providers/product_provider.dart';
 import 'package:laundry_customer/providers/settings_provider.dart';
 import 'package:laundry_customer/screens/homePage/widgets/product_card.dart';
+import 'package:laundry_customer/services/local_service.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
+import 'package:laundry_customer/widgets/buttons/full_width_button.dart';
 import 'package:laundry_customer/widgets/global_functions.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
 import 'package:laundry_customer/widgets/nav_bar.dart';
@@ -26,7 +31,6 @@ class ProductScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Box appSettingsBox = Hive.box(AppHSC.appSettingsBox);
     int? minimum;
     double? dlvrychrg;
     double? free;
@@ -80,148 +84,70 @@ class ProductScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            // Positioned(
-            //   bottom: 0,
-            //   child: Builder(
-            //     builder: (context) {
-            //       return ValueListenableBuilder(
-            //         valueListenable:
-            //             Hive.box<CartModel>(AppHSC.cartBox).listenable(),
-            //         builder: (
-            //           BuildContext context,
-            //           Box cartBox,
-            //           Widget? child,
-            //         ) {
-            //           final List<CarItemHiveModel> cartItems = [];
-            //           for (var i = 0; i < cartBox.length; i++) {
-            //             final Map<String, dynamic> processedData = {};
-            //             final Map<dynamic, dynamic> unprocessedData =
-            //                 cartBox.getAt(i) as Map<dynamic, dynamic>;
-
-            //             unprocessedData.forEach((key, value) {
-            //               processedData[key.toString()] = value;
-            //             });
-
-            //             cartItems.add(
-            //               CarItemHiveModel.fromMap(
-            //                 processedData,
-            //               ),
-            //             );
-            //           }
-
-            //           return Container(
-            //             height: 104.h,
-            //             width: 375.w,
-            //             color: AppColors.white,
-            //             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            //             child: Row(
-            //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //               children: [
-            //                 Column(
-            //                   crossAxisAlignment: CrossAxisAlignment.start,
-            //                   mainAxisAlignment: MainAxisAlignment.center,
-            //                   children: [
-            //                     Text(
-            //                       S.of(context).ttl,
-            //                       style: AppTextDecor.osSemiBold18black,
-            //                     ),
-            //                     Text(
-            //                       '${appSettingsBox.get('currency') ?? '\$'}${calculateTotal(cartItems).toStringAsFixed(2)}',
-            //                       style: AppTextDecor.osSemiBold18black,
-            //                     ),
-            //                     if (AppGFunctions.calculateTotal(
-            //                           cartItems,
-            //                         ).toInt() <
-            //                         free!) ...[
-            //                       Text(
-            //                         'Delivery Charge is ${appSettingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(dlvrychrg!)}',
-            //                         style: AppTextDecor.osRegular12black,
-            //                       ),
-            //                     ] else ...[
-            //                       Text(
-            //                         'Delivery Charge is ${appSettingsBox.get('currency') ?? '\$'}0.00',
-            //                         style: AppTextDecor.osRegular12black,
-            //                       ),
-            //                     ],
-            //                   ],
-            //                 ),
-            //                 Column(
-            //                   mainAxisAlignment: MainAxisAlignment.center,
-            //                   children: [
-            //                     if (calculateTotal(cartItems) < minimum!)
-            //                       Text(
-            //                         '${S.of(context).mnmmordramnt} ${appSettingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(minimum!)}',
-            //                         style: AppTextDecor.osRegular12red,
-            //                       ),
-            //                     AppSpacerH(5.h),
-            //                     if (ref.read(orderIdProvider) != '')
-            //                       AppTextButton(
-            //                         height: 45.h,
-            //                         width: 164.w,
-            //                         title: 'Done',
-            //                         onTap: () {
-            //                           context.nav.pop();
-            //                           ref
-            //                               .watch(
-            //                                 homeScreenIndexProvider.notifier,
-            //                               )
-            //                               .state = 0;
-            //                           ref
-            //                               .watch(
-            //                                 homeScreenPageControllerProvider,
-            //                               )
-            //                               .animateToPage(
-            //                                 0,
-            //                                 duration: transissionDuration,
-            //                                 curve: Curves.easeInOut,
-            //                               );
-            //                         },
-            //                       )
-            //                     else
-            //                       AppTextButton(
-            //                         title: S.of(context).ordrnow,
-            //                         height: 45.h,
-            //                         width: 164.w,
-            //                         onTap: () {
-            //                           final Box authBox = Hive.box(
-            //                             AppHSC.authBox,
-            //                           ); //Stores Auth Data
-
-            //                           if (authBox.get(AppHSC.authToken) !=
-            //                                   null &&
-            //                               authBox.get(AppHSC.authToken) != '') {
-            //                             if (calculateTotal(cartItems) >=
-            //                                 minimum!) {
-            //                               ref.refresh(
-            //                                 addresListProvider,
-            //                               );
-            //                               context.nav.pushNamed(
-            //                                 Routes.checkOutScreen,
-            //                               );
-            //                             } else {
-            //                               EasyLoading.showError(
-            //                                 '${S.of(context).mnmmordramnt} ${appSettingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(minimum!)}',
-            //                               );
-            //                             }
-            //                           } else {
-            //                             context.nav
-            //                                 .pushNamed(Routes.loginScreen);
-            //                           }
-            //                         },
-            //                       ),
-            //                   ],
-            //                 ),
-            //               ],
-            //             ),
-            //           );
-            //         },
-            //       );
-            //     },
-            //   ),
-            // ),
+            Positioned(
+              bottom: 0,
+              child: payableAmountWidget(ref, dlvrychrg),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  ValueListenableBuilder<Box<CartModel>> payableAmountWidget(
+    WidgetRef ref,
+    dynamic deliveryCharge,
+  ) {
+    return ValueListenableBuilder(
+      valueListenable: Hive.box<CartModel>(AppHSC.cartBox).listenable(),
+      builder: (
+        BuildContext context,
+        Box cartBox,
+        Widget? child,
+      ) {
+        final List<CartModel> cartItems = LocalService().getCart();
+
+        return Container(
+          height: 104.h,
+          width: 375.w,
+          color: AppColors.white,
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    S.of(context).ttl,
+                    style: AppTextDecor.osSemiBold18black,
+                  ),
+                  Text(
+                    '${AppGFunctions.getCurrency()}${LocalService().calculateTotal(cartItems: cartItems).toStringAsFixed(2)}',
+                    style: AppTextDecor.osSemiBold18black,
+                  ),
+                  Text(
+                    'Delivery Charge is ${AppGFunctions.getCurrency()}$deliveryCharge',
+                    style: AppTextDecor.osRegular12black,
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AppTextButton(
+                    title: S.of(context).ordrnow,
+                    height: 45.h,
+                    width: 164.w,
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -239,18 +165,4 @@ class ProductScreen extends ConsumerWidget {
       ),
     );
   }
-}
-
-double calculateTotal(List<CarItemHiveModel> cartItems) {
-  double amount = 0;
-  for (final element in cartItems) {
-    if (element.subProduct != null) {
-      amount += element.productsQTY *
-          (element.unitPrice + element.subProduct!.price!);
-    } else {
-      amount += element.productsQTY * element.unitPrice;
-    }
-  }
-
-  return amount;
 }

@@ -9,7 +9,6 @@ import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/models/hive_cart_item_model.dart';
 import 'package:laundry_customer/models/products_model/product.dart';
 import 'package:laundry_customer/models/products_model/sub_product.dart';
-import 'package:laundry_customer/screens/homePage/product_screen.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
 import 'package:laundry_customer/widgets/buttons/cart_item_inc_dec_button.dart';
 import 'package:laundry_customer/widgets/buttons/full_width_button.dart';
@@ -101,39 +100,39 @@ class _SubPrductBottomSheetState extends State<SubPrductBottomSheet> {
                       ),
                     ),
                     AppSpacerH(8.h),
-                    ValueListenableBuilder(
-                      valueListenable: Hive.box(
-                        AppHSC.cartBox,
-                      ).listenable(),
-                      builder: (context, Box cartBox, child) {
-                        final List<CarItemHiveModel> cartItems = [];
-                        int? keyAt;
-                        for (int i = 0; i < cartsBox.length; i++) {
-                          final Map<String, dynamic> processedData = {};
-                          final Map<dynamic, dynamic> unprocessedData =
-                              cartBox.getAt(
-                            i,
-                          ) as Map<dynamic, dynamic>;
+                    // ValueListenableBuilder(
+                    //   valueListenable: Hive.box(
+                    //     AppHSC.cartBox,
+                    //   ).listenable(),
+                    //   builder: (context, Box cartBox, child) {
+                    //     final List<CarItemHiveModel> cartItems = [];
+                    //     int? keyAt;
+                    //     for (int i = 0; i < cartsBox.length; i++) {
+                    //       final Map<String, dynamic> processedData = {};
+                    //       final Map<dynamic, dynamic> unprocessedData =
+                    //           cartBox.getAt(
+                    //         i,
+                    //       ) as Map<dynamic, dynamic>;
 
-                          unprocessedData.forEach((
-                            key,
-                            value,
-                          ) {
-                            processedData[key.toString()] = value;
-                          });
-                          final data = CarItemHiveModel.fromMap(
-                            processedData,
-                          );
-                          cartItems.add(data);
-                        }
-                        return Text(
-                          "${settingsBox.get('currency')}${calculateTotal(cartItems)}",
-                          style: AppTextDecor.osBold24black.copyWith(
-                            color: AppColors.purple,
-                          ),
-                        );
-                      },
-                    ),
+                    //       unprocessedData.forEach((
+                    //         key,
+                    //         value,
+                    //       ) {
+                    //         processedData[key.toString()] = value;
+                    //       });
+                    //       final data = CarItemHiveModel.fromMap(
+                    //         processedData,
+                    //       );
+                    //       cartItems.add(data);
+                    //     }
+                    //     return Text(
+                    //       "${settingsBox.get('currency')}${calculateTotal([])}",
+                    //       style: AppTextDecor.osBold24black.copyWith(
+                    //         color: AppColors.purple,
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
                     AppSpacerH(16.h),
                     AppTextButton(
                       onTap: () {

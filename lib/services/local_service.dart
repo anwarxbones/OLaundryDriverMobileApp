@@ -45,8 +45,21 @@ class LocalService {
     }
   }
 
-  Future<List<CartModel>> getCart() async {
+  List<CartModel> getCart() {
     final box = Hive.box<CartModel>(AppHSC.cartBox);
     return box.values.toList();
+  }
+
+  double calculateTotal({required List<CartModel> cartItems}) {
+    double amount = 0;
+    for (final item in cartItems) {
+      amount += item.quantity * item.price!;
+      if (item.addOns.isNotEmpty) {
+        for (final addOn in item.addOns) {
+          amount += addOn.price;
+        }
+      }
+    }
+    return amount;
   }
 }

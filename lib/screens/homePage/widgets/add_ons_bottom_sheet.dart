@@ -6,6 +6,7 @@ import 'package:laundry_customer/constants/app_colors.dart';
 import 'package:laundry_customer/constants/app_text_decor.dart';
 import 'package:laundry_customer/constants/input_field_decorations.dart';
 import 'package:laundry_customer/misc/global_functions.dart';
+import 'package:laundry_customer/models/cart/add_ons_model.dart';
 import 'package:laundry_customer/models/cart/cart_model.dart';
 import 'package:laundry_customer/models/product/product_mode.dart';
 import 'package:laundry_customer/services/local_service.dart';
@@ -32,7 +33,7 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
     FocusNode(),
   ];
 
-  final Set<int> _addOns = {};
+  final Set<AddOns> _addOns = {};
 
   @override
   @override
@@ -132,10 +133,15 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
                       if (_formkey.currentState!.saveAndValidate()) {
                         final CartModel cartModel = CartModel(
                           productId: widget.product.productId,
+                          name: widget.product.productName,
+                          image: widget.product.image,
+                          categoryName: widget.product.categoryName,
+                          discountPercentage: widget.product.discountPercentage,
                           quantity: int.parse(
                             _formkey.currentState!.fields['quantity']!.value
                                 .toString(),
                           ),
+                          price: widget.product.price,
                           note: _formkey.currentState?.fields['note']?.value
                               as String,
                           addOns: _addOns.toList(),
@@ -160,13 +166,17 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
       children: [
         Checkbox(
           visualDensity: VisualDensity.compact,
-          value: _addOns.contains(subProduct.id),
+          value: _addOns.any((element) => element.id == subProduct.id),
           onChanged: (v) {
             setState(() {
               if (v!) {
-                _addOns.add(subProduct.id);
+                final AddOns addOns = AddOns(
+                  id: subProduct.id,
+                  price: subProduct.price,
+                );
+                _addOns.add(addOns);
               } else {
-                _addOns.remove(subProduct.id);
+                _addOns.removeWhere((element) => element.id == subProduct.id);
               }
             });
           },
