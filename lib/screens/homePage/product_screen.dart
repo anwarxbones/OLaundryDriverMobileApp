@@ -16,6 +16,7 @@ import 'package:laundry_customer/providers/settings_provider.dart';
 import 'package:laundry_customer/screens/homePage/widgets/product_card.dart';
 import 'package:laundry_customer/services/local_service.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
+import 'package:laundry_customer/utils/routes.dart';
 import 'package:laundry_customer/widgets/buttons/full_width_button.dart';
 import 'package:laundry_customer/widgets/global_functions.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
@@ -140,7 +141,9 @@ class ProductScreen extends ConsumerWidget {
                     title: S.of(context).ordrnow,
                     height: 45.h,
                     width: 164.w,
-                    onTap: () {},
+                    onTap: () {
+                      context.nav.pushNamed(Routes.checkOutScreen);
+                    },
                   ),
                 ],
               ),

@@ -6,6 +6,7 @@ class ProductModel {
   final String soldBy;
   final String categoryName;
   final double price;
+  final double previousPrice;
   final double? discountPrice;
   final double? discountPercentage;
   final String image;
@@ -16,6 +17,7 @@ class ProductModel {
     required this.soldBy,
     required this.categoryName,
     required this.price,
+    required this.previousPrice,
     required this.discountPrice,
     required this.discountPercentage,
     required this.image,
@@ -28,6 +30,7 @@ class ProductModel {
     String? soldBy,
     String? categoryName,
     double? price,
+    double? previousPrice,
     double? discountPrice,
     double? discountPercentage,
     String? image,
@@ -39,6 +42,7 @@ class ProductModel {
       soldBy: soldBy ?? this.soldBy,
       categoryName: categoryName ?? this.categoryName,
       price: price ?? this.price,
+      previousPrice: previousPrice ?? this.previousPrice,
       discountPrice: discountPrice ?? this.discountPrice,
       discountPercentage: discountPercentage ?? this.discountPercentage,
       image: image ?? this.image,
@@ -53,6 +57,7 @@ class ProductModel {
       'sold_by': soldBy,
       'category_name': categoryName,
       'price': price,
+      'previous_price': previousPrice,
       'discount_price': discountPrice,
       'discount_percentage': discountPercentage,
       'image_path': image,
@@ -67,6 +72,7 @@ class ProductModel {
       soldBy: map['sold_by'] as String,
       categoryName: map['category_name'] as String,
       price: (map['price'] as num).toDouble(),
+      previousPrice: (map['previous_price'] as num).toDouble(),
       discountPrice: map['discount_price'] != null
           ? (map['discount_price'] as num).toDouble()
           : null,

@@ -14,7 +14,6 @@ import 'package:laundry_customer/providers/address_provider.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
 import 'package:laundry_customer/screens/order/payment_method_card.dart';
 import 'package:laundry_customer/screens/payment/payment_controller.dart';
-import 'package:laundry_customer/screens/payment/payment_section.dart';
 import 'package:laundry_customer/screens/payment/schedule_picker_widget.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
 import 'package:laundry_customer/utils/routes.dart';
@@ -104,7 +103,6 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
                                 S.of(context).shpngschdl,
                                 style: AppTextDecor.osSemiBold18black,
                               ),
-                              // const CutomDatePicker('Collection Date'),
                               AppSpacerH(10.h),
                               Row(
                                 children: [
@@ -154,7 +152,6 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
                                           Routes.manageAddressScreen,
                                         );
                                       },
-                                      // ignore: use_decorated_box
                                       child: Container(
                                         decoration: BoxDecoration(
                                           color: AppColors.grayBG,
@@ -296,10 +293,10 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
                             ],
                           ),
                         ),
-                        PaymentSection(
-                          instruction: _instruction,
-                          selectedPaymentType: selectedPaymentType,
-                        ),
+                        // PaymentSection(
+                        //   instruction: _instruction,
+                        //   selectedPaymentType: selectedPaymentType,
+                        // ),
                       ],
                     ),
                   ),

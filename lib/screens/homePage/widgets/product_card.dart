@@ -105,7 +105,7 @@ class _ProductCardState extends State<ProductCard> {
                     .copyWith(decoration: TextDecoration.lineThrough),
               ),
             Text(
-              '${AppGFunctions.getCurrency()}${widget.productModel.price}',
+              '${AppGFunctions.getCurrency()}${widget.productModel.previousPrice}',
               style: AppTextDecor.osRegular14black.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.primary,

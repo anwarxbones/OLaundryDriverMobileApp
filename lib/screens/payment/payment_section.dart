@@ -10,6 +10,7 @@ import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/misc/global_functions.dart';
 import 'package:laundry_customer/misc/misc_global_variables.dart';
+import 'package:laundry_customer/models/cart/cart_model.dart';
 import 'package:laundry_customer/models/hive_cart_item_model.dart';
 import 'package:laundry_customer/models/order_place_model/order_place_model.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
@@ -64,7 +65,7 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
       },
     );
     return ValueListenableBuilder(
-      valueListenable: Hive.box(AppHSC.cartBox).listenable(),
+      valueListenable: Hive.box<CartModel>(AppHSC.cartBox).listenable(),
       builder: (
         BuildContext context,
         Box cartBox,
@@ -197,7 +198,7 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
                                                     quantity: e.productsQTY
                                                         .toString(),
                                                     subid: e.subProduct?.id
-                                                            .toString(),
+                                                        .toString(),
                                                   ),
                                                 )
                                                 .toList(),
