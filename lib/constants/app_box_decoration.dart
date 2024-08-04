@@ -7,7 +7,6 @@ class AppBoxDecorations {
 
   static const BoxDecoration topBar = BoxDecoration(
     color: AppColors.white,
-    // border: Border(bottom: BorderSide(color: AppColors.gray)),
   );
   static BoxDecoration topBarv2 = BoxDecoration(
     color: AppColors.white,

@@ -4,6 +4,7 @@ import 'package:laundry_customer/models/add_order_model/add_order_model.dart';
 import 'package:laundry_customer/models/all_orders_model/all_orders_model.dart';
 import 'package:laundry_customer/models/coupon_response_model/coupon_response_model.dart';
 import 'package:laundry_customer/models/order_details_model/order_details_model.dart';
+import 'package:laundry_customer/models/order_place_model/order_place_mode_new.dart';
 import 'package:laundry_customer/models/order_place_model/order_place_model.dart';
 import 'package:laundry_customer/models/schedules_model/schedules_model.dart';
 import 'package:laundry_customer/repos/order_repo.dart';
@@ -49,7 +50,7 @@ class PlaceOrderNotifier extends StateNotifier<ApiState<AddOrderModel>> {
   ) : super(const ApiState.initial());
   final IOrderRepo _repo;
 
-  Future<void> addOrder(OrderPlaceModel orderPlaceModel) async {
+  Future<void> addOrder(OrderPlaceModelNew orderPlaceModel) async {
     state = const ApiState.loading();
     try {
       state = ApiState.loaded(data: await _repo.addOrder(orderPlaceModel));

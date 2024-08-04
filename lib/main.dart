@@ -295,7 +295,6 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
 
             return MaterialApp(
               title: 'O Laundry',
-
               localizationsDelegates: const [
                 S.delegate,
                 GlobalMaterialLocalizations.delegate,
@@ -322,9 +321,7 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
               theme: ThemeData(
                 fontFamily: "Poppins",
               ),
-              navigatorKey: ContextLess
-                  .navigatorkey, //Setting Global navigator key to navigate from anywhere without Context
-
+              navigatorKey: ContextLess.navigatorkey,
               onGenerateRoute: (settings) => generatedRoutes(settings),
               initialRoute: Routes.splash,
               builder: EasyLoading.init(),

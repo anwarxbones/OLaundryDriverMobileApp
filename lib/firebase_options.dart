@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '887141294942',
     projectId: 'laundry-49a80',
     storageBucket: 'laundry-49a80.appspot.com',
-    androidClientId: '887141294942-gfi58ku2i9jfvddrbfp3i9nqsdi68uj9.apps.googleusercontent.com',
+    androidClientId:
+        '887141294942-gfi58ku2i9jfvddrbfp3i9nqsdi68uj9.apps.googleusercontent.com',
     iosBundleId: 'com.razinsoft.laundry',
   );
 }

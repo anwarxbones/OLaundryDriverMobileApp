@@ -8,16 +8,15 @@ import 'package:laundry_customer/constants/app_box_decoration.dart';
 import 'package:laundry_customer/constants/app_text_decor.dart';
 import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/generated/l10n.dart';
-import 'package:laundry_customer/misc/global_functions.dart';
 import 'package:laundry_customer/misc/misc_global_variables.dart';
 import 'package:laundry_customer/models/cart/cart_model.dart';
-import 'package:laundry_customer/models/hive_cart_item_model.dart';
-import 'package:laundry_customer/models/order_place_model/order_place_model.dart';
+import 'package:laundry_customer/models/order_place_model/order_place_mode_new.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
 import 'package:laundry_customer/providers/order_providers.dart';
 import 'package:laundry_customer/providers/settings_provider.dart';
+import 'package:laundry_customer/screens/payment/checkout_screen.dart';
 import 'package:laundry_customer/screens/payment/payment_controller.dart';
-import 'package:laundry_customer/screens/payment/payment_screen.dart';
+import 'package:laundry_customer/services/local_service.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
 import 'package:laundry_customer/utils/routes.dart';
 import 'package:laundry_customer/widgets/buttons/full_width_button.dart';
@@ -50,8 +49,8 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
   Widget build(BuildContext context) {
     ref.watch(couponProvider).maybeWhen(
           orElse: () {},
-          loaded: (_) {
-            couponID = _.data?.coupon?.id;
+          loaded: (response) {
+            couponID = response.data?.coupon?.id;
           },
         );
     late int? minimum;
@@ -71,22 +70,7 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
         Box cartBox,
         Widget? child,
       ) {
-        final List<CarItemHiveModel> cartItems = [];
-        for (var i = 0; i < cartBox.length; i++) {
-          final Map<String, dynamic> processedData = {};
-          final Map<dynamic, dynamic> unprocessedData =
-              cartBox.getAt(i) as Map<dynamic, dynamic>;
-
-          unprocessedData.forEach((key, value) {
-            processedData[key.toString()] = value;
-          });
-
-          cartItems.add(
-            CarItemHiveModel.fromMap(
-              processedData,
-            ),
-          );
-        }
+        final List<CartModel> cartItems = LocalService().getCart();
         return Container(
           width: 375.w,
           padding: EdgeInsets.symmetric(
@@ -95,7 +79,6 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
           ),
           decoration: AppBoxDecorations.pageCommonCard.copyWith(),
           child: SizedBox(
-            // height: 70.h,
             child: Consumer(
               builder: (context, ref, child) {
                 return ref.watch(placeOrdersProvider).map(
@@ -109,24 +92,19 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
                                 S.of(context).ttlpybl,
                                 style: AppTextDecor.osSemiBold18black,
                               ),
-                              if (AppGFunctions.calculateTotal(
-                                    cartItems,
-                                  ).toInt() <
+                              if (LocalService()
+                                      .calculateTotal(cartItems: cartItems) <
                                   free!) ...[
                                 Text(
-                                  '${appSettingsBox.get('currency') ?? '\$'}${(AppGFunctions.calculateTotal(cartItems) + dlvrychrg! - ref.watch(discountAmountProvider)).toStringAsFixed(2)}',
+                                  '${appSettingsBox.get('currency') ?? '\$'}${(LocalService().calculateTotal(cartItems: cartItems) + dlvrychrg! - ref.watch(discountAmountProvider)).toStringAsFixed(2)}',
                                   style: AppTextDecor.osBold14black,
                                 ),
                               ] else ...[
                                 Text(
-                                  '${appSettingsBox.get('currency') ?? '\$'}${(AppGFunctions.calculateTotal(cartItems) - ref.watch(discountAmountProvider)).toStringAsFixed(2)}',
+                                  '${appSettingsBox.get('currency') ?? '\$'}${(LocalService().calculateTotal(cartItems: cartItems) - ref.watch(discountAmountProvider)).toStringAsFixed(2)}',
                                   style: AppTextDecor.osSemiBold18black,
                                 ),
                               ],
-                              // Text(
-                              //   '${appSettingsBox.get('currency') ?? '\$'}${(calculateTotal(cartItems) + dlvrychrg! - ref.watch(discountAmountProvider)).toStringAsFixed(2)}',
-                              //   style: AppTextDecor.osSemiBold18black,
-                              // ),
                             ],
                           ),
                           if (isMakingPayment)
@@ -137,9 +115,6 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
                             AppTextButton(
                               title: S.of(context).pynw,
                               onTap: () async {
-                                /*
-                                      Order Placement Data Validation and Logic Processed Here
-                                      */
                                 final DateFormat formatter = DateFormat(
                                   'yyyy-MM-dd',
                                 );
@@ -171,42 +146,31 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
                                       cartItems.isNotEmpty) {
                                     //Has All Data
 
-                                    await ref
-                                        .watch(
-                                          placeOrdersProvider.notifier,
-                                        )
-                                        .addOrder(
-                                          OrderPlaceModel(
-                                            address_id: address,
-                                            pick_date:
-                                                "${pickUp.dateTime.year}-${pickUp.dateTime.month}-${pickUp.dateTime.day}",
-                                            pick_hour:
-                                                pickUp.schedule.hour.toString(),
-                                            delivery_date:
-                                                "${delivery.dateTime.year}-${delivery.dateTime.month}-${delivery.dateTime.day}",
-                                            delivery_hour: delivery
-                                                .schedule.hour
-                                                .toString(),
-                                            coupon_id:
-                                                couponID?.toString() ?? '',
-                                            instruction:
-                                                widget.instruction.text,
-                                            products: cartItems
-                                                .map(
-                                                  (e) => OrderProductModel(
-                                                    id: e.productsId.toString(),
-                                                    quantity: e.productsQTY
-                                                        .toString(),
-                                                    subid: e.subProduct?.id
-                                                        .toString(),
-                                                  ),
-                                                )
-                                                .toList(),
-                                            additional_service_id: [],
-                                          ),
-                                        );
+                                    final OrderPlaceModelNew
+                                        orderPlaceModelNew = OrderPlaceModelNew(
+                                      addressId: address,
+                                      pickDate:
+                                          "${pickUp.dateTime.year}-${pickUp.dateTime.month}-${pickUp.dateTime.day}",
+                                      pickHour: pickUp.schedule.hour.toString(),
+                                      deliveryDate:
+                                          "${delivery.dateTime.year}-${delivery.dateTime.month}-${delivery.dateTime.day}",
+                                      deliveryHour:
+                                          delivery.schedule.hour.toString(),
+                                      couponId: couponID?.toString(),
+                                      instruction: widget.instruction.text,
+                                      products:
+                                          getProductList(cartItems: cartItems),
+                                      subProductIds: getSubProductList(
+                                        cartItems: cartItems,
+                                      ),
+                                    );
+
+                                    print(orderPlaceModelNew.toJson());
+
+                                    // await ref
+                                    //     .watch(placeOrdersProvider.notifier)
+                                    //     .addOrder(orderPlaceModelNew);
                                   } else {
-                                    //Missing Data
                                     EasyLoading.showError(
                                       S.of(context).plsslctalflds,
                                     );
@@ -224,18 +188,15 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
                         ],
                       ),
                       loading: (_) => const LoadingWidget(),
-                      loaded: (_) {
-                        final String amount = (calculateTotal(cartItems) -
+                      loaded: (response) {
+                        final String amount = (LocalService()
+                                    .calculateTotal(cartItems: cartItems) -
                                 ref.watch(
                                   discountAmountProvider,
                                 ))
                             .toStringAsFixed(2);
 
                         Future.delayed(buildDuration).then((value) async {
-                          // EasyLoading.showSuccess(
-                          //   S.of(context).ordrplcd,
-                          // );
-
                           await cartBox.clear();
                           ref.refresh(placeOrdersProvider);
                           ref.refresh(couponProvider);
@@ -252,23 +213,24 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
                                 dateProvider('Delivery').notifier,
                               )
                               .state = null;
-                          // context.nav.pushNamedAndRemoveUntil(
-                          //   Routes.orderSuccessScreen,
-                          //   arguments: {
-                          //     'id': _.data.data!.order!.orderCode,
-                          //     'amount': amount,
-                          //     'couponID': couponID.toString(),
-                          //     'isCOD': selectedPaymentType == PaymentType.cod
-                          //   },
-                          //   (route) => false,
-                          // );
+                          context.nav.pushNamedAndRemoveUntil(
+                            Routes.orderSuccessScreen,
+                            arguments: {
+                              'id': response.data.data!.order!.orderCode,
+                              'amount': amount,
+                              'couponID': couponID.toString(),
+                              'isCOD':
+                                  widget.selectedPaymentType == PaymentType.cod,
+                            },
+                            (route) => false,
+                          );
 
                           if (widget.selectedPaymentType == PaymentType.cod ||
                               isPaid) {
                             context.nav.pushNamedAndRemoveUntil(
                               Routes.orderSuccessScreen,
                               arguments: {
-                                'id': _.data.data!.order!.orderCode,
+                                'id': response.data.data!.order!.orderCode,
                                 'amount': amount,
                                 'couponID': couponID.toString(),
                                 'isCOD': widget.selectedPaymentType ==
@@ -285,7 +247,7 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
                                 amount: amount,
                                 currency: 'GBP',
                                 couponID: couponID.toString(),
-                                orderID: _.data.data!.order!.orderCode!,
+                                orderID: response.data.data!.order!.orderCode!,
                               );
 
                               isMakingPayment = false;
@@ -295,7 +257,7 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
                                 context.nav.pushNamedAndRemoveUntil(
                                   Routes.orderSuccessScreen,
                                   arguments: {
-                                    'id': _.data.data!.order!.orderCode,
+                                    'id': response.data.data!.order!.orderCode,
                                     'amount': amount,
                                     'couponID': couponID.toString(),
                                     'isCOD': widget.selectedPaymentType ==
@@ -308,7 +270,7 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
                                 context.nav.pushNamedAndRemoveUntil(
                                   Routes.orderSuccessScreen,
                                   arguments: {
-                                    'id': _.data.data!.order!.orderCode,
+                                    'id': response.data.data!.order!.orderCode,
                                     'amount': amount,
                                     'couponID': couponID.toString(),
                                     'isCOD': widget.selectedPaymentType ==
@@ -319,22 +281,21 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
                                 );
                               }
                             }
-                            print("Paid : $isPaid");
                           }
                         });
                         return MessageTextWidget(
                           msg: S.of(context).ordrplcd,
                         );
-                        // return Text("Text");
                       },
-                      error: (_) {
+                      error: (error) {
                         Future.delayed(
                           const Duration(seconds: 2),
                         ).then((value) {
-                          ref.refresh(placeOrdersProvider);
+                          final value = ref.refresh(placeOrdersProvider);
+                          debugPrint(value.toString());
                         });
                         return ErrorTextWidget(
-                          error: _.error,
+                          error: error.error,
                         );
                       },
                     );
@@ -346,17 +307,22 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
     );
   }
 
-  double calculateTotal(List<CarItemHiveModel> cartItems) {
-    double amount = 0;
-    for (final element in cartItems) {
-      if (element.subProduct != null) {
-        amount += element.productsQTY *
-            (element.unitPrice + element.subProduct!.price!);
-      } else {
-        amount += element.productsQTY * element.unitPrice;
-      }
-    }
+  List<Product> getProductList({required List<CartModel> cartItems}) {
+    return cartItems
+        .map(
+          (product) => Product(
+            productId: product.productId,
+            quantity: product.quantity,
+            instrunction: product.note,
+          ),
+        )
+        .toList();
+  }
 
-    return amount;
+  List<int> getSubProductList({required List<CartModel> cartItems}) {
+    return cartItems
+        .expand((product) => product.addOns)
+        .map((addOn) => addOn.id)
+        .toList();
   }
 }

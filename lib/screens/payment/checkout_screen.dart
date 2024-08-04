@@ -14,6 +14,7 @@ import 'package:laundry_customer/providers/address_provider.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
 import 'package:laundry_customer/screens/order/payment_method_card.dart';
 import 'package:laundry_customer/screens/payment/payment_controller.dart';
+import 'package:laundry_customer/screens/payment/payment_section.dart';
 import 'package:laundry_customer/screens/payment/schedule_picker_widget.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
 import 'package:laundry_customer/utils/routes.dart';
@@ -47,11 +48,10 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
     //         couponID = _.data?.coupon?.id;
     //       },
     //     );
-    return WillPopScope(
-      onWillPop: () {
+    return PopScope(
+      onPopInvoked: (value) {
         ref.watch(dateProvider('Pick Up').notifier).state = null;
         ref.watch(dateProvider('Delivery').notifier).state = null;
-        return Future.value(true);
       },
       child: ScreenWrapper(
         padding: EdgeInsets.zero,
@@ -63,68 +63,13 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
             children: [
               Column(
                 children: [
-                  Container(
-                    color: AppColors.primary,
-                    height: 108.h,
-                    width: 375.w,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.h),
-                      child: Column(
-                        children: [
-                          AppSpacerH(44.h),
-                          AppNavbar(
-                            backgroundColor: AppColors.primary,
-                            titleColor: AppColors.white,
-                            title: S.of(context).shpngndpymnt,
-                            onBack: () {
-                              context.nav.pop();
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  _buildHeaderWidget(context),
                   Expanded(
                     child: ListView(
                       padding: EdgeInsets.zero,
                       children: [
                         AppSpacerH(10.h),
-                        Container(
-                          width: 375.w,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 20.w,
-                            vertical: 15.h,
-                          ),
-                          decoration: AppBoxDecorations.pageCommonCard,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                S.of(context).shpngschdl,
-                                style: AppTextDecor.osSemiBold18black,
-                              ),
-                              AppSpacerH(10.h),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: ShedulePicker(
-                                      image: 'assets/images/pickup-car.png',
-                                      title: S.of(context).pickupat,
-                                    ),
-                                  ),
-                                  AppSpacerW(10.w),
-                                  Expanded(
-                                    child: ShedulePicker(
-                                      image: 'assets/images/pick-up-truck.png',
-                                      title: S.of(context).dlvryat,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              AppSpacerH(10.h),
-                            ],
-                          ),
-                        ),
+                        _buildScheduleWidget(context),
                         AppSpacerH(10.h),
                         Container(
                           width: 375.w,
@@ -293,10 +238,10 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
                             ],
                           ),
                         ),
-                        // PaymentSection(
-                        //   instruction: _instruction,
-                        //   selectedPaymentType: selectedPaymentType,
-                        // ),
+                        PaymentSection(
+                          instruction: _instruction,
+                          selectedPaymentType: selectedPaymentType,
+                        ),
                       ],
                     ),
                   ),
@@ -304,6 +249,69 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Container _buildScheduleWidget(BuildContext context) {
+    return Container(
+      width: 375.w,
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.w,
+        vertical: 15.h,
+      ),
+      decoration: AppBoxDecorations.pageCommonCard,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            S.of(context).shpngschdl,
+            style: AppTextDecor.osSemiBold18black,
+          ),
+          AppSpacerH(10.h),
+          Row(
+            children: [
+              Expanded(
+                child: ShedulePicker(
+                  image: 'assets/images/pickup-car.png',
+                  title: S.of(context).pickupat,
+                ),
+              ),
+              AppSpacerW(10.w),
+              Expanded(
+                child: ShedulePicker(
+                  image: 'assets/images/pick-up-truck.png',
+                  title: S.of(context).dlvryat,
+                ),
+              ),
+            ],
+          ),
+          AppSpacerH(10.h),
+        ],
+      ),
+    );
+  }
+
+  Container _buildHeaderWidget(BuildContext context) {
+    return Container(
+      color: AppColors.primary,
+      height: 108.h,
+      width: 375.w,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.h),
+        child: Column(
+          children: [
+            AppSpacerH(44.h),
+            AppNavbar(
+              backgroundColor: AppColors.primary,
+              titleColor: AppColors.white,
+              title: S.of(context).shpngndpymnt,
+              onBack: () {
+                context.nav.pop();
+              },
+            ),
+          ],
         ),
       ),
     );

@@ -6,6 +6,7 @@ import 'package:laundry_customer/models/add_order_model/add_order_model.dart';
 import 'package:laundry_customer/models/all_orders_model/all_orders_model.dart';
 import 'package:laundry_customer/models/coupon_response_model/coupon_response_model.dart';
 import 'package:laundry_customer/models/order_details_model/order_details_model.dart';
+import 'package:laundry_customer/models/order_place_model/order_place_mode_new.dart';
 import 'package:laundry_customer/models/order_place_model/order_place_model.dart';
 import 'package:laundry_customer/models/schedules_model/schedules_model.dart';
 import 'package:laundry_customer/offline_data/order_data.dart';
@@ -13,7 +14,7 @@ import 'package:laundry_customer/services/api_service.dart';
 
 abstract class IOrderRepo {
   Future<AllOrdersModel> getAllOrders(String status);
-  Future<AddOrderModel> addOrder(OrderPlaceModel orderPlaceModel);
+  Future<AddOrderModel> addOrder(OrderPlaceModelNew orderPlaceModel);
   Future<AddOrderModel> updateOrder(
     List<OrderProductModel> orderProductModel,
     String orderID,
@@ -42,7 +43,7 @@ class OrderRepo implements IOrderRepo {
   }
 
   @override
-  Future<AddOrderModel> addOrder(OrderPlaceModel orderPlaceModel) async {
+  Future<AddOrderModel> addOrder(OrderPlaceModelNew orderPlaceModel) async {
     final response = await _dio.post(
       '/orders',
       data: FormData.fromMap(orderPlaceModel.toMap()),
@@ -120,7 +121,7 @@ class OfflineOrderRepo implements IOrderRepo {
   }
 
   @override
-  Future<AddOrderModel> addOrder(OrderPlaceModel orderPlaceModel) async {
+  Future<AddOrderModel> addOrder(OrderPlaceModelNew orderPlaceModel) async {
     await Future.delayed(apiDataDuration);
     return AddOrderModel.fromMap(OfflineOrderData.addOrderData);
   }
