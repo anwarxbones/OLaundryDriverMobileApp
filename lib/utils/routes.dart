@@ -29,8 +29,8 @@ import 'package:laundry_customer/screens/other/contact_us.dart';
 import 'package:laundry_customer/screens/other/privacy_policy.dart';
 import 'package:laundry_customer/screens/other/terms_of_service.dart';
 import 'package:laundry_customer/screens/payment/add_card_screen.dart';
-import 'package:laundry_customer/screens/payment/order_success.dart';
 import 'package:laundry_customer/screens/payment/checkout_screen.dart';
+import 'package:laundry_customer/screens/payment/order_success.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Routes {

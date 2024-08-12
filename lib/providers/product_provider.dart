@@ -8,12 +8,19 @@ final productRepoProvider = Provider<IProductRepo>((ref) {
   return ProductRepo();
 });
 
-final productProvider = StateNotifierProvider.family<ProductyNotifier,
+final productProvider = StateNotifierProvider.family<ProductNotifier,
     ApiState<List<ProductModel>>, int>(
   (ref, categoryId) {
-    return ProductyNotifier(
+    return ProductNotifier(
       ref.watch(productRepoProvider),
       categoryId,
     );
+  },
+);
+
+final productDetailsProvider = StateNotifierProvider<
+    ProductDetailsNotifier, ApiState<ProductModel>>(
+  (ref) {
+    return ProductDetailsNotifier(ref.watch(productRepoProvider));
   },
 );

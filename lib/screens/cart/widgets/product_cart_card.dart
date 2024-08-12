@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:laundry_customer/constants/app_colors.dart';
@@ -7,12 +8,15 @@ import 'package:laundry_customer/constants/app_text_decor.dart';
 import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/misc/global_functions.dart';
 import 'package:laundry_customer/models/cart/cart_model.dart';
+import 'package:laundry_customer/models/product/product_mode.dart';
+import 'package:laundry_customer/providers/product_provider.dart';
+import 'package:laundry_customer/screens/homePage/widgets/add_ons_bottom_sheet.dart';
 import 'package:laundry_customer/screens/homePage/widgets/inc_dec_button.dart';
 import 'package:laundry_customer/services/local_service.dart';
 import 'package:laundry_customer/widgets/buttons/cart_item_inc_dec_button.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
 
-class ProductCartCard extends StatefulWidget {
+class ProductCartCard extends ConsumerStatefulWidget {
   final CartModel cartModel;
   const ProductCartCard({
     super.key,
@@ -20,33 +24,54 @@ class ProductCartCard extends StatefulWidget {
   });
 
   @override
-  State<ProductCartCard> createState() => _ProductCartCardState();
+  ConsumerState<ProductCartCard> createState() => _ProductCartCardState();
 }
 
-class _ProductCartCardState extends State<ProductCartCard> {
+class _ProductCartCardState extends ConsumerState<ProductCartCard> {
   @override
   void initState() {
     super.initState();
   }
 
   final Box appSettingsBox = Hive.box(AppHSC.appSettingsBox);
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-      color: AppColors.white,
-      height: 90.h,
-      child: Row(
-        children: [
-          _buildImageWidget(),
-          AppSpacerW(8.w),
-          _buildProductInfoColumn(),
-          const Spacer(),
-          _buildCartFunctionWidget(
-            inCart: true,
-            cartCount: 5,
+    return AbsorbPointer(
+      absorbing: ref.watch(loadingProvider),
+      child: GestureDetector(
+        onTap: () {
+          ref.read(loadingProvider.notifier).state = true;
+          ref
+              .read(productDetailsProvider.notifier)
+              .getProductDetails(id: widget.cartModel.productId)
+              .then((product) {
+            ref.refresh(loadingProvider.notifier).state;
+            if (product != null) {
+              _showAddOnsBottomSheet(
+                cartModel: widget.cartModel,
+                productModel: product,
+              );
+            }
+          });
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          color: AppColors.white,
+          height: 90.h,
+          child: Row(
+            children: [
+              _buildImageWidget(),
+              AppSpacerW(8.w),
+              _buildProductInfoColumn(),
+              const Spacer(),
+              _buildCartFunctionWidget(
+                inCart: true,
+                cartCount: 5,
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -150,4 +175,28 @@ class _ProductCartCardState extends State<ProductCartCard> {
       ],
     );
   }
+
+  Future _showAddOnsBottomSheet({
+    required CartModel? cartModel,
+    required ProductModel productModel,
+  }) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12.r),
+          topRight: Radius.circular(12.r),
+        ),
+      ),
+      backgroundColor: AppColors.white,
+      builder: (context) => AddOnsBottomSheet(
+        product: productModel,
+        cartModel: cartModel,
+        isUpdate: true,
+      ),
+    );
+  }
 }
+
+final loadingProvider = StateProvider<bool>((ref) => false);

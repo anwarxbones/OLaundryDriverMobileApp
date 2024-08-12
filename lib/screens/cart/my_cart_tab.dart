@@ -13,6 +13,7 @@ import 'package:laundry_customer/providers/settings_provider.dart';
 import 'package:laundry_customer/screens/cart/widgets/product_cart_card.dart';
 import 'package:laundry_customer/services/local_service.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
+import 'package:laundry_customer/widgets/busy_loader.dart';
 import 'package:laundry_customer/widgets/buttons/full_width_button.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
 import 'package:laundry_customer/widgets/nav_bar.dart';
@@ -40,44 +41,55 @@ class MyCartTab extends ConsumerWidget {
       child: ScreenWrapper(
         color: AppColors.grayBG,
         padding: EdgeInsets.zero,
-        child: ValueListenableBuilder(
-          valueListenable: Hive.box<CartModel>(AppHSC.cartBox).listenable(),
-          builder: (context, Box<CartModel> cartBox, child) {
-            final List<CartModel> cartItmes = cartBox.values.toList();
-            return Stack(
-              children: [
-                SizedBox(
-                  height: 812.h,
-                  width: 375.w,
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 100.h,
-                        width: 375.w,
-                        decoration: AppBoxDecorations.topBar,
-                        padding: EdgeInsets.symmetric(horizontal: 20.w),
-                        child: Column(
-                          children: [
-                            AppSpacerH(44.h),
-                            AppNavbar(
-                              backButtionColor: AppColors.black,
-                              title: 'My Cart(${cartItmes.length})',
-                              showBack: false,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            ValueListenableBuilder(
+              valueListenable: Hive.box<CartModel>(AppHSC.cartBox).listenable(),
+              builder: (context, Box<CartModel> cartBox, child) {
+                final List<CartModel> cartItmes = cartBox.values.toList();
+                return Stack(
+                  children: [
+                    SizedBox(
+                      height: 812.h,
+                      width: 375.w,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 100.h,
+                            width: 375.w,
+                            decoration: AppBoxDecorations.topBar,
+                            padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            child: Column(
+                              children: [
+                                AppSpacerH(44.h),
+                                AppNavbar(
+                                  backButtionColor: AppColors.black,
+                                  title: 'My Cart(${cartItmes.length})',
+                                  showBack: false,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          _buildProductListWidget(cartItems: cartItmes),
+                        ],
                       ),
-                      _buildProductListWidget(cartItems: cartItmes),
-                    ],
-                  ),
+                    ),
+                    Positioned(
+                      bottom: 80.h,
+                      child: payableAmountWidget(cartItmes, dlvrychrg),
+                    ),
+                  ],
+                );
+              },
+            ),
+            if (ref.watch(loadingProvider))
+              const Center(
+                child: BusyLoader(
+                  size: 120,
                 ),
-                Positioned(
-                  bottom: 80.h,
-                  child: payableAmountWidget(cartItmes, dlvrychrg),
-                ),
-              ],
-            );
-          },
+              ),
+          ],
         ),
       ),
     );

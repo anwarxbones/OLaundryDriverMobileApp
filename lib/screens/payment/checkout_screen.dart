@@ -12,6 +12,7 @@ import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/misc/global_functions.dart';
 import 'package:laundry_customer/providers/address_provider.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
+import 'package:laundry_customer/providers/order_providers.dart';
 import 'package:laundry_customer/screens/order/payment_method_card.dart';
 import 'package:laundry_customer/screens/payment/payment_controller.dart';
 import 'package:laundry_customer/screens/payment/payment_section.dart';
@@ -38,16 +39,17 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // int? couponID;
+    int? couponID;
     ref.watch(addressIDProvider);
     ref.watch(dateProvider('Pick Up'));
     ref.watch(dateProvider('Delivery'));
-    // ref.watch(couponProvider).maybeWhen(
-    //       orElse: () {},
-    //       loaded: (_) {
-    //         couponID = _.data?.coupon?.id;
-    //       },
-    //     );
+    ref.watch(couponProvider).maybeWhen(
+          orElse: () {},
+          loaded: (_) {
+            couponID = _.data?.coupon?.id;
+          },
+          error: (error) => print('This is a coupon error $error'),
+        );
     return PopScope(
       onPopInvoked: (value) {
         ref.watch(dateProvider('Pick Up').notifier).state = null;
@@ -238,6 +240,7 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
                             ],
                           ),
                         ),
+                        _buildCouponAndSummaryWidget(context),
                         PaymentSection(
                           instruction: _instruction,
                           selectedPaymentType: selectedPaymentType,
@@ -314,6 +317,179 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildCouponAndSummaryWidget(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16.r),
+      margin: EdgeInsets.only(top: 10.h),
+      color: AppColors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildCouponWidget(),
+          AppSpacerH(16.h),
+          Text(
+            'Order Summary',
+            style: AppTextDecor.osBold14black,
+          ),
+          AppSpacerH(10.h),
+          _buildSummaryWidget(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCouponWidget() {
+    return Row(
+      children: [
+        Flexible(
+          flex: 4,
+          child: FormBuilderTextField(
+            name: 'coupon',
+            decoration: AppInputDecor.loginPageInputDecor.copyWith(
+              hintText: 'Enter coupon code',
+              prefixIcon: Padding(
+                padding: EdgeInsets.all(10.w),
+                child: SizedBox(
+                  width: 10,
+                  child: Image.asset(
+                    'assets/images/coupon.png',
+                  ),
+                ),
+              ),
+            ),
+            onChanged: (value) {},
+          ),
+        ),
+        AppSpacerW(10.w),
+        Flexible(
+          child: ref.watch(couponProvider).map(
+                initial: (_) => GestureDetector(
+                  onTap: () {
+                    ref
+                        .read(couponProvider.notifier)
+                        .applyCoupon(coupon: 'sdfsdf', amount: '100');
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(12.r),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.r),
+                      border: Border.all(color: AppColors.primary),
+                    ),
+                    child: Text(
+                      'Apply',
+                      style: AppTextDecor.osBold14black
+                          .copyWith(color: AppColors.primary),
+                    ),
+                  ),
+                ),
+                loading: (_) => const CircularProgressIndicator(),
+                loaded: (value) => GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    padding: EdgeInsets.all(8.r),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.r),
+                      color: AppColors.primary,
+                    ),
+                    child: Text(
+                      'Applied',
+                      style: AppTextDecor.osBold14white
+                          .copyWith(color: AppColors.white),
+                    ),
+                  ),
+                ),
+                error: (_) => GestureDetector(
+                  onTap: () {
+                    ref
+                        .read(couponProvider.notifier)
+                        .applyCoupon(coupon: 'sdfsdf', amount: '100');
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(12.r),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.r),
+                      border: Border.all(color: AppColors.primary),
+                    ),
+                    child: Text(
+                      'Apply',
+                      style: AppTextDecor.osBold14black
+                          .copyWith(color: AppColors.primary),
+                    ),
+                  ),
+                ),
+              ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSummaryWidget() {
+    return Container(
+      padding: EdgeInsets.all(12.sp),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.r),
+        color: AppColors.lightgray,
+      ),
+      child: Column(
+        children: [
+          _buildSummaryRowWidget(
+            title: 'Sub Total',
+            value: 260,
+          ),
+          AppSpacerH(8.h),
+          _buildSummaryRowWidget(
+            title: 'Discount',
+            value: 10,
+            isDiscount: true,
+          ),
+          const Divider(),
+          _buildSummaryRowWidget(
+            title: 'Total',
+            value: 10,
+          ),
+          AppSpacerH(8.h),
+          _buildSummaryRowWidget(
+            title: 'Delivery Charge',
+            value: 10,
+          ),
+          const Divider(),
+          _buildSummaryRowWidget(
+            title: 'Payable',
+            value: 10,
+            isPayable: true,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSummaryRowWidget({
+    required String title,
+    required double value,
+    bool isDiscount = false,
+    bool isPayable = false,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: AppTextDecor.osRegular14Navy
+              .copyWith(fontWeight: isPayable ? FontWeight.w600 : null),
+        ),
+        Text(
+          isDiscount
+              ? '-' + '${appSettingsBox.get('currency') ?? '\$'}$value'
+              : '${appSettingsBox.get('currency') ?? '\$'}$value',
+          style: AppTextDecor.osRegular14black.copyWith(
+            color: isDiscount ? AppColors.red : AppColors.black,
+            fontWeight: isPayable ? FontWeight.w600 : null,
+          ),
+        ),
+      ],
     );
   }
 }

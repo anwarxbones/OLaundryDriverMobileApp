@@ -4,6 +4,7 @@ import 'package:laundry_customer/services/api_service.dart';
 
 abstract class IProductRepo {
   Future<List<ProductModel>> fatchProducts({required int? categoryId});
+  Future<ProductModel> fatchProduct({required int productId});
 }
 
 class ProductRepo extends IProductRepo {
@@ -27,5 +28,19 @@ class ProductRepo extends IProductRepo {
           .toList();
     }
     return [];
+  }
+
+  @override
+  Future<ProductModel> fatchProduct({required int productId}) async {
+    final Response response = await _dio.get(
+      '/get-sub-products',
+      data: {'product_id': productId},
+    );
+
+    final Map<String, dynamic> data = response.data as Map<String, dynamic>;
+    final Map<String, dynamic> product =
+        data['products'][0] as Map<String, dynamic>;
+
+    return ProductModel.fromMap(product);
   }
 }

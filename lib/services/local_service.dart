@@ -55,6 +55,11 @@ class LocalService {
     }
   }
 
+  Future<void> deleteProduct({required int productId}) async {
+    final box = Hive.box<CartModel>(AppHSC.cartBox);
+    await box.delete(productId);
+  }
+
   List<CartModel> getCart() {
     final box = Hive.box<CartModel>(AppHSC.cartBox);
     return box.values.toList();

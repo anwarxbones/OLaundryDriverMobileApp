@@ -15,12 +15,14 @@ import 'package:laundry_customer/widgets/buttons/full_width_button.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
 
 class AddOnsBottomSheet extends StatefulWidget {
+  final bool isUpdate;
   final ProductModel product;
   final CartModel? cartModel;
   const AddOnsBottomSheet({
     super.key,
     required this.product,
     required this.cartModel,
+    this.isUpdate = false,
   });
 
   @override
@@ -143,17 +145,29 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
               Row(
                 children: [
                   Flexible(
-                    child: AppTextButton(
-                      title: 'Close',
-                      buttonColor: AppColors.grayBG,
-                      titleColor: AppColors.black,
-                      onTap: () => context.nav.pop(),
-                    ),
+                    child: widget.isUpdate
+                        ? AppTextButton(
+                            title: 'Delete',
+                            buttonColor: AppColors.red,
+                            titleColor: AppColors.white,
+                            onTap: () {
+                              LocalService().deleteProduct(
+                                productId: widget.cartModel!.productId,
+                              );
+                              context.nav.pop();
+                            },
+                          )
+                        : AppTextButton(
+                            title: 'Close',
+                            buttonColor: AppColors.grayBG,
+                            titleColor: AppColors.black,
+                            onTap: () => context.nav.pop(),
+                          ),
                   ),
                   AppSpacerW(10.w),
                   Flexible(
                     child: AppTextButton(
-                      title: 'Add to Cart',
+                      title: widget.isUpdate ? 'Update' : ' Add to Cart',
                       onTap: () {
                         _unfocus();
                         if (_formkey.currentState!.saveAndValidate()) {

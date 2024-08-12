@@ -61,7 +61,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         controller: ref.watch(homeScreenPageControllerProvider),
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          MyCartTab(),
+          const MyCartTab(),
           const MyOrdersTab(),
           MyNotificationsTab(),
           const UsignedUserTab(),
