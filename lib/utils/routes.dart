@@ -31,6 +31,7 @@ import 'package:laundry_customer/screens/other/terms_of_service.dart';
 import 'package:laundry_customer/screens/payment/add_card_screen.dart';
 import 'package:laundry_customer/screens/payment/checkout_screen.dart';
 import 'package:laundry_customer/screens/payment/order_success.dart';
+import 'package:laundry_customer/screens/quick_order/quick_order.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Routes {
@@ -68,6 +69,7 @@ class Routes {
   static const deilverySchedulePickerScreen = '/deilverySchedulePickerScreen';
   static const addCardScreen = '/addCardScreen';
   static const editProfileScreen = '/editProfileScreen';
+  static const quickOrder = '/quickOrder';
 }
 
 Route generatedRoutes(RouteSettings settings) {
@@ -143,6 +145,8 @@ Route generatedRoutes(RouteSettings settings) {
       child = const ContactUs();
     case Routes.schedulePickerScreen:
       child = const SchedulerPicker();
+    case Routes.quickOrder:
+      child = QuickOrder();
     case Routes.deilverySchedulePickerScreen:
       child = const DeliverySchedulerPicker();
     //Card

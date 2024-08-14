@@ -37,6 +37,7 @@ class _ShedulePickerState extends ConsumerState<ShedulePicker>
     } else {
       modifiedtitle = AppStrConst.delivery;
     }
+    print("this is a modified title $modifiedtitle");
     final ScheduleModel? data = ref.watch(
       scheduleProvider(modifiedtitle),
     );

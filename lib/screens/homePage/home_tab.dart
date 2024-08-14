@@ -47,7 +47,9 @@ class _HomeTabState extends ConsumerState<HomeTab> {
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: AppRountedTextButton(
                 title: 'Quick Order',
-                onTap: () {},
+                onTap: () {
+                  context.nav.pushNamed(Routes.quickOrder);
+                },
               ),
             ),
             AppSpacerH(20.h),
