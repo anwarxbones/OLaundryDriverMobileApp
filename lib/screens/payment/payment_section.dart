@@ -54,13 +54,13 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
           },
         );
     late int? minimum;
-    double? dlvrychrg;
-    double? free;
+    double? deliveryCharge;
+    double? fee;
     ref.watch(settingsProvider).whenOrNull(
       loaded: (data) {
         minimum = data.data!.minimumCost;
-        dlvrychrg = data.data!.deliveryCost!.toDouble();
-        free = data.data!.feeCost!.toDouble();
+        deliveryCharge = data.data!.deliveryCost!.toDouble();
+        fee = data.data!.feeCost!.toDouble();
       },
     );
     return ValueListenableBuilder(
@@ -94,9 +94,9 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
                               ),
                               if (LocalService()
                                       .calculateTotal(cartItems: cartItems) <
-                                  free!) ...[
+                                  fee!) ...[
                                 Text(
-                                  '${appSettingsBox.get('currency') ?? '\$'}${(LocalService().calculateTotal(cartItems: cartItems) + dlvrychrg! - ref.watch(discountAmountProvider)).toStringAsFixed(2)}',
+                                  '${appSettingsBox.get('currency') ?? '\$'}${(LocalService().calculateTotal(cartItems: cartItems) + deliveryCharge! - ref.watch(discountAmountProvider)).toStringAsFixed(2)}',
                                   style: AppTextDecor.osBold14black,
                                 ),
                               ] else ...[

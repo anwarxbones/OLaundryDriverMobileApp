@@ -17,6 +17,7 @@ import 'package:laundry_customer/screens/order/payment_method_card.dart';
 import 'package:laundry_customer/screens/payment/payment_controller.dart';
 import 'package:laundry_customer/screens/payment/payment_section.dart';
 import 'package:laundry_customer/screens/payment/schedule_picker_widget.dart';
+import 'package:laundry_customer/services/local_service.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
 import 'package:laundry_customer/utils/routes.dart';
 import 'package:laundry_customer/widgets/buttons/button_with_icon.dart';
@@ -36,6 +37,10 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
   final TextEditingController _instruction = TextEditingController();
   final Box appSettingsBox = Hive.box(AppHSC.appSettingsBox);
   PaymentType selectedPaymentType = PaymentType.cod;
+  int deliveryCost = 0;
+  int couponDiscount = 0;
+  int feeCost = 0;
+  int minimumCost = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +55,10 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
           },
           error: (error) => print('This is a coupon error $error'),
         );
+    deliveryCost = appSettingsBox.get('delivery_cost') as int;
+    feeCost = appSettingsBox.get('fee_cost') as int;
+    minimumCost = appSettingsBox.get('minimum_cost') as int;
+    print("This is a fee cost: $feeCost");
     return PopScope(
       onPopInvoked: (value) {
         ref.watch(dateProvider('Pick Up').notifier).state = null;
@@ -437,12 +446,13 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
         children: [
           _buildSummaryRowWidget(
             title: 'Sub Total',
-            value: 260,
+            value: LocalService()
+                .calculateTotal(cartItems: LocalService().getCart()),
           ),
           AppSpacerH(8.h),
           _buildSummaryRowWidget(
             title: 'Discount',
-            value: 10,
+            value: ref.watch(discountAmountProvider),
             isDiscount: true,
           ),
           const Divider(),
@@ -453,7 +463,11 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
           AppSpacerH(8.h),
           _buildSummaryRowWidget(
             title: 'Delivery Charge',
-            value: 10,
+            value: LocalService()
+                        .calculateTotal(cartItems: LocalService().getCart()) <
+                    minimumCost
+                ? deliveryCost.toDouble()
+                : 0,
           ),
           const Divider(),
           _buildSummaryRowWidget(
@@ -482,8 +496,9 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
         ),
         Text(
           isDiscount
-              ? '-' + '${appSettingsBox.get('currency') ?? '\$'}$value'
-              : '${appSettingsBox.get('currency') ?? '\$'}$value',
+              ? '-' +
+                  '${appSettingsBox.get('currency') ?? '\$'}${value.toStringAsFixed(2)}'
+              : '${appSettingsBox.get('currency') ?? '\$'}${value.toStringAsFixed(2)}',
           style: AppTextDecor.osRegular14black.copyWith(
             color: isDiscount ? AppColors.red : AppColors.black,
             fontWeight: isPayable ? FontWeight.w600 : null,

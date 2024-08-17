@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 import 'package:laundry_customer/constants/app_colors.dart';
 import 'package:laundry_customer/constants/app_text_decor.dart';
 import 'package:laundry_customer/constants/input_field_decorations.dart';
+import 'package:laundry_customer/misc/misc_global_variables.dart';
 import 'package:laundry_customer/models/schedule_model.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
+import 'package:laundry_customer/providers/quick_order_provider.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
 import 'package:laundry_customer/utils/routes.dart';
 import 'package:laundry_customer/widgets/buttons/full_width_button.dart';
@@ -69,7 +73,7 @@ class QuickOrder extends ConsumerWidget {
                       .pushNamed(Routes.schedulePickerScreen);
                 },
                 readOnly: true,
-                name: 'pick_up_date',
+                name: 'scheduled_date',
                 decoration: AppInputDecor.loginPageInputDecor
                     .copyWith(
                       hintText: 'Pick-up Date',
@@ -77,6 +81,7 @@ class QuickOrder extends ConsumerWidget {
                     .copyWith(
                       suffixIcon: const Icon(Icons.calendar_month),
                     ),
+                validator: FormBuilderValidators.required(),
                 onChanged: (value) {},
               ),
               AppSpacerH(16.h),
@@ -84,10 +89,11 @@ class QuickOrder extends ConsumerWidget {
                 focusNode: fNodes[1],
                 onTap: () {},
                 readOnly: true,
-                name: 'pick_up_time',
+                name: 'scheduled_time',
                 decoration: AppInputDecor.loginPageInputDecor.copyWith(
                   hintText: 'Pick-up Time',
                 ),
+                validator: FormBuilderValidators.required(),
                 onChanged: (value) {},
               ),
             ],
@@ -98,22 +104,45 @@ class QuickOrder extends ConsumerWidget {
   }
 
   Widget _buildButtonWidget() {
-    return Container(
-      color: AppColors.white,
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      child: AppTextButton(
-        title: 'Place Order',
-        onTap: () {},
-      ),
+    return Consumer(
+      builder: (context, ref, _) {
+        return Container(
+          color: AppColors.white,
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+          child: ref.watch(quickOrderProvder).map(
+                initial: (_) => AppTextButton(
+                  title: 'Place Order',
+                  onTap: () {
+                    if (_formkey.currentState!.validate()) {
+                      _formkey.currentState?.save();
+                      ref
+                          .read(quickOrderProvder.notifier)
+                          .placeQuickOrder(_formkey.currentState!.value);
+                    }
+                  },
+                ),
+                loading: (_) => const LoadingWidget(),
+                loaded: (data) {
+                  Future.delayed(transissionDuration).then((value) {
+                    EasyLoading.showSuccess(data.data.message);
+                    ref.refresh(quickOrderProvder);
+                    context.nav.pop();
+                  });
+                  return null;
+                },
+                error: (error) => ErrorTextWidget(error: error.error),
+              ),
+        );
+      },
     );
   }
 
   void _setDateTime(ScheduleModel? data) {
     if (data != null) {
-      _formkey.currentState?.fields['pick_up_date']
-          ?.didChange(DateFormat('dd/MM/yyyy').format(data.dateTime));
+      _formkey.currentState?.fields['scheduled_date']
+          ?.didChange(DateFormat('yyyy-MM-dd').format(data.dateTime));
 
-      _formkey.currentState?.fields['pick_up_time']
+      _formkey.currentState?.fields['scheduled_time']
           ?.didChange(data.schedule.title);
     }
   }
