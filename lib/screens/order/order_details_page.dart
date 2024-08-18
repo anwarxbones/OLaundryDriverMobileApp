@@ -35,7 +35,7 @@ class OrderDetails extends ConsumerStatefulWidget {
 }
 
 class _OrderDetailsState extends ConsumerState<OrderDetails> {
-  final Box cartsBox = Hive.box(AppHSC.cartBox);
+  // final Box cartsBox = Hive.box(AppHSC.cartBox);
   bool isChatAble = false;
   // late int? driverId;
   @override
@@ -141,26 +141,26 @@ class _OrderDetailsState extends ConsumerState<OrderDetails> {
                             ),
                           );
                           if (_.data.data!.order!.orderStatus == 'Pending') {
-                            cartsBox.clear();
+                            // cartsBox.clear();
                           }
-                          final CarItemHiveModel product = CarItemHiveModel(
-                            productsId:
-                                _.data.data!.order!.products![i].id ?? 0,
-                            productsName:
-                                _.data.data!.order!.products![i].name ?? '',
-                            productsImage:
-                                _.data.data!.order!.products![i].imagePath ??
-                                    '',
-                            productsQTY: _.data.data!.order!.quantity!
-                                .quantity[i].quantity,
-                            unitPrice:
-                                _.data.data!.order!.products![i].currentPrice ??
-                                    0.0,
-                            serviceName: _.data.data!.order!.products![i]
-                                    .service!.name ??
-                                '',
-                          );
-                          products.add(product);
+                          // final CarItemHiveModel product = CarItemHiveModel(
+                          //   productsId:
+                          //       _.data.data!.order!.products![i].id ?? 0,
+                          //   productsName:
+                          //       _.data.data!.order!.products![i].name ?? '',
+                          //   productsImage:
+                          //       _.data.data!.order!.products![i].imagePath ??
+                          //           '',
+                          //   productsQTY: _.data.data!.order!.quantity!
+                          //       .quantity[i].quantity,
+                          //   unitPrice:
+                          //       _.data.data!.order!.products![i].currentPrice ??
+                          //           0.0,
+                          //   serviceName: _.data.data!.order!.products![i]
+                          //           .service!.name ??
+                          //       '',
+                          // );
+                          // products.add(product);
                         }
                         return ListView(
                           padding: EdgeInsets.zero,

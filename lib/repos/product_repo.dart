@@ -32,9 +32,12 @@ class ProductRepo extends IProductRepo {
 
   @override
   Future<ProductModel> fatchProduct({required int productId}) async {
+    print("This is a product id $productId");
     final Response response = await _dio.get(
       '/get-sub-products',
-      data: {'product_id': productId},
+      queryParameters: {
+        'product_id': productId,
+      },
     );
 
     final Map<String, dynamic> data = response.data as Map<String, dynamic>;

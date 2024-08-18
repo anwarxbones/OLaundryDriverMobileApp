@@ -167,9 +167,9 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
 
                                     print(orderPlaceModelNew.toJson());
 
-                                    // await ref
-                                    //     .watch(placeOrdersProvider.notifier)
-                                    //     .addOrder(orderPlaceModelNew);
+                                    await ref
+                                        .watch(placeOrdersProvider.notifier)
+                                        .addOrder(orderPlaceModelNew);
                                   } else {
                                     EasyLoading.showError(
                                       S.of(context).plsslctalflds,

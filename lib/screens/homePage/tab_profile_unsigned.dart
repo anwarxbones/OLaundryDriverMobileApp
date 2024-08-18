@@ -14,6 +14,7 @@ import 'package:laundry_customer/providers/address_provider.dart';
 import 'package:laundry_customer/providers/auth_provider.dart';
 import 'package:laundry_customer/providers/profile_update_provider.dart';
 import 'package:laundry_customer/screens/message/logic/socket.dart';
+import 'package:laundry_customer/services/local_service.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
 import 'package:laundry_customer/utils/routes.dart';
 import 'package:laundry_customer/widgets/buttons/full_width_button.dart';
@@ -357,6 +358,8 @@ class UsignedUserTab extends ConsumerWidget {
                                                                     .logout()
                                                                     .then(
                                                                         (value) {
+                                                                  LocalService()
+                                                                      .clearCart();
                                                                   ref
                                                                       .read(
                                                                         socketProvider,

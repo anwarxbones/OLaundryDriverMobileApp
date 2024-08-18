@@ -65,6 +65,12 @@ class LocalService {
     return box.values.toList();
   }
 
+  // clear cart
+  Future<void> clearCart() async {
+    final box = Hive.box<CartModel>(AppHSC.cartBox);
+    await box.clear();
+  }
+
   double calculateTotal({required List<CartModel> cartItems}) {
     double amount = 0;
     for (final item in cartItems) {

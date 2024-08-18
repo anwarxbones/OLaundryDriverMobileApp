@@ -35,6 +35,7 @@ class CheckOutScreen extends ConsumerStatefulWidget {
 class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
   final PaymentController pay = PaymentController();
   final TextEditingController _instruction = TextEditingController();
+  final TextEditingController _couponCode = TextEditingController();
   final Box appSettingsBox = Hive.box(AppHSC.appSettingsBox);
   PaymentType selectedPaymentType = PaymentType.cod;
   int deliveryCost = 0;
@@ -357,6 +358,7 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
           flex: 4,
           child: FormBuilderTextField(
             name: 'coupon',
+            controller: _couponCode,
             decoration: AppInputDecor.loginPageInputDecor.copyWith(
               hintText: 'Enter coupon code',
               prefixIcon: Padding(
@@ -377,9 +379,11 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
           child: ref.watch(couponProvider).map(
                 initial: (_) => GestureDetector(
                   onTap: () {
-                    ref
-                        .read(couponProvider.notifier)
-                        .applyCoupon(coupon: 'sdfsdf', amount: '100');
+                    if (_couponCode.text.isNotEmpty) {
+                      ref
+                          .read(couponProvider.notifier)
+                          .applyCoupon(coupon: _couponCode.text, amount: '100');
+                    }
                   },
                   child: Container(
                     padding: EdgeInsets.all(12.r),
@@ -458,7 +462,9 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
           const Divider(),
           _buildSummaryRowWidget(
             title: 'Total',
-            value: 10,
+            value: LocalService()
+                    .calculateTotal(cartItems: LocalService().getCart()) -
+                ref.watch(discountAmountProvider),
           ),
           AppSpacerH(8.h),
           _buildSummaryRowWidget(
@@ -472,7 +478,9 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
           const Divider(),
           _buildSummaryRowWidget(
             title: 'Payable',
-            value: 10,
+            value: LocalService()
+                    .calculateTotal(cartItems: LocalService().getCart()) -
+                (ref.watch(discountAmountProvider) + deliveryCost),
             isPayable: true,
           ),
         ],

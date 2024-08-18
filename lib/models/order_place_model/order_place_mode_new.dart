@@ -111,7 +111,7 @@ class Product {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'product_id': productId,
+      'id': productId,
       'quantity': quantity,
       'instruction': instrunction,
     };
