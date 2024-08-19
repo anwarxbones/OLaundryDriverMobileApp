@@ -7,10 +7,9 @@ import 'package:laundry_customer/constants/app_colors.dart';
 import 'package:laundry_customer/constants/app_text_decor.dart';
 import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/generated/l10n.dart';
-import 'package:laundry_customer/models/all_orders_model/order.dart';
+import 'package:laundry_customer/models/order_model.dart/order_model.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
 import 'package:laundry_customer/utils/routes.dart';
-import 'package:laundry_customer/widgets/global_functions.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
 
 class HomeOrderTile extends StatelessWidget {
@@ -24,7 +23,7 @@ class HomeOrderTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gotDate = DateTime.parse(data.orderedAt!.split(" ").first);
+    final gotDate = DateTime.parse(data.orderedAt.split(" ").first);
     return GestureDetector(
       onTap: () {
         context.nav.pushNamed(
@@ -64,20 +63,21 @@ class HomeOrderTile extends StatelessWidget {
                       child: Stack(
                         children: [
                           Center(
-                            child: (data.products?.first.service?.imagePath !=
-                                    null)
-                                ? Image.network(
-                                    data.products!.first.service!.imagePath!,
-                                    height: 46.h,
-                                    width: 46.h,
-                                    fit: BoxFit.cover,
-                                  )
-                                : Image.asset(
-                                    "assets/images/3.png",
-                                    height: 46.h,
-                                    width: 46.h,
-                                    fit: BoxFit.cover,
-                                  ),
+                            child:
+                                // (data.products.first.service?.imagePath != null)
+                                //     ? Image.network(
+                                //         data.products.first.service!.imagePath!,
+                                //         height: 46.h,
+                                //         width: 46.h,
+                                //         fit: BoxFit.cover,
+                                //       )
+                                //     :
+                                Image.asset(
+                              "assets/images/3.png",
+                              height: 46.h,
+                              width: 46.h,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                           // const Center(
                           //   child: CircularProgressIndicator(
@@ -102,7 +102,7 @@ class HomeOrderTile extends StatelessWidget {
                         ),
                         AppSpacerH(8.h),
                         Text(
-                          "${DateFormat("EEEE,dd MMM, yyyy").format(gotDate)}\n${data.orderedAt!.split(" ")[1]} ${data.orderedAt!.split(" ")[2]}",
+                          "${DateFormat("EEEE,dd MMM, yyyy").format(gotDate)}\n${data.orderedAt.split(" ")[1]} ${data.orderedAt.split(" ")[2]}",
                           style: AppTextDecor.osSemiBold12black
                               .copyWith(color: AppColors.black),
                         ),
@@ -117,10 +117,11 @@ class HomeOrderTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20.h),
                     ),
                     child: Text(
-                      getLng(
-                        en: data.orderStatus,
-                        changeLang: data.orderStatusbn,
-                      ),
+                      '',
+                      // getLng(
+                      //   en: data.orderStatus,
+                      //   changeLang: data.orderStatusbn,
+                      // ),
                       style: AppTextDecor.osBold14white,
                     ),
                   ),
@@ -151,7 +152,7 @@ class HomeOrderTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${data.pickDate}',
+                            data.pickDate,
                             style: AppTextDecor.osRegular12black
                                 .copyWith(color: AppColors.black),
                           ),
@@ -164,7 +165,7 @@ class HomeOrderTile extends StatelessWidget {
                               ),
                               const SizedBox(width: 5),
                               Text(
-                                '${data.pickHour}',
+                                data.pickHour ?? '',
                                 style: AppTextDecor.osRegular12black
                                     .copyWith(color: AppColors.black),
                               ),
@@ -188,7 +189,7 @@ class HomeOrderTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${data.deliveryDate}',
+                            data.deliveryDate,
                             style: AppTextDecor.osRegular12black
                                 .copyWith(color: AppColors.black),
                             maxLines: 2,
@@ -202,7 +203,7 @@ class HomeOrderTile extends StatelessWidget {
                               ),
                               const SizedBox(width: 5),
                               Text(
-                                '${data.deliveryHour}',
+                                data.deliveryHour,
                                 style: AppTextDecor.osRegular12black
                                     .copyWith(color: AppColors.black),
                               ),
@@ -222,9 +223,9 @@ class HomeOrderTile extends StatelessWidget {
   }
 
   Color getOrderStatusColor() {
-    if (data.orderStatus!.toLowerCase() == 'pending') {
+    if (data.orderStatus.toLowerCase() == 'pending') {
       return const Color.fromARGB(255, 75, 224, 172);
-    } else if (data.orderStatus!.replaceAll(' ', '').toLowerCase() ==
+    } else if (data.orderStatus.replaceAll(' ', '').toLowerCase() ==
         'pickedYourOrder'.toLowerCase()) {
       return const Color(0xFF3AD0FF);
     } else {

@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:laundry_customer/misc/misc_global_variables.dart';
 import 'package:laundry_customer/models/add_order_model/add_order_model.dart';
-import 'package:laundry_customer/models/all_orders_model/all_orders_model.dart';
 import 'package:laundry_customer/models/coupon_response_model/coupon_response_model.dart';
 import 'package:laundry_customer/models/order_details_model/order_details_model.dart';
+import 'package:laundry_customer/models/order_model.dart/order_model.dart';
 import 'package:laundry_customer/models/order_place_model/order_place_mode_new.dart';
 import 'package:laundry_customer/models/order_place_model/order_place_model.dart';
 import 'package:laundry_customer/models/schedules_model/schedules_model.dart';
@@ -13,7 +13,7 @@ import 'package:laundry_customer/offline_data/order_data.dart';
 import 'package:laundry_customer/services/api_service.dart';
 
 abstract class IOrderRepo {
-  Future<AllOrdersModel> getAllOrders(String status);
+  Future<AllOrderModels> getAllOrders(String status);
   Future<AddOrderModel> addOrder(OrderPlaceModelNew orderPlaceModel);
   Future<AddOrderModel> updateOrder(
     List<OrderProductModel> orderProductModel,
@@ -32,14 +32,14 @@ class OrderRepo implements IOrderRepo {
   final Dio _dio = getDio();
 
   @override
-  Future<AllOrdersModel> getAllOrders(String status) async {
+  Future<AllOrderModels> getAllOrders(String status) async {
     Map<String, dynamic> qp = {};
 
     if (status != '') {
       qp = {'status': status};
     }
     final Response response = await _dio.get('/orders', queryParameters: qp);
-    return AllOrdersModel.fromMap(response.data as Map<String, dynamic>);
+    return AllOrderModels.fromJson(response.data as Map<String, dynamic>);
   }
 
   @override
@@ -115,9 +115,9 @@ class OrderRepo implements IOrderRepo {
 
 class OfflineOrderRepo implements IOrderRepo {
   @override
-  Future<AllOrdersModel> getAllOrders(String status) async {
+  Future<AllOrderModels> getAllOrders(String status) async {
     await Future.delayed(apiDataDuration);
-    return AllOrdersModel.fromMap(OfflineOrderData.orderList);
+    return AllOrderModels.fromJson(OfflineOrderData.orderList);
   }
 
   @override

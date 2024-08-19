@@ -9,13 +9,11 @@ import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/misc/global_functions.dart';
 import 'package:laundry_customer/models/addres_list_model/address.dart';
-import 'package:laundry_customer/models/all_orders_model/order.dart';
+import 'package:laundry_customer/models/order_model.dart/order_model.dart';
 import 'package:laundry_customer/providers/order_providers.dart';
-import 'package:laundry_customer/screens/order/my_order_home_tile.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
 import 'package:laundry_customer/utils/routes.dart';
 import 'package:laundry_customer/widgets/buttons/full_width_button.dart';
-import 'package:laundry_customer/widgets/global_functions.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
 
 class MyOrdersSignedIn extends ConsumerWidget {
@@ -32,18 +30,18 @@ class MyOrdersSignedIn extends ConsumerWidget {
             initial: (_) => const SizedBox(),
             loading: (_) => const LoadingWidget(),
             loaded: (_) {
-              if (_.data.data!.orders!.isEmpty) {
+              if (_.data.data.orders.isEmpty) {
                 return MessageTextWidget(
                   msg: S.of(context).noordrfnd,
                 );
               } else {
                 return ListView.builder(
                   padding: EdgeInsets.zero,
-                  itemCount: _.data.data!.orders!.length +
+                  itemCount: _.data.data.orders.length +
                       1, // Add 1 to account for the additional padding
                   itemBuilder: (context, index) {
-                    if (index < _.data.data!.orders!.length) {
-                      final Order data = _.data.data!.orders![index];
+                    if (index < _.data.data.orders.length) {
+                      final Order data = _.data.data.orders[index];
                       return OrderTile(data: data);
                     } else {
                       // Add the desired padding widget after the last index
@@ -77,10 +75,7 @@ class OrderTile extends StatelessWidget {
       onTap: () {
         context.nav.pushNamed(
           Routes.orderDetails,
-          arguments: DetailsArg(
-            orderId: data.id.toString(),
-            orderStatus: data.orderStatus ?? '',
-          ),
+          arguments: data,
         );
       },
       child: Padding(
@@ -157,7 +152,7 @@ class OrderTile extends StatelessWidget {
                         ),
                         child: Text(
                           DateFormat("dd MMM, yyyy").format(
-                            DateTime.parse(data.orderedAt!.split(" ").first),
+                            DateTime.parse(data.orderedAt.split(" ").first),
                           ),
                           style: AppTextDecor.osRegular14black,
                           textAlign: Hive.box(AppHSC.appSettingsBox)
@@ -238,7 +233,7 @@ class OrderTile extends StatelessWidget {
                           vertical: 3.5.h,
                         ),
                         child: Text(
-                          '${settingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(data.totalAmount!)}',
+                          '${settingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(data.totalAmount)}',
                           style: AppTextDecor.osRegular14black,
                           textAlign: Hive.box(AppHSC.appSettingsBox)
                                       .get(AppHSC.appLocal)
@@ -268,10 +263,11 @@ class OrderTile extends StatelessWidget {
                         ),
                       ),
                       AppTextButton(
-                        title: getLng(
-                          en: data.orderStatus,
-                          changeLang: data.orderStatusbn.toString(),
-                        ),
+                        title: data.orderStatus,
+                        //  getLng(
+                        //   en: data.orderStatus,
+                        //   changeLang: data.orderStatusbn.toString(),
+                        // ),
                         height: 25.h,
                         width: 122.w,
                         buttonColor: getOrderStatusColor(),
@@ -297,11 +293,12 @@ class OrderTile extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        getLng(
-                          en: data.paymentStatus,
-                          changeLang: data.paymentStatusbn,
-                        ),
-                        style: data.paymentStatus?.toLowerCase() == 'paid'
+                        // getLng(
+                        //   en: data.paymentStatus,
+                        //   changeLang: data.paymentStatusbn,
+                        // ),
+                        "",
+                        style: data.paymentStatus.toLowerCase() == 'paid'
                             ? AppTextDecor.osBold14gold
                             : AppTextDecor.osBold14red,
                         textAlign: Hive.box(AppHSC.appSettingsBox)
@@ -337,7 +334,7 @@ class OrderTile extends StatelessWidget {
                     Expanded(
                       child: Text(
                         AppGFunctions.processAdAddess(
-                          Address.fromMap(data.address!.toMap()),
+                          Address.fromMap(data.address.toMap()),
                         ),
                         style: AppTextDecor.osRegular12black,
                       ),
@@ -362,9 +359,9 @@ class OrderTile extends StatelessWidget {
   }
 
   Color getOrderStatusColor() {
-    if (data.orderStatus!.toLowerCase() == 'pending') {
+    if (data.orderStatus.toLowerCase() == 'pending') {
       return const Color.fromARGB(255, 75, 224, 172);
-    } else if (data.orderStatus!.replaceAll(' ', '').toLowerCase() ==
+    } else if (data.orderStatus.replaceAll(' ', '').toLowerCase() ==
         'pickedYourOrder'.toLowerCase()) {
       return const Color(0xFF3AD0FF);
     } else {

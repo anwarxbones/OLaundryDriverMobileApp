@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:laundry_customer/misc/misc_global_variables.dart';
 import 'package:laundry_customer/models/addres_list_model/address.dart';
 import 'package:laundry_customer/models/category_model/category.dart';
+import 'package:laundry_customer/models/order_model.dart/order_model.dart';
 import 'package:laundry_customer/screens/address/add_update_address.dart';
 import 'package:laundry_customer/screens/address/manage_address_screen.dart';
 import 'package:laundry_customer/screens/auth/login_screen.dart';
@@ -21,7 +22,6 @@ import 'package:laundry_customer/screens/homePage/product_screen.dart';
 import 'package:laundry_customer/screens/onBoarding/on_boarding.dart';
 import 'package:laundry_customer/screens/onBoarding/splash_screen.dart';
 import 'package:laundry_customer/screens/order/delivery_schedule_picker.dart';
-import 'package:laundry_customer/screens/order/my_order_home_tile.dart';
 import 'package:laundry_customer/screens/order/order_details_page.dart';
 import 'package:laundry_customer/screens/order/schedule_picker.dart';
 import 'package:laundry_customer/screens/other/about_us.dart';
@@ -113,10 +113,9 @@ Route generatedRoutes(RouteSettings settings) {
     case Routes.homeScreen:
       child = const HomeScreen();
     case Routes.orderDetails:
-      final DetailsArg arg = settings.arguments! as DetailsArg;
+      final Order order = settings.arguments! as Order;
       child = OrderDetails(
-        orderID: arg.orderId,
-        orderStatus: arg.orderStatus,
+        order: order,
       );
 
     case Routes.checkOutScreen:

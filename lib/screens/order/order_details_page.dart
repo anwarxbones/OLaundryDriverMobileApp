@@ -9,12 +9,8 @@ import 'package:laundry_customer/constants/app_text_decor.dart';
 import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/misc/global_functions.dart';
-import 'package:laundry_customer/models/hive_cart_item_model.dart';
-import 'package:laundry_customer/models/order_details_model/product.dart';
-import 'package:laundry_customer/providers/order_providers.dart';
-import 'package:laundry_customer/screens/order/order_dialouges.dart';
+import 'package:laundry_customer/models/order_model.dart/order_model.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
-import 'package:laundry_customer/widgets/buttons/order_cancel_button.dart';
 import 'package:laundry_customer/widgets/dashed_line.dart';
 import 'package:laundry_customer/widgets/global_functions.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
@@ -24,27 +20,22 @@ import 'package:laundry_customer/widgets/screen_wrapper.dart';
 class OrderDetails extends ConsumerStatefulWidget {
   const OrderDetails({
     super.key,
-    required this.orderID,
-    required this.orderStatus,
+    required this.order,
   });
-  final String orderID;
-  final String orderStatus;
+
+  final Order order;
 
   @override
   ConsumerState<OrderDetails> createState() => _OrderDetailsState();
 }
 
 class _OrderDetailsState extends ConsumerState<OrderDetails> {
-  // final Box cartsBox = Hive.box(AppHSC.cartBox);
   bool isChatAble = false;
-  // late int? driverId;
+
   @override
   Widget build(BuildContext context) {
     final Box settingsBox = Hive.box(AppHSC.appSettingsBox);
-    final userBox = Hive.box(AppHSC.userBox);
-    final Map<dynamic, dynamic> userData = userBox.toMap();
-    final int userId = userData['id'] as int;
-    ref.watch(orderDetailsProvider(widget.orderID));
+
     return ScreenWrapper(
       padding: EdgeInsets.zero,
       child: Container(
@@ -54,349 +45,203 @@ class _OrderDetailsState extends ConsumerState<OrderDetails> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Stack(
-                children: [
-                  Container(
-                    color: AppColors.primary,
-                    width: 375.w,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.h),
-                      child: Column(
-                        children: [
-                          AppSpacerH(44.h),
-                          AppNavbar(
-                            backgroundColor: AppColors.primary,
-                            titleColor: AppColors.white,
-                            title: S.of(context).ordrdtls,
-                            onBack: () {
-                              context.nav.pop();
-                            },
-                          ),
-                          AppSpacerH(12.h),
-                        ],
-                      ),
-                    ),
-                  ),
-                  // if (isChatAble)
-                  //   Positioned(
-                  //     right: 0,
-                  //     top: 45.h,
-                  //     child: IconButton(
-                  //       color: Colors.white,
-                  //       onPressed: () {
-                  //         context.nav.pushNamed(
-                  //           Routes.messageScreen,
-                  //           arguments: MessageScreenArgument(
-                  //             orderId: int.parse(widget.orderID),
-                  //             senderId: userId,
-                  //             receiverId: driverId!,
-                  //           ),
-                  //         );
-                  //       },
-                  //       icon: const Icon(Icons.message),
-                  //     ),
-                  //   )
-                  // else
-                  //   const SizedBox()
-                ],
-              ),
-              Container(
-                height: 724.h,
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: ref.watch(orderDetailsProvider(widget.orderID)).map(
-                      initial: (_) => const LoadingWidget(),
-                      loading: (_) => const LoadingWidget(),
-                      loaded: (_) {
-                        Future.delayed(const Duration(milliseconds: 50), () {
-                          setState(() {
-                            isChatAble = _.data.data!.order!.isChatAble!;
-                          });
-                        });
-                        // if (_.data.data!.order!.drivers!.driverId != null) {
-                        //   setState(() {
-                        //     driverId = _.data.data!.order!.drivers!.driverId;
-                        //   });
-                        // }
-                        final List<OrderDetailsTile> orderWidgets = [];
-                        final List<CarItemHiveModel> products = [];
-                        for (var i = 0;
-                            i < _.data.data!.order!.products!.length;
-                            i++) {
-                          var subproductprice = 0;
-                          for (final subproduct
-                              in _.data.data!.order!.products![i].sbproducts!) {
-                            for (final orderedsubproduct
-                                in _.data.data!.order!.orderSubProduct!) {
-                              if (subproduct.id == orderedsubproduct.id) {
-                                subproductprice = orderedsubproduct.price!;
-                              }
-                            }
-                          }
-                          orderWidgets.add(
-                            OrderDetailsTile(
-                              product: _.data.data!.order!.products![i],
-                              qty: _.data.data!.order!.quantity!.quantity[i]
-                                  .quantity,
-                              subprice: subproductprice,
-                            ),
-                          );
-                          if (_.data.data!.order!.orderStatus == 'Pending') {
-                            // cartsBox.clear();
-                          }
-                          // final CarItemHiveModel product = CarItemHiveModel(
-                          //   productsId:
-                          //       _.data.data!.order!.products![i].id ?? 0,
-                          //   productsName:
-                          //       _.data.data!.order!.products![i].name ?? '',
-                          //   productsImage:
-                          //       _.data.data!.order!.products![i].imagePath ??
-                          //           '',
-                          //   productsQTY: _.data.data!.order!.quantity!
-                          //       .quantity[i].quantity,
-                          //   unitPrice:
-                          //       _.data.data!.order!.products![i].currentPrice ??
-                          //           0.0,
-                          //   serviceName: _.data.data!.order!.products![i]
-                          //           .service!.name ??
-                          //       '',
-                          // );
-                          // products.add(product);
-                        }
-                        return ListView(
-                          padding: EdgeInsets.zero,
-                          children: [
-                            AppSpacerH(10.h),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 20.w,
-                                vertical: 15.h,
-                              ),
-                              decoration: AppBoxDecorations.pageCommonCard,
-                              child: ExpandablePanel(
-                                header: Text(
-                                  '${S.of(context).itms} (${_.data.data!.order!.products!.length})',
-                                  style: AppTextDecor.osBold14black,
-                                ),
-                                collapsed: const SizedBox(),
-                                expanded: Column(
-                                  children: orderWidgets,
-                                ),
-                              ),
-                            ),
-                            AppSpacerH(15.h),
-                            Container(
-                              width: 335.w,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 20.w,
-                                vertical: 15.h,
-                              ),
-                              decoration: AppBoxDecorations.pageCommonCard,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    S.of(context).shpngadrs,
-                                    style: AppTextDecor.osBold14black,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_pin,
-                                        size: 40.w,
-                                      ),
-                                      AppSpacerW(10.w),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            _.data.data!.order!.customer!.user!
-                                                .name!,
-                                            style:
-                                                AppTextDecor.osRegular14black,
-                                          ),
-                                          if (_.data.data!.order!.customer!
-                                                  .user!.mobile ==
-                                              null)
-                                            const SizedBox()
-                                          else
-                                            Text(
-                                              _.data.data!.order!.customer!
-                                                  .user!.mobile!,
-                                              style:
-                                                  AppTextDecor.osRegular14black,
-                                            ),
-                                          Text(
-                                            _.data.data!.order!.address!
-                                                    .addressLine ??
-                                                '',
-                                            style:
-                                                AppTextDecor.osRegular14black,
-                                          ),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                1.6,
-                                            child: Text(
-                                              "${_.data.data!.order!.address!.addressName}, ${_.data.data!.order!.address!.area}, ${_.data.data!.order!.address!.addressLine2 ?? ''} - ${_.data.data!.order!.address!.postCode}",
-                                              style:
-                                                  AppTextDecor.osRegular14black,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            AppSpacerH(15.h),
-                            Container(
-                              width: 335.w,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 20.w,
-                                vertical: 15.h,
-                              ),
-                              decoration: AppBoxDecorations.pageCommonCard,
-                              child: Column(
-                                children: [
-                                  Table(
-                                    children: [
-                                      AppGFunctions.tableTitleTextRow(
-                                        title: S.of(context).ordrid,
-                                        data:
-                                            '#${_.data.data!.order!.orderCode}',
-                                      ),
-                                      AppGFunctions.tableTextRow(
-                                        title: S.of(context).pickupat,
-                                        data:
-                                            '${_.data.data!.order!.pickDate} - ${_.data.data!.order!.pickHour}',
-                                      ),
-                                      AppGFunctions.tableTextRow(
-                                        title: S.of(context).dlvryat,
-                                        data:
-                                            '${_.data.data!.order!.deliveryDate} - ${_.data.data!.order!.deliveryHour}',
-                                      ),
-                                      AppGFunctions.tableTextRow(
-                                        title: S.of(context).ordrstats,
-                                        data: getLng(
-                                          en: _.data.data!.order!.orderStatus,
-                                          changeLang: _
-                                              .data.data!.order!.orderStatusbn
-                                              .toString(),
-                                        ),
-                                      ),
-                                      AppGFunctions.tableTextRow(
-                                        title: S.of(context).pymntstats,
-                                        data: getLng(
-                                          en: _.data.data!.order!.paymentStatus,
-                                          changeLang: _
-                                              .data.data!.order!.paymentStatusbn
-                                              .toString(),
-                                        ),
-                                      ),
-                                      AppGFunctions.tableTextRow(
-                                        title: S.of(context).sbttl,
-                                        data:
-                                            '${settingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(_.data.data!.order!.amount!)}',
-                                      ),
-                                      AppGFunctions.tableTextRow(
-                                        title: S.of(context).dlvrychrg,
-                                        data:
-                                            '${settingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(_.data.data!.order!.deliveryCharge!)}',
-                                      ),
-                                      AppGFunctions.tableDiscountTextRow(
-                                        title: S.of(context).dscnt,
-                                        data:
-                                            '${settingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(_.data.data!.order!.discount!)}',
-                                      ),
-                                    ],
-                                  ),
-                                  const MySeparator(),
-                                  AppSpacerH(8.5.h),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        S.of(context).ttl,
-                                        style: AppTextDecor.osBold14black,
-                                      ),
-                                      Text(
-                                        '${settingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(_.data.data!.order!.totalAmount!)}',
-                                        style: AppTextDecor.osBold14black,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            // AppSpacerH(15.h),
-                            // MARK: Order update options
-
-                            // if (_.data.data?.order?.orderStatus == 'Pending')
-                            //   AppIconTextButton(
-                            //     title: S.of(context).updateproduct,
-                            //     icon: Icons.edit,
-                            //     onTap: () async {
-                            //       if (_.data.data!.order!.orderStatus ==
-                            //           'Pending') {
-                            //         for (final product in products) {
-                            //           await cartsBox.add(
-                            //             product.toMap(),
-                            //           );
-                            //         }
-                            //         context.nav.pop();
-                            //         ref
-                            //                 .read(
-                            //                   orderIdProvider.notifier,
-                            //                 )
-                            //                 .state =
-                            //             _.data.data!.order!.id.toString();
-                            //         ref
-                            //             .watch(
-                            //               homeScreenIndexProvider.notifier,
-                            //             )
-                            //             .state = 0;
-                            //         ref
-                            //             .watch(
-                            //               homeScreenPageControllerProvider,
-                            //             )
-                            //             .animateToPage(
-                            //               0,
-                            //               duration: transissionDuration,
-                            //               curve: Curves.easeInOut,
-                            //             );
-                            //       }
-                            //     },
-                            //   ),
-                            if (_.data.data?.order?.orderStatus ==
-                                    'Delivered' &&
-                                _.data.data?.order?.rating == null)
-                              CancelOrderButton(
-                                title: S.of(context).rateurexprnc,
-                                onTap: () {
-                                  AppOrderDialouges.orderFeedBackDialouge(
-                                    context: context,
-                                    orderID: _.data.data!.order!.id.toString(),
-                                    ref: ref,
-                                  );
-                                },
-                              ),
-                            AppSpacerH(8.h),
-                          ],
-                        );
-                      },
-                      error: (_) => ErrorTextWidget(
-                        error: _.error,
-                      ),
-                    ),
-              ),
+              _buildHeader(context),
+              _buildOrderDetails(settingsBox, context),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          color: AppColors.primary,
+          width: 375.w,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.h),
+            child: Column(
+              children: [
+                AppSpacerH(44.h),
+                AppNavbar(
+                  backgroundColor: AppColors.primary,
+                  titleColor: AppColors.white,
+                  title: S.of(context).ordrdtls,
+                  onBack: () => context.nav.pop(),
+                ),
+                AppSpacerH(12.h),
+              ],
+            ),
+          ),
+        ),
+        // Add conditional chat button here if needed
+      ],
+    );
+  }
+
+  Widget _buildOrderDetails(Box settingsBox, BuildContext context) {
+    return Container(
+      height: 724.h,
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child: ListView(
+        padding: EdgeInsets.only(bottom: 40.h),
+        children: [
+          AppSpacerH(10.h),
+          _buildItemDetails(),
+          AppSpacerH(15.h),
+          _buildShippingAddress(context),
+          AppSpacerH(15.h),
+          _buildOrderSummary(settingsBox, context),
+          AppSpacerH(8.h),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildItemDetails() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+      decoration: AppBoxDecorations.pageCommonCard,
+      child: ExpandablePanel(
+        header: Text(
+          '${S.of(context).itms} (${widget.order.products.length})',
+          style: AppTextDecor.osBold14black,
+        ),
+        collapsed: const SizedBox(),
+        expanded: Column(
+          children: widget.order.products.map((product) {
+            return OrderDetailsTile(
+              product: product,
+              qty: product.quantity,
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildShippingAddress(BuildContext context) {
+    final customer = widget.order.customer;
+    final address = widget.order.address;
+
+    return Container(
+      width: 335.w,
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+      decoration: AppBoxDecorations.pageCommonCard,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(S.of(context).shpngadrs, style: AppTextDecor.osBold14black),
+          Row(
+            children: [
+              Icon(Icons.location_pin, size: 40.w),
+              AppSpacerW(10.w),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    customer.name ?? '',
+                    style: AppTextDecor.osRegular14black,
+                  ),
+                  if (customer.mobile != null)
+                    Text(
+                      customer.mobile ?? '',
+                      style: AppTextDecor.osRegular14black,
+                    ),
+                  Text(
+                    address.addressLine ?? '',
+                    style: AppTextDecor.osRegular14black,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 1.6,
+                    child: Text(
+                      "${address.addressName}, ${address.addressLine ?? ''} - ${address.zipCode}",
+                      style: AppTextDecor.osRegular14black,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOrderSummary(Box settingsBox, BuildContext context) {
+    final order = widget.order;
+
+    return Container(
+      width: 335.w,
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+      decoration: AppBoxDecorations.pageCommonCard,
+      child: Column(
+        children: [
+          Table(
+            children: [
+              AppGFunctions.tableTitleTextRow(
+                title: S.of(context).ordrid,
+                data: '#${order.orderCode}',
+              ),
+              AppGFunctions.tableTextRow(
+                title: S.of(context).pickupat,
+                data: '${order.pickDate} - ${order.pickHour}',
+              ),
+              AppGFunctions.tableTextRow(
+                title: S.of(context).dlvryat,
+                data: '${order.deliveryDate} - ${order.deliveryHour}',
+              ),
+              AppGFunctions.tableTextRow(
+                title: S.of(context).ordrstats,
+                data: getLng(
+                  en: order.orderStatus,
+                  changeLang: order.orderStatus,
+                ),
+              ),
+              AppGFunctions.tableTextRow(
+                title: S.of(context).pymntstats,
+                data: getLng(
+                  en: order.paymentStatus,
+                  changeLang: order.paymentStatus,
+                ),
+              ),
+              AppGFunctions.tableTextRow(
+                title: S.of(context).sbttl,
+                data:
+                    '${settingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(order.amount)}',
+              ),
+              AppGFunctions.tableTextRow(
+                title: S.of(context).dlvrychrg,
+                data:
+                    '${settingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(order.deliveryCharge)}',
+              ),
+              AppGFunctions.tableDiscountTextRow(
+                title: S.of(context).dscnt,
+                data:
+                    '${settingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(order.discount)}',
+              ),
+            ],
+          ),
+          const MySeparator(),
+          AppSpacerH(8.5.h),
+          _buildTotalAmount(settingsBox),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTotalAmount(Box settingsBox) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(S.of(context).ttl, style: AppTextDecor.osBold14black),
+        Text(
+          '${settingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(widget.order.totalAmount)}',
+          style: AppTextDecor.osBold14black,
+        ),
+      ],
     );
   }
 }
@@ -408,6 +253,7 @@ class OrderDetailsTile extends StatelessWidget {
     required this.qty,
     this.subprice,
   });
+
   final Product product;
   final int qty;
   final int? subprice;
@@ -415,52 +261,27 @@ class OrderDetailsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Box settingsBox = Hive.box(AppHSC.appSettingsBox);
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: SizedBox(
-        // height: 40.h,
         width: 297.w,
         child: Row(
           children: [
             Image.network(
-              product.imagePath!,
+              product.imagePath,
               height: 40.h,
               width: 42.w,
-            ),
+            ), // Uncomment if needed
+            SizedBox(width: 5.w),
             Expanded(
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          product.name!,
-                          style: AppTextDecor.osBold12black,
-                        ),
-                      ),
-                      Text(
-                        '${settingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo((product.currentPrice! + (subprice != null ? subprice! : 0)) * qty)}',
-                        style: AppTextDecor.osBold12gold,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          product.service?.name ?? '',
-                          style: AppTextDecor.osRegular12navy,
-                          maxLines: 3,
-                        ),
-                      ),
-                      Text(
-                        '${qty}x${settingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(product.currentPrice! + (subprice != null ? subprice! : 0))} ',
-                        style: AppTextDecor.osRegular12navy,
-                      ),
-                    ],
-                  ),
+                  _buildProductNameAndPrice(settingsBox),
+                  _buildProductCategoryAndQty(settingsBox),
+                  const Divider(),
+                  _buildSubProductsWidget(settingsBox),
+                  if (product.additionalNotes != null) _buildNoteWidget(),
                 ],
               ),
             ),
@@ -468,5 +289,102 @@ class OrderDetailsTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildProductNameAndPrice(Box settingsBox) {
+    final price = (product.price + (subprice ?? 0)) * qty;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Text(product.productName, style: AppTextDecor.osBold12black),
+        ),
+        Text(
+          '${settingsBox.get('currency') ?? '\$'}${(AppGFunctions.convertToFixedTwo(price) + getSubTotalOfSubProducts(product.subProducts)).toStringAsFixed(2)}',
+          style: AppTextDecor.osBold12gold,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProductCategoryAndQty(Box settingsBox) {
+    final unitPrice = product.price;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Text(
+            product.categoryName,
+            style: AppTextDecor.osRegular12navy,
+            maxLines: 3,
+          ),
+        ),
+        Text(
+          '${qty}x${settingsBox.get('currency') ?? '\$'}${AppGFunctions.convertToFixedTwo(unitPrice)}',
+          style: AppTextDecor.osRegular12black,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSubProductsWidget(Box settingsBox) {
+    if (product.subProducts.isEmpty) {
+      return const SizedBox();
+    }
+
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Wrap(
+        spacing: 10.0,
+        children: List.generate(product.subProducts.length, (index) {
+          final subProduct = product.subProducts[index];
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircleAvatar(
+                radius: 2,
+                backgroundColor: AppColors.gray,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text('${subProduct.name}:', style: AppTextDecor.osBold12black),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                '${settingsBox.get('currency') ?? '\$'}${subProduct.price}',
+                style: AppTextDecor.osRegular12black,
+              ),
+            ],
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget _buildNoteWidget() {
+    return Container(
+      margin: EdgeInsets.only(top: 10.h),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.r),
+        color: AppColors.grayBG,
+      ),
+      padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
+      child: Text(
+        product.additionalNotes ?? '',
+      ),
+    );
+  }
+
+  double getSubTotalOfSubProducts(List<SubProduct> subProducts) {
+    double subTotal = 0;
+    for (final subProduct in subProducts) {
+      subTotal += subProduct.price;
+    }
+    return subTotal;
   }
 }

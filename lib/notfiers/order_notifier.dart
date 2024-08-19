@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:laundry_customer/models/add_order_model/add_order_model.dart';
-import 'package:laundry_customer/models/all_orders_model/all_orders_model.dart';
 import 'package:laundry_customer/models/coupon_response_model/coupon_response_model.dart';
 import 'package:laundry_customer/models/order_details_model/order_details_model.dart';
+import 'package:laundry_customer/models/order_model.dart/order_model.dart';
 import 'package:laundry_customer/models/order_place_model/order_place_mode_new.dart';
 import 'package:laundry_customer/models/order_place_model/order_place_model.dart';
 import 'package:laundry_customer/models/schedules_model/schedules_model.dart';
@@ -11,7 +11,7 @@ import 'package:laundry_customer/repos/order_repo.dart';
 import 'package:laundry_customer/services/api_state.dart';
 import 'package:laundry_customer/services/network_exceptions.dart';
 
-class AllOrdersNotifier extends StateNotifier<ApiState<AllOrdersModel>> {
+class AllOrdersNotifier extends StateNotifier<ApiState<AllOrderModels>> {
   AllOrdersNotifier(this._repo, this._filter)
       : super(const ApiState.initial()) {
     getAllOrders();
@@ -24,6 +24,7 @@ class AllOrdersNotifier extends StateNotifier<ApiState<AllOrdersModel>> {
       state = ApiState.loaded(data: await _repo.getAllOrders(_filter));
     } catch (e) {
       state = ApiState.error(error: NetworkExceptions.errorText(e));
+      rethrow;
     }
   }
 }

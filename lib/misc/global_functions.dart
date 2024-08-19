@@ -174,8 +174,8 @@ class AppGFunctions {
     return amount;
   }
 
-  static String convertToFixedTwo(num number) {
-    return number.toStringAsFixed(2);
+  static double convertToFixedTwo(num number) {
+    return double.parse(number.toStringAsFixed(2));
   }
 
   static String getCurrency() {

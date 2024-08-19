@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:laundry_customer/constants/app_string_const.dart';
 import 'package:laundry_customer/models/add_order_model/add_order_model.dart';
-import 'package:laundry_customer/models/all_orders_model/all_orders_model.dart';
 import 'package:laundry_customer/models/coupon_response_model/coupon_response_model.dart';
 import 'package:laundry_customer/models/order_details_model/order_details_model.dart';
+import 'package:laundry_customer/models/order_model.dart/order_model.dart';
 import 'package:laundry_customer/models/schedules_model/schedules_model.dart';
 import 'package:laundry_customer/notfiers/order_notifier.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
@@ -19,7 +19,7 @@ final orderFilterProvider = StateProvider<String>((ref) {
 });
 
 final allOrdersProvider = StateNotifierProvider.autoDispose<AllOrdersNotifier,
-    ApiState<AllOrdersModel>>((ref) {
+    ApiState<AllOrderModels>>((ref) {
   return AllOrdersNotifier(
     ref.watch(orderRepoProvider),
     ref.watch(orderFilterProvider),

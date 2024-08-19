@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:laundry_customer/models/add_order_model/address.dart';
 import 'package:laundry_customer/models/add_order_model/customer.dart';
 import 'package:laundry_customer/models/add_order_model/product.dart';
-import 'package:laundry_customer/models/all_orders_model/quantity.dart';
+import 'package:laundry_customer/models/order_details_model/quantity.dart';
 
 class Order {
   int? id;
