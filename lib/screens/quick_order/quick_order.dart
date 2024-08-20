@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:laundry_customer/constants/app_colors.dart';
 import 'package:laundry_customer/constants/app_text_decor.dart';
 import 'package:laundry_customer/constants/input_field_decorations.dart';
+import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/misc/misc_global_variables.dart';
 import 'package:laundry_customer/models/schedule_model.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
@@ -30,7 +31,9 @@ class QuickOrder extends ConsumerWidget {
         backgroundColor: AppColors.lightgray,
         appBar: AppBar(
           backgroundColor: AppColors.white,
-          title: const Text('Quick Order'),
+          title: Text(
+            S.of(context).quickOrder,
+          ),
         ),
         body: _buildBody(),
       ),
@@ -64,7 +67,10 @@ class QuickOrder extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Pick-up Schedule', style: AppTextDecor.osBold14black),
+              Text(
+                S.of(context).pickupSchedule,
+                style: AppTextDecor.osBold14black,
+              ),
               AppSpacerH(16.h),
               FormBuilderTextField(
                 focusNode: fNodes[0],
@@ -76,7 +82,7 @@ class QuickOrder extends ConsumerWidget {
                 name: 'scheduled_date',
                 decoration: AppInputDecor.loginPageInputDecor
                     .copyWith(
-                      hintText: 'Pick-up Date',
+                      hintText: S.of(context).pickupDate,
                     )
                     .copyWith(
                       suffixIcon: const Icon(Icons.calendar_month),
@@ -91,7 +97,7 @@ class QuickOrder extends ConsumerWidget {
                 readOnly: true,
                 name: 'scheduled_time',
                 decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                  hintText: 'Pick-up Time',
+                  hintText: S.of(context).pickupTime,
                 ),
                 validator: FormBuilderValidators.required(),
                 onChanged: (value) {},
@@ -111,7 +117,7 @@ class QuickOrder extends ConsumerWidget {
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
           child: ref.watch(quickOrderProvder).map(
                 initial: (_) => AppTextButton(
-                  title: 'Place Order',
+                  title: S.of(context).placeOrder,
                   onTap: () {
                     if (_formkey.currentState!.validate()) {
                       _formkey.currentState?.save();

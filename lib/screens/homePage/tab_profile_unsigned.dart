@@ -430,10 +430,11 @@ class LocaLizationSelector extends StatelessWidget {
   LocaLizationSelector({super.key});
   final List<AppLanguage> languages = [
     AppLanguage(name: '\ud83c\uddfa\ud83c\uddf8 ENG', value: 'en'),
-    AppLanguage(name: '🇪🇬 مصر', value: 'ar'),
-    AppLanguage(name: '🇹🇷 Tür', value: 'tr'),
-    AppLanguage(name: '🇮🇳 हिंदी', value: 'in'),
-    AppLanguage(name: '🇧🇩 বাংলা', value: 'bn'),
+    // AppLanguage(name: '🇪🇬 مصر', value: 'ar'),
+    // AppLanguage(name: '🇹🇷 Tür', value: 'tr'),
+    // AppLanguage(name: '🇮🇳 हिंदी', value: 'in'),
+    // AppLanguage(name: '🇧🇩 বাংলা', value: 'bn'),
+    AppLanguage(name: '🇪🇸 Spanish', value: 'es'),
   ];
 
   @override

@@ -58,6 +58,7 @@ dependencies:
   smooth_page_indicator: ^1.2.0+3
   build_runner: ^2.4.11
   hive_generator: ^2.0.1
+  intl_utils: ^2.8.7
 
 dev_dependencies:
   flutter_test:

@@ -4,6 +4,11 @@ A new Flutter project.
 
 ## Getting Started
 
+Generate language code
+
+- flutter pub run intl_utils:generate
+- dart run intl_utils:generate
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:

@@ -29,10 +29,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "actvordr": MessageLookupByLibrary.simpleMessage("Active Order"),
         "adadres": MessageLookupByLibrary.simpleMessage("Add Address"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
+        "addOns": MessageLookupByLibrary.simpleMessage("Add-ons"),
+        "addToCart": MessageLookupByLibrary.simpleMessage("Add to Cart"),
         "addadrs": MessageLookupByLibrary.simpleMessage("Add Address"),
         "additm": MessageLookupByLibrary.simpleMessage("Add Item"),
         "addmore": MessageLookupByLibrary.simpleMessage("Add More"),
         "addnwadrs": MessageLookupByLibrary.simpleMessage("Add New Address"),
+        "addressLine1": MessageLookupByLibrary.simpleMessage("Address Line 1"),
+        "addressLine2": MessageLookupByLibrary.simpleMessage("Address Line 2"),
         "adinstrctnop":
             MessageLookupByLibrary.simpleMessage("Add Instruction(Optional)"),
         "adrs": MessageLookupByLibrary.simpleMessage("Address"),
@@ -45,12 +49,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "altrntvphn": MessageLookupByLibrary.simpleMessage(
             "Alternative Phone (Optional)"),
         "and": MessageLookupByLibrary.simpleMessage("And"),
+        "applied": MessageLookupByLibrary.simpleMessage("Applied"),
         "apply": MessageLookupByLibrary.simpleMessage("Apply"),
         "areaex":
             MessageLookupByLibrary.simpleMessage("Area (Ex: Bashundhara)"),
         "arusre": MessageLookupByLibrary.simpleMessage("Are you Sure?"),
+        "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
+        "changePassword":
+            MessageLookupByLibrary.simpleMessage("Change Password"),
         "chckout": MessageLookupByLibrary.simpleMessage("Check Out"),
         "chsadrs": MessageLookupByLibrary.simpleMessage("Choose Address"),
+        "city": MessageLookupByLibrary.simpleMessage("City"),
+        "close": MessageLookupByLibrary.simpleMessage("Close"),
         "cls": MessageLookupByLibrary.simpleMessage("Close"),
         "cncl": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cnfirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -69,6 +79,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create your new password"),
         "cshondlvry": MessageLookupByLibrary.simpleMessage("Cash On Delivery"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "deliveryCharge":
+            MessageLookupByLibrary.simpleMessage("Delivery Charge"),
+        "deliveryChargeIs":
+            MessageLookupByLibrary.simpleMessage("Delivery Charge is"),
+        "discount": MessageLookupByLibrary.simpleMessage("Discount"),
         "dlvrd": MessageLookupByLibrary.simpleMessage("Delivered"),
         "dlvry": MessageLookupByLibrary.simpleMessage("Delivery"),
         "dlvryat": MessageLookupByLibrary.simpleMessage("Delivery At"),
@@ -80,10 +96,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "edt": MessageLookupByLibrary.simpleMessage("Edit"),
         "edtprfl": MessageLookupByLibrary.simpleMessage("Edit Profile"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "emailOrPhone": MessageLookupByLibrary.simpleMessage("Email or Phone"),
+        "enterCouponCode":
+            MessageLookupByLibrary.simpleMessage("Enter Coupon Code"),
         "entrotp": MessageLookupByLibrary.simpleMessage("Enter OTP"),
         "entrpswrdorphn": MessageLookupByLibrary.simpleMessage(
             "Enter your email or phone number to recover Password"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
+        "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
         "flat": MessageLookupByLibrary.simpleMessage("Flat"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Forgot Password?"),
@@ -101,6 +121,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "instrctn": MessageLookupByLibrary.simpleMessage("Instruction"),
         "item": MessageLookupByLibrary.simpleMessage("item"),
         "itms": MessageLookupByLibrary.simpleMessage("Items"),
+        "lastName": MessageLookupByLibrary.simpleMessage("Last Name"),
         "letsGetStarted":
             MessageLookupByLibrary.simpleMessage("Let`s Get Started"),
         "lgdot": MessageLookupByLibrary.simpleMessage("Logged Out"),
@@ -136,6 +157,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("No Slots Available"),
         "nosrvcavlbl":
             MessageLookupByLibrary.simpleMessage("No Service Available"),
+        "note": MessageLookupByLibrary.simpleMessage("Note"),
         "ntfctn": MessageLookupByLibrary.simpleMessage("Notification"),
         "ntfctns": MessageLookupByLibrary.simpleMessage("Notifications"),
         "odrdsmry": MessageLookupByLibrary.simpleMessage("Order Summary"),
@@ -155,13 +177,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "otpwillbesnd":
             MessageLookupByLibrary.simpleMessage("OTP will send within"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "payable": MessageLookupByLibrary.simpleMessage("Payable"),
         "payonlinewithcard":
             MessageLookupByLibrary.simpleMessage("Pay Online With Your Card"),
         "pckup": MessageLookupByLibrary.simpleMessage("Pick Up"),
         "phoneNumber": MessageLookupByLibrary.simpleMessage("Phone Number"),
         "pickedYourOrder":
             MessageLookupByLibrary.simpleMessage("pickedYourOrder"),
+        "pickupDate": MessageLookupByLibrary.simpleMessage("Pick-up Date"),
+        "pickupSchedule":
+            MessageLookupByLibrary.simpleMessage("Pick-up Schedule"),
+        "pickupTime": MessageLookupByLibrary.simpleMessage("Pick-up Time"),
         "pickupat": MessageLookupByLibrary.simpleMessage("Pick Up At"),
+        "placeOrder": MessageLookupByLibrary.simpleMessage("Place Order"),
         "plcdplsmkpymnttocnfrmit": MessageLookupByLibrary.simpleMessage(
             "Placed, Please Make payment to Confirm it"),
         "plslctanimg":
@@ -182,6 +210,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pynw": MessageLookupByLibrary.simpleMessage("Confirm Order"),
         "pywhndlvry":
             MessageLookupByLibrary.simpleMessage("Pay When Taking Delivery"),
+        "quantity": MessageLookupByLibrary.simpleMessage("Quantity"),
+        "quickOrder": MessageLookupByLibrary.simpleMessage("Quick Order"),
         "rateurexprnc":
             MessageLookupByLibrary.simpleMessage("Rate Your Experience"),
         "rcvrpswrd": MessageLookupByLibrary.simpleMessage("Recover Password"),
@@ -193,6 +223,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sbttl": MessageLookupByLibrary.simpleMessage("Sub total"),
         "schdl": MessageLookupByLibrary.simpleMessage("Schedule"),
         "scs": MessageLookupByLibrary.simpleMessage("Success"),
+        "services": MessageLookupByLibrary.simpleMessage("Services"),
         "showmore": MessageLookupByLibrary.simpleMessage("Show More"),
         "shpngadrs": MessageLookupByLibrary.simpleMessage("Shipping Address"),
         "shpngndpymnt":
@@ -206,11 +237,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "sndotp": MessageLookupByLibrary.simpleMessage("Send OTP"),
         "srvc": MessageLookupByLibrary.simpleMessage("service"),
         "srvctgrs": MessageLookupByLibrary.simpleMessage("Service Categories"),
+        "state": MessageLookupByLibrary.simpleMessage("State"),
         "status": MessageLookupByLibrary.simpleMessage("Status"),
+        "subtotal": MessageLookupByLibrary.simpleMessage("Sub Total"),
         "surewnttocnclordr": MessageLookupByLibrary.simpleMessage(
             "Are you sure\nwant to Cancel this order?"),
         "termsAndConditions":
             MessageLookupByLibrary.simpleMessage("Terms  & Conditions"),
+        "total": MessageLookupByLibrary.simpleMessage("Total"),
         "trmsofsrvc": MessageLookupByLibrary.simpleMessage("Terms of Service"),
         "ttl": MessageLookupByLibrary.simpleMessage("Total"),
         "ttlpybl": MessageLookupByLibrary.simpleMessage("Total Payable"),
@@ -219,6 +253,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "uhvscsflysgndupon": MessageLookupByLibrary.simpleMessage(
             "You have successfully signed up on"),
         "unslctd": MessageLookupByLibrary.simpleMessage("Unselected"),
+        "update": MessageLookupByLibrary.simpleMessage("Update"),
         "updateproduct": MessageLookupByLibrary.simpleMessage("Update Product"),
         "updtadrs": MessageLookupByLibrary.simpleMessage("Update Address"),
         "updtaprl": MessageLookupByLibrary.simpleMessage("Update Profile"),
@@ -244,6 +279,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "We are processing your Previous Request.\nPlease Wait"),
         "y": MessageLookupByLibrary.simpleMessage("Yes"),
         "yourntsignedin": MessageLookupByLibrary.simpleMessage(
-            "You are not signed in!\nPlease sign in first.")
+            "You are not signed in!\nPlease sign in first."),
+        "zipCode": MessageLookupByLibrary.simpleMessage("Zip Code")
       };
 }

@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           name: 'email',
                           decoration:
                               AppInputDecor.loginPageInputDecor.copyWith(
-                            hintText: "Email or Phone",
+                            hintText: S.of(context).emailOrPhone,
                           ),
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,

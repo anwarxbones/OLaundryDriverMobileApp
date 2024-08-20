@@ -129,7 +129,7 @@ class ProductScreen extends ConsumerWidget {
                     style: AppTextDecor.osSemiBold18black,
                   ),
                   Text(
-                    'Delivery Charge is ${AppGFunctions.getCurrency()}$deliveryCharge',
+                    '${S.of(context).deliveryChargeIs} ${AppGFunctions.getCurrency()}$deliveryCharge',
                     style: AppTextDecor.osRegular12black,
                   ),
                 ],

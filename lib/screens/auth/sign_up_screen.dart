@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:laundry_customer/constants/app_colors.dart';
 import 'package:laundry_customer/constants/app_text_decor.dart';
 import 'package:laundry_customer/constants/hive_contants.dart';
@@ -100,15 +99,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         focusNode: fNodes[0],
                         name: 'first_name',
                         decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                          hintText: 'First Name',
+                          hintText: S.of(context).firstName,
                         ),
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(
-                              errorText:
-                                  validationError(fieldName: 'First Name'),
+                              errorText: validationError(
+                                fieldName: S.of(context).firstName,
+                              ),
                             ),
                           ],
                         ),
@@ -118,15 +118,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         focusNode: fNodes[1],
                         name: 'last_name',
                         decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                          hintText: "Last Name",
+                          hintText: S.of(context).lastName,
                         ),
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(
-                              errorText:
-                                  validationError(fieldName: 'First Name'),
+                              errorText: validationError(
+                                fieldName: S.of(context).lastName,
+                              ),
                             ),
                           ],
                         ),
@@ -136,7 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         focusNode: fNodes[2],
                         name: 'business_name',
                         decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                          hintText: "Business Name",
+                          hintText: S.of(context).businessName,
                         ),
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
@@ -154,7 +155,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           [
                             FormBuilderValidators.email(),
                             FormBuilderValidators.required(
-                              errorText: validationError(fieldName: 'Email'),
+                              errorText: validationError(
+                                fieldName: S.of(context).email,
+                              ),
                             ),
                           ],
                         ),
@@ -171,7 +174,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(
-                              errorText: validationError(fieldName: 'Mobile'),
+                              errorText: validationError(
+                                fieldName: S.of(context).phoneNumber,
+                              ),
                             ),
                             FormBuilderValidators.maxLength(13),
                             FormBuilderValidators.minLength(10),
@@ -179,51 +184,53 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       AppSpacerH(20.h),
-                      GestureDetector(
-                        onTap: () {
-                          _selectDate(context).then((value) {
-                            if (value != null) {
-                              final String date =
-                                  DateFormat('MM/dd/yyyy').format(value);
-                              fNodes[5].requestFocus();
-                              _formkey.currentState!.fields['date_of_birth']!
-                                  .didChange(date);
-                            }
-                          });
-                        },
-                        child: FormBuilderTextField(
-                          enabled: false,
-                          focusNode: fNodes[5],
-                          name: 'date_of_birth',
-                          decoration:
-                              AppInputDecor.loginPageInputDecor.copyWith(
-                            hintText: 'Date Of Birth',
-                          ),
-                          keyboardType: TextInputType.phone,
-                          textInputAction: TextInputAction.next,
-                          validator: FormBuilderValidators.compose(
-                            [
-                              FormBuilderValidators.required(
-                                errorText:
-                                    validationError(fieldName: 'Date Of Birth'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     _selectDate(context).then((value) {
+                      //       if (value != null) {
+                      //         final String date =
+                      //             DateFormat('MM/dd/yyyy').format(value);
+                      //         fNodes[5].requestFocus();
+                      //         _formkey.currentState!.fields['date_of_birth']!
+                      //             .didChange(date);
+                      //       }
+                      //     });
+                      //   },
+                      //   child: FormBuilderTextField(
+                      //     enabled: false,
+                      //     focusNode: fNodes[5],
+                      //     name: 'date_of_birth',
+                      //     decoration:
+                      //         AppInputDecor.loginPageInputDecor.copyWith(
+                      //       hintText: 'Date Of Birth',
+                      //     ),
+                      //     keyboardType: TextInputType.phone,
+                      //     textInputAction: TextInputAction.next,
+                      //     validator: FormBuilderValidators.compose(
+                      //       [
+                      //         FormBuilderValidators.required(
+                      //           errorText:
+                      //               validationError(fieldName: 'Date Of Birth'),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       AppSpacerH(20.h),
                       FormBuilderTextField(
                         focusNode: fNodes[6],
                         name: 'city',
                         decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                          hintText: 'City',
+                          hintText: S.of(context).city,
                         ),
                         keyboardType: TextInputType.phone,
                         textInputAction: TextInputAction.next,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(
-                              errorText: validationError(fieldName: 'City'),
+                              errorText: validationError(
+                                fieldName: S.of(context).city,
+                              ),
                             ),
                           ],
                         ),
@@ -233,14 +240,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         focusNode: fNodes[7],
                         name: 'state',
                         decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                          hintText: 'State',
+                          hintText: S.of(context).state,
                         ),
                         keyboardType: TextInputType.phone,
                         textInputAction: TextInputAction.next,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(
-                              errorText: validationError(fieldName: 'State'),
+                              errorText: validationError(
+                                fieldName: S.of(context).state,
+                              ),
                             ),
                           ],
                         ),
@@ -250,14 +259,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         focusNode: fNodes[8],
                         name: 'zip_code',
                         decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                          hintText: 'Zip Code',
+                          hintText: S.of(context).zipCode,
                         ),
                         keyboardType: TextInputType.phone,
                         textInputAction: TextInputAction.next,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(
-                              errorText: validationError(fieldName: 'Zip Code'),
+                              errorText: validationError(
+                                fieldName: S.of(context).zipCode,
+                              ),
                             ),
                           ],
                         ),
@@ -267,15 +278,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         focusNode: fNodes[9],
                         name: 'address_line',
                         decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                          hintText: 'Address 1',
+                          hintText: S.of(context).addressLine1,
                         ),
-                        keyboardType: TextInputType.phone,
+                        keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(
-                              errorText:
-                                  validationError(fieldName: 'Addresss 1'),
+                              errorText: validationError(
+                                fieldName: S.of(context).addressLine1,
+                              ),
                             ),
                           ],
                         ),
@@ -285,15 +297,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         focusNode: fNodes[10],
                         name: 'address_line2',
                         decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                          hintText: 'Address 2',
+                          hintText: S.of(context).addressLine2,
                         ),
-                        keyboardType: TextInputType.phone,
+                        keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.next,
                         validator: FormBuilderValidators.compose(
                           [
                             FormBuilderValidators.required(
-                              errorText:
-                                  validationError(fieldName: 'Addresss 2'),
+                              errorText: validationError(
+                                fieldName: S.of(context).addressLine2,
+                              ),
                             ),
                           ],
                         ),

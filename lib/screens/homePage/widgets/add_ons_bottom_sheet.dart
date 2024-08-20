@@ -5,6 +5,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:laundry_customer/constants/app_colors.dart';
 import 'package:laundry_customer/constants/app_text_decor.dart';
 import 'package:laundry_customer/constants/input_field_decorations.dart';
+import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/misc/global_functions.dart';
 import 'package:laundry_customer/models/cart/add_ons_model.dart';
 import 'package:laundry_customer/models/cart/cart_model.dart';
@@ -102,7 +103,7 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
                       : 2,
                 ),
                 decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                  hintText: 'Quantity',
+                  hintText: S.of(context).quantity,
                 ),
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.done,
@@ -116,7 +117,7 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
                 ),
               ),
               AppSpacerH(24.h),
-              const Text('Add-ons'),
+              Text(S.of(context).addOns),
               ListView.builder(
                 shrinkWrap: true,
                 itemCount: widget.product.subProducts.length,
@@ -131,7 +132,7 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
                 name: 'note',
                 maxLines: 3,
                 decoration: AppInputDecor.loginPageInputDecor.copyWith(
-                  hintText: 'Note',
+                  hintText: S.of(context).note,
                 ),
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.done,
@@ -147,7 +148,7 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
                   Flexible(
                     child: widget.isUpdate
                         ? AppTextButton(
-                            title: 'Delete',
+                            title: S.of(context).delete,
                             buttonColor: AppColors.red,
                             titleColor: AppColors.white,
                             onTap: () {
@@ -158,7 +159,7 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
                             },
                           )
                         : AppTextButton(
-                            title: 'Close',
+                            title: S.of(context).close,
                             buttonColor: AppColors.grayBG,
                             titleColor: AppColors.black,
                             onTap: () => context.nav.pop(),
@@ -167,7 +168,9 @@ class _AddOnsBottomSheetState extends State<AddOnsBottomSheet> {
                   AppSpacerW(10.w),
                   Flexible(
                     child: AppTextButton(
-                      title: widget.isUpdate ? 'Update' : ' Add to Cart',
+                      title: widget.isUpdate
+                          ? S.of(context).update
+                          : S.of(context).addToCart,
                       onTap: () {
                         _unfocus();
                         if (_formkey.currentState!.saveAndValidate()) {

@@ -46,7 +46,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: AppRountedTextButton(
-                title: 'Quick Order',
+                title: S.of(context).quickOrder,
                 onTap: () {
                   context.nav.pushNamed(Routes.quickOrder);
                 },
@@ -172,7 +172,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Services',
+                  S.of(context).services,
                   style: AppTextDecor.osRegular14white
                       .copyWith(fontWeight: FontWeight.w600),
                 ),

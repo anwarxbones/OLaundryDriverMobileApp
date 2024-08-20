@@ -360,7 +360,7 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
             name: 'coupon',
             controller: _couponCode,
             decoration: AppInputDecor.loginPageInputDecor.copyWith(
-              hintText: 'Enter coupon code',
+              hintText: S.of(context).enterCouponCode,
               prefixIcon: Padding(
                 padding: EdgeInsets.all(10.w),
                 child: SizedBox(
@@ -392,7 +392,7 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
                       border: Border.all(color: AppColors.primary),
                     ),
                     child: Text(
-                      'Apply',
+                      S.of(context).apply,
                       style: AppTextDecor.osBold14black
                           .copyWith(color: AppColors.primary),
                     ),
@@ -408,7 +408,7 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
                       color: AppColors.primary,
                     ),
                     child: Text(
-                      'Applied',
+                      S.of(context).applied,
                       style: AppTextDecor.osBold14white
                           .copyWith(color: AppColors.white),
                     ),
@@ -449,26 +449,26 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
       child: Column(
         children: [
           _buildSummaryRowWidget(
-            title: 'Sub Total',
+            title: S.of(context).subtotal,
             value: LocalService()
                 .calculateTotal(cartItems: LocalService().getCart()),
           ),
           AppSpacerH(8.h),
           _buildSummaryRowWidget(
-            title: 'Discount',
+            title: S.of(context).discount,
             value: ref.watch(discountAmountProvider),
             isDiscount: true,
           ),
           const Divider(),
           _buildSummaryRowWidget(
-            title: 'Total',
+            title: S.of(context).total,
             value: LocalService()
                     .calculateTotal(cartItems: LocalService().getCart()) -
                 ref.watch(discountAmountProvider),
           ),
           AppSpacerH(8.h),
           _buildSummaryRowWidget(
-            title: 'Delivery Charge',
+            title: S.of(context).deliveryCharge,
             value: LocalService()
                         .calculateTotal(cartItems: LocalService().getCart()) <
                     minimumCost
@@ -477,7 +477,7 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
           ),
           const Divider(),
           _buildSummaryRowWidget(
-            title: 'Payable',
+            title: S.of(context).payable,
             value: LocalService()
                     .calculateTotal(cartItems: LocalService().getCart()) -
                 (ref.watch(discountAmountProvider) + deliveryCost),
