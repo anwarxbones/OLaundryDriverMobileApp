@@ -355,7 +355,7 @@ class OrderDetailsTile extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                '${settingsBox.get('currency') ?? '\$'}${subProduct.price}',
+                '  ${product.quantity} x ${settingsBox.get('currency') ?? '\$'}${subProduct.price}',
                 style: AppTextDecor.osRegular12black,
               ),
             ],
