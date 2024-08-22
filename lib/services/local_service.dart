@@ -77,7 +77,7 @@ class LocalService {
       amount += item.quantity * item.price!;
       if (item.addOns.isNotEmpty) {
         for (final addOn in item.addOns) {
-          amount += addOn.price;
+          amount += addOn.price * item.quantity;
         }
       }
     }

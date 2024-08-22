@@ -460,7 +460,6 @@ class LocaLizationSelector extends StatelessWidget {
           )
           .toList(),
       onChanged: (value) {
-        print(value);
         if (value != null && value != '') {
           Hive.box(AppHSC.appSettingsBox).put(AppHSC.appLocal, value);
         }
