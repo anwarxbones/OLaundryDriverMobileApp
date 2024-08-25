@@ -11,10 +11,13 @@ import 'package:laundry_customer/constants/input_field_decorations.dart';
 import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/misc/misc_global_variables.dart';
 import 'package:laundry_customer/models/schedule_model.dart';
+import 'package:laundry_customer/providers/address_provider.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
 import 'package:laundry_customer/providers/quick_order_provider.dart';
+import 'package:laundry_customer/screens/address/manage_address_screen.dart';
 import 'package:laundry_customer/utils/context_less_nav.dart';
 import 'package:laundry_customer/utils/routes.dart';
+import 'package:laundry_customer/widgets/buttons/button_with_icon.dart';
 import 'package:laundry_customer/widgets/buttons/full_width_button.dart';
 import 'package:laundry_customer/widgets/misc_widgets.dart';
 
@@ -47,6 +50,8 @@ class QuickOrder extends ConsumerWidget {
         children: [
           AppSpacerH(12.h),
           _buildPickupScheduleWidget(),
+          // AppSpacerH(12.h),
+          _buildAddressWidget(),
           AppSpacerH(12.h),
           _buildButtonWidget(),
         ],
@@ -105,6 +110,40 @@ class QuickOrder extends ConsumerWidget {
             ],
           ),
         );
+      },
+    );
+  }
+
+  Widget _buildAddressWidget() {
+    return Consumer(
+      builder: (context, ref, _) {
+        return ref.watch(addresListProvider).map(
+              initial: (_) => const SizedBox(),
+              loading: (_) => const LoadingWidget(),
+              loaded: (_) {
+                Future.delayed(Duration.zero, () {
+                  ref
+                      .watch(
+                        addressIDProvider.notifier,
+                      )
+                      .state = _.data.data!.addresses![0].id.toString();
+                });
+                return _.data.data!.addresses!.isEmpty
+                    ? AppIconTextButton(
+                        icon: Icons.add,
+                        title: S.of(context).adadres,
+                        onTap: () {
+                          context.nav.pushNamed(
+                            Routes.addOrUpdateAddressScreen,
+                          );
+                        },
+                      )
+                    : AddressCard(
+                        address: _.data.data!.addresses![0],
+                      );
+              },
+              error: (_) => ErrorTextWidget(error: _.error),
+            );
       },
     );
   }

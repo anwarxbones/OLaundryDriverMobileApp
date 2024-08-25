@@ -9,10 +9,10 @@ import 'package:laundry_customer/constants/app_text_decor.dart';
 import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/constants/input_field_decorations.dart';
 import 'package:laundry_customer/generated/l10n.dart';
-import 'package:laundry_customer/misc/global_functions.dart';
 import 'package:laundry_customer/providers/address_provider.dart';
 import 'package:laundry_customer/providers/misc_providers.dart';
 import 'package:laundry_customer/providers/order_providers.dart';
+import 'package:laundry_customer/screens/address/manage_address_screen.dart';
 import 'package:laundry_customer/screens/order/payment_method_card.dart';
 import 'package:laundry_customer/screens/payment/payment_controller.dart';
 import 'package:laundry_customer/screens/payment/payment_section.dart';
@@ -132,45 +132,61 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
                               ref.watch(addresListProvider).map(
                                     initial: (_) => const SizedBox(),
                                     loading: (_) => const LoadingWidget(),
-                                    loaded: (_) => _
-                                            .data.data!.addresses!.isEmpty
-                                        ? AppIconTextButton(
-                                            icon: Icons.add,
-                                            title: S.of(context).adadres,
-                                            onTap: () {
-                                              context.nav.pushNamed(
-                                                Routes.addOrUpdateAddressScreen,
-                                              );
-                                            },
-                                          )
-                                        : FormBuilderDropdown(
-                                            decoration: AppInputDecor
-                                                .loginPageInputDecor
-                                                .copyWith(
-                                              hintText: S.of(context).chsadrs,
-                                            ),
-                                            onChanged: (val) {
-                                              ref
-                                                  .watch(
-                                                    addressIDProvider.notifier,
-                                                  )
-                                                  .state = val.toString();
-                                            },
-                                            name: 'address',
-                                            items: _.data.data!.addresses!
-                                                .map(
-                                                  (e) => DropdownMenuItem(
-                                                    value: e.id.toString(),
-                                                    child: Text(
-                                                      AppGFunctions
-                                                          .processAdAddess(
-                                                        e,
-                                                      ),
-                                                    ),
-                                                  ),
+                                    loaded: (_) {
+                                      Future.delayed(Duration.zero, () {
+                                        ref
+                                                .watch(
+                                                  addressIDProvider.notifier,
                                                 )
-                                                .toList(),
-                                          ),
+                                                .state =
+                                            _.data.data!.addresses![0].id
+                                                .toString();
+                                      });
+                                      return _.data.data!.addresses!.isEmpty
+                                          ? AppIconTextButton(
+                                              icon: Icons.add,
+                                              title: S.of(context).adadres,
+                                              onTap: () {
+                                                context.nav.pushNamed(
+                                                  Routes
+                                                      .addOrUpdateAddressScreen,
+                                                );
+                                              },
+                                            )
+                                          : AddressCard(
+                                              address:
+                                                  _.data.data!.addresses![0],
+                                            );
+                                    },
+
+                                    // FormBuilderDropdown(
+                                    //     decoration: AppInputDecor
+                                    //         .loginPageInputDecor
+                                    //         .copyWith(
+                                    //       hintText: S.of(context).chsadrs,
+                                    //     ),
+                                    //     onChanged: (val) {
+                                    //       ref
+                                    //           .watch(
+                                    //             addressIDProvider.notifier,
+                                    //           )
+                                    //           .state = val.toString();
+                                    //     },
+                                    //     name: 'address',
+                                    //     items: _.data.data!.addresses!
+                                    //         .map(
+                                    //           (e) => DropdownMenuItem(
+                                    //             value: e.id.toString(),
+                                    //             child: Text(
+                                    //               AppGFunctions
+                                    //                   .processAdAddess(
+                                    //                 e,
+                                    //               ),
+                                    //             ),
+                                    //           ),
+                                    //         )
+                                    //         .toList(),
+                                    //   ),
                                     error: (_) =>
                                         ErrorTextWidget(error: _.error),
                                   ),
