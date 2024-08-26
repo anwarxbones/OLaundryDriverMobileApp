@@ -114,8 +114,10 @@ class AddressCard extends ConsumerStatefulWidget {
   const AddressCard({
     super.key,
     required this.address,
+    this.editable = true,
   });
   final Address address;
+  final bool editable;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _AddressCardState();
@@ -168,33 +170,34 @@ class _AddressCardState extends ConsumerState<AddressCard> {
                 ],
               ),
             ),
-            SizedBox(
-              width: 58.w,
-              height: 24.h,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      context.nav.pushNamed(
-                        Routes.addOrUpdateAddressScreen,
-                        arguments: widget.address,
-                      );
-                    },
-                    child: Icon(
-                      Icons.edit,
-                      color: AppColors.primary,
-                      size: 24.h,
+            if (widget.editable)
+              SizedBox(
+                width: 58.w,
+                height: 24.h,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        context.nav.pushNamed(
+                          Routes.addOrUpdateAddressScreen,
+                          arguments: widget.address,
+                        );
+                      },
+                      child: Icon(
+                        Icons.edit,
+                        color: AppColors.primary,
+                        size: 24.h,
+                      ),
                     ),
-                  ),
-                  // Icon(
-                  //   Icons.delete_forever,
-                  //   color: AppColors.red,
-                  //   size: 24.h,
-                  // ),
-                ],
+                    // Icon(
+                    //   Icons.delete_forever,
+                    //   color: AppColors.red,
+                    //   size: 24.h,
+                    // ),
+                  ],
+                ),
               ),
-            ),
           ],
         ),
       ),

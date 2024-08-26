@@ -103,28 +103,28 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
                                       S.of(context).adrs,
                                       style: AppTextDecor.osSemiBold18black,
                                     ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        context.nav.pushNamed(
-                                          Routes.manageAddressScreen,
-                                        );
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: AppColors.grayBG,
-                                          borderRadius:
-                                              BorderRadius.circular(5.w),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(3.0),
-                                          child: Text(
-                                            S.of(context).mngaddrs,
-                                            style:
-                                                AppTextDecor.osSemiBold14navy,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                    // GestureDetector(
+                                    //   onTap: () {
+                                    //     context.nav.pushNamed(
+                                    //       Routes.manageAddressScreen,
+                                    //     );
+                                    //   },
+                                    //   child: Container(
+                                    //     decoration: BoxDecoration(
+                                    //       color: AppColors.grayBG,
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(5.w),
+                                    //     ),
+                                    //     child: Padding(
+                                    //       padding: const EdgeInsets.all(3.0),
+                                    //       child: Text(
+                                    //         S.of(context).mngaddrs,
+                                    //         style:
+                                    //             AppTextDecor.osSemiBold14navy,
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                               ),
@@ -154,6 +154,7 @@ class _CheckOutScreenState extends ConsumerState<CheckOutScreen> {
                                               },
                                             )
                                           : AddressCard(
+                                              editable: false,
                                               address:
                                                   _.data.data!.addresses![0],
                                             );

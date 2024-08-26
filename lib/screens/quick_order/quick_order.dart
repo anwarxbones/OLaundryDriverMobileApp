@@ -139,6 +139,7 @@ class QuickOrder extends ConsumerWidget {
                         },
                       )
                     : AddressCard(
+                        editable: false,
                         address: _.data.data!.addresses![0],
                       );
               },

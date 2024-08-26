@@ -25,7 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "abt": MessageLookupByLibrary.simpleMessage("Sobre"),
         "abtus": MessageLookupByLibrary.simpleMessage("Sobre Nós"),
         "acceptTermsAndConditions": MessageLookupByLibrary.simpleMessage(
-            "Precisa aceitar os Termos e Condições"),
+            "Precisa aceitar os Termos e Condições",),
         "actvordr": MessageLookupByLibrary.simpleMessage("Activar Pedido"),
         "adadres": MessageLookupByLibrary.simpleMessage("Adicionar Endereço"),
         "addadrs": MessageLookupByLibrary.simpleMessage("Adicionar Endereço"),
@@ -34,15 +34,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "addnwadrs":
             MessageLookupByLibrary.simpleMessage("Adicionar Novo Endereço"),
         "adinstrctnop": MessageLookupByLibrary.simpleMessage(
-            "Adicioar Instrução (Opcional)"),
+            "Adicioar Instrução (Opcional)",),
         "adrs": MessageLookupByLibrary.simpleMessage("Endereço"),
         "adrsline": MessageLookupByLibrary.simpleMessage("Linha do Endereço"),
         "adrsname": MessageLookupByLibrary.simpleMessage(
-            "Tipo de Endereço (Ex: Escritório/Casa/etc)"),
+            "Tipo de Endereço (Ex: Escritório/Casa/etc)",),
         "alreadyHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("Já tem Conta?"),
         "altrntvphn": MessageLookupByLibrary.simpleMessage(
-            "Telefone Alternativo (Opcional)"),
+            "Telefone Alternativo (Opcional)",),
         "and": MessageLookupByLibrary.simpleMessage("&"),
         "apply": MessageLookupByLibrary.simpleMessage("Aplicar"),
         "areaex": MessageLookupByLibrary.simpleMessage("Área (Ex: Mutamba)"),
@@ -79,7 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("E-posta"),
         "entrotp": MessageLookupByLibrary.simpleMessage("Digitar OTP"),
         "entrpswrdorphn": MessageLookupByLibrary.simpleMessage(
-            "Digite seu e-mail ou número de telefone para recuperar a senha"),
+            "Digite seu e-mail ou número de telefone para recuperar a senha",),
         "female": MessageLookupByLibrary.simpleMessage("Feminino"),
         "flat": MessageLookupByLibrary.simpleMessage("Apto"),
         "forgotPassword":
@@ -93,7 +93,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hello": MessageLookupByLibrary.simpleMessage("Olá"),
         "houseno": MessageLookupByLibrary.simpleMessage("N. da Casa"),
         "howwasironsrvc": MessageLookupByLibrary.simpleMessage(
-            "Como foi o serviço de Passar a Roupa?"),
+            "Como foi o serviço de Passar a Roupa?",),
         "iAcceptAndAgreeToThe":
             MessageLookupByLibrary.simpleMessage("Eu aceito e concordo com os"),
         "instrctn": MessageLookupByLibrary.simpleMessage("Instrução"),
@@ -120,7 +120,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myorder": MessageLookupByLibrary.simpleMessage("Meus Pedidos"),
         "myordr": MessageLookupByLibrary.simpleMessage("Benim siparişim"),
         "ndgtotp": MessageLookupByLibrary.simpleMessage(
-            "Um código de 4 dígitos foi enviado para"),
+            "Um código de 4 dígitos foi enviado para",),
         "no": MessageLookupByLibrary.simpleMessage("NO"),
         "nointrntcnctn":
             MessageLookupByLibrary.simpleMessage("Sem conexão a internet"),
@@ -141,16 +141,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "odrdsmry": MessageLookupByLibrary.simpleMessage("sipariş özeti"),
         "okay": MessageLookupByLibrary.simpleMessage("Ok"),
         "orderupdatesuccmes": MessageLookupByLibrary.simpleMessage(
-            "Sipariş güncellemesi başarılı!"),
+            "Sipariş güncellemesi başarılı!",),
         "ordrdtls": MessageLookupByLibrary.simpleMessage("Detalhes do Pedido"),
         "ordrid": MessageLookupByLibrary.simpleMessage("ID do Pedido"),
         "ordrnow": MessageLookupByLibrary.simpleMessage("Şimdi sipariş ver"),
         "ordronlineviaapp": MessageLookupByLibrary.simpleMessage(
-            "Pedido online ou via Aplicativo"),
+            "Pedido online ou via Aplicativo",),
         "ordrplcd": MessageLookupByLibrary.simpleMessage("Pedido Feito"),
         "ordrstats": MessageLookupByLibrary.simpleMessage("Estado do Pedido"),
         "otpwillbesnd": MessageLookupByLibrary.simpleMessage(
-            "O OTP será enviado dentro de"),
+            "O OTP será enviado dentro de",),
         "password": MessageLookupByLibrary.simpleMessage("Senha"),
         "payonlinewithcard":
             MessageLookupByLibrary.simpleMessage("Sipariş başarıyla verildi"),
@@ -161,14 +161,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Escolha o seu Pedido"),
         "pickupat": MessageLookupByLibrary.simpleMessage("Pegar em"),
         "plcdplsmkpymnttocnfrmit": MessageLookupByLibrary.simpleMessage(
-            "Feito, por favor, faça o pagamento para confirmá-lo"),
+            "Feito, por favor, faça o pagamento para confirmá-lo",),
         "plslctanimg":
             MessageLookupByLibrary.simpleMessage("Selecione uma Imagem"),
         "plslgin": MessageLookupByLibrary.simpleMessage("Por favor, Entrar"),
         "plsslctalflds":
             MessageLookupByLibrary.simpleMessage("Selecione todos os Campos"),
         "plsslctpckupschdl": MessageLookupByLibrary.simpleMessage(
-            "Por favor, selecione primeiro o horário de coleta"),
+            "Por favor, selecione primeiro o horário de coleta",),
         "postcode": MessageLookupByLibrary.simpleMessage("Código Postal"),
         "prfl": MessageLookupByLibrary.simpleMessage("Profil"),
         "privacyPolicy":
@@ -189,7 +189,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "rcvrpswrd": MessageLookupByLibrary.simpleMessage("Recuperar Senha"),
         "removeCoupon": MessageLookupByLibrary.simpleMessage("Remover Código"),
         "rmladrs": MessageLookupByLibrary.simpleMessage(
-            "Endereço de E-posta (Opcional)"),
+            "Endereço de E-posta (Opcional)",),
         "rsndotp": MessageLookupByLibrary.simpleMessage("Reenviar OTP"),
         "rstpswrd": MessageLookupByLibrary.simpleMessage("Reiniciar a Senha"),
         "sbttl": MessageLookupByLibrary.simpleMessage("Ara toplam"),
@@ -211,16 +211,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Categoria dos Serviços"),
         "status": MessageLookupByLibrary.simpleMessage("Estado"),
         "surewnttocnclordr": MessageLookupByLibrary.simpleMessage(
-            "Tem certeza que\n deseja Cancelar este pedido?"),
+            "Tem certeza que\n deseja Cancelar este pedido?",),
         "termsAndConditions":
             MessageLookupByLibrary.simpleMessage("Termos & Condições"),
         "trmsofsrvc": MessageLookupByLibrary.simpleMessage("Termos do Serviço"),
         "ttl": MessageLookupByLibrary.simpleMessage("Toplam"),
         "ttlpybl": MessageLookupByLibrary.simpleMessage("Toplam ödenecek"),
         "ucnupldajpgorpng": MessageLookupByLibrary.simpleMessage(
-            "Pode carregar um arquivo JPG ou PNG como uma fotografia para o perfil do usuário"),
+            "Pode carregar um arquivo JPG ou PNG como uma fotografia para o perfil do usuário",),
         "uhvscsflysgndupon": MessageLookupByLibrary.simpleMessage(
-            "Şu tarihte başarıyla kaydoldunuz"),
+            "Şu tarihte başarıyla kaydoldunuz",),
         "unslctd": MessageLookupByLibrary.simpleMessage("Não Selecionado"),
         "updateproduct": MessageLookupByLibrary.simpleMessage("ürünü güncelle"),
         "updtadrs": MessageLookupByLibrary.simpleMessage("Actualizar Endereço"),
@@ -228,11 +228,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "upldaphto":
             MessageLookupByLibrary.simpleMessage("Carregar uma Fotografia"),
         "upldaprflpht": MessageLookupByLibrary.simpleMessage(
-            "Carregar a Fotografia de perfil"),
+            "Carregar a Fotografia de perfil",),
         "urabttolgot":
             MessageLookupByLibrary.simpleMessage("Çıkış yapmak üzeresiniz"),
         "urfdbckwillhlp": MessageLookupByLibrary.simpleMessage(
-            "Seu feedback nos ajudará a melhorar a experiência de serviço de Engomar."),
+            "Seu feedback nos ajudará a melhorar a experiência de serviço de Engomar.",),
         "urordrhsbncnfmrd":
             MessageLookupByLibrary.simpleMessage("Seu Pedido foi"),
         "urordrhsbnplcd":
@@ -241,13 +241,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "vewall": MessageLookupByLibrary.simpleMessage("Ver Todos"),
         "vrfyotp": MessageLookupByLibrary.simpleMessage("Verificar OTP"),
         "wecvlclctattime": MessageLookupByLibrary.simpleMessage(
-            "Recolhemos à hora que mais lhe convém e fazemos a nossa magia"),
+            "Recolhemos à hora que mais lhe convém e fazemos a nossa magia",),
         "wertrnclnclothes": MessageLookupByLibrary.simpleMessage(
-            "Entregamos as suas roupas limpas"),
+            "Entregamos as suas roupas limpas",),
         "wrprcsngprvsdlvry": MessageLookupByLibrary.simpleMessage(
-            "Estamos a processar o seu Pedido Anterior. \n Aguarde"),
+            "Estamos a processar o seu Pedido Anterior. \n Aguarde",),
         "y": MessageLookupByLibrary.simpleMessage("Evet"),
         "yourntsignedin": MessageLookupByLibrary.simpleMessage(
-            "Não está conectado!\nFaça o login primeiro.")
+            "Não está conectado!\nFaça o login primeiro.",),
       };
 }
