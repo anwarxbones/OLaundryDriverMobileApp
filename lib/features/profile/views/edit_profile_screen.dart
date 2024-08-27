@@ -111,7 +111,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                     backgroundColor: AppColors.white,
                                     radius: 50,
                                     backgroundImage: AssetImage(
-                                      'assets/images/app_icon.jpj',
+                                      'assets/images/app_icon.png',
                                     ),
                                     //Text
                                   ),

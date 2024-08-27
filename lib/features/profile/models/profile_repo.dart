@@ -50,6 +50,6 @@ class ProfileRepo implements IProfileRepo {
     Box userbox = Hive.box(AppHSC.userBox);
     var userID = userbox.get(AppHSC.userID);
 
-    await _dio.get('/driver/user/${userID}/toggle-status');
+    await _dio.get('/driver/user/$userID/toggle-status');
   }
 }

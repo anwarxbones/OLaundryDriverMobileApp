@@ -5,6 +5,7 @@ import 'package:dry_cleaners_driver/features/core/views/home_tab.dart';
 import 'package:dry_cleaners_driver/features/orders/logic/order_provider.dart';
 import 'package:dry_cleaners_driver/features/orders/views/orders_tab.dart';
 import 'package:dry_cleaners_driver/features/profile/views/profile_tab.dart';
+import 'package:dry_cleaners_driver/widgets/misc_widgets.dart';
 import 'package:dry_cleaners_driver/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,59 +26,60 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     ref.watch(statusListProvider);
     return ScreenWrapper(
-        child: Column(
-      children: [
-        Expanded(
-          child: Consumer(builder: (context, ref, child) {
-            return IndexedStack(
-              index: selectedIndex,
-              children: const [HomeTab(), OrdersTab(), ProfileTab()],
-            );
-          }),
-        ),
-        Container(
-          width: 375.w,
-          height: 83.h,
-          color: AppColors.white,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              BottomMenuItem(
-                title: 'DashBoard',
-                icon: 'assets/svgs/icon_grid.svg',
-                selected: selectedIndex == 0,
-                ontap: () {
-                  setState(() {
-                    selectedIndex = 0;
-                  });
-                },
-              ),
-              BottomMenuItem(
-                title: 'Jobs',
-                icon: 'assets/svgs/icon_rider.svg',
-                selected: selectedIndex == 1,
-                ontap: () {
-                  setState(() {
-                    selectedIndex = 1;
-                  });
-                },
-              ),
-              BottomMenuItem(
-                title: 'Profile',
-                icon: 'assets/svgs/icon_profile.svg',
-                selected: selectedIndex == 2,
-                ontap: () {
-                  setState(() {
-                    selectedIndex = 2;
-                  });
-                },
-              ),
-            ],
+      child: Column(
+        children: [
+          Expanded(
+            child: Consumer(builder: (context, ref, child) {
+              return IndexedStack(
+                index: selectedIndex,
+                children: const [HomeTab(), OrdersTab(), ProfileTab()],
+              );
+            }),
           ),
-        )
-      ],
-    ));
+          Container(
+            width: 375.w,
+            height: 83.h,
+            color: AppColors.white,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                BottomMenuItem(
+                  title: 'DashBoard',
+                  icon: 'assets/svgs/icon_grid.svg',
+                  selected: selectedIndex == 0,
+                  ontap: () {
+                    setState(() {
+                      selectedIndex = 0;
+                    });
+                  },
+                ),
+                BottomMenuItem(
+                  title: 'Jobs',
+                  icon: 'assets/svgs/icon_rider.svg',
+                  selected: selectedIndex == 1,
+                  ontap: () {
+                    setState(() {
+                      selectedIndex = 1;
+                    });
+                  },
+                ),
+                BottomMenuItem(
+                  title: 'Profile',
+                  icon: 'assets/svgs/icon_profile.svg',
+                  selected: selectedIndex == 2,
+                  ontap: () {
+                    setState(() {
+                      selectedIndex = 2;
+                    });
+                  },
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
 
@@ -102,12 +104,14 @@ class BottomMenuItem extends ConsumerWidget {
       child: Container(
         padding: EdgeInsets.only(top: 10.h),
         decoration: BoxDecoration(
-            border: Border(
-                top: BorderSide(
-                    color:
-                        selected ? AppColors.goldenButton : Colors.transparent,
-                    width: 3.h))),
-        height: 51.h,
+          border: Border(
+            top: BorderSide(
+              color: selected ? AppColors.goldenButton : Colors.transparent,
+              width: 3.h,
+            ),
+          ),
+        ),
+        height: 58.h,
         child: Column(
           children: [
             SvgPicture.asset(
@@ -116,6 +120,7 @@ class BottomMenuItem extends ConsumerWidget {
               width: 24.h,
               color: selected ? AppColors.goldenButton : AppColors.navyText,
             ),
+            AppSpacerH(4.h),
             Text(
               title,
               style: selected

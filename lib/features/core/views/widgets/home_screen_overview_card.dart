@@ -22,8 +22,9 @@ class HomeScreenOverviewCard extends StatelessWidget {
       width: 106.w,
       padding: EdgeInsets.all(8.h),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4.h),
-          color: cardColor.withOpacity(0.10)),
+        borderRadius: BorderRadius.circular(4.h),
+        color: cardColor.withOpacity(0.10),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

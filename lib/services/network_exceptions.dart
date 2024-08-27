@@ -119,9 +119,9 @@ abstract class NetworkExceptions with _$NetworkExceptions {
           String? msg =
               // ignore: avoid_dynamic_calls
               error.response?.data['message'] as String?;
-          final Map<String, dynamic>? _error =
+          final Map<String, dynamic>? error0 =
               error.response?.data['errors'] as Map<String, dynamic>?;
-          _error?.forEach((key, value) {
+          error0?.forEach((key, value) {
             msg = value.first as String;
           });
 

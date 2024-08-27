@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dry_cleaners_driver/constants/app_colors.dart';
 import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
-import 'package:dry_cleaners_driver/utils/context_less_nav.dart';
 import 'package:dry_cleaners_driver/widgets/buttons/full_width_button.dart';
 import 'package:dry_cleaners_driver/widgets/misc_widgets.dart';
 import 'package:dry_cleaners_driver/widgets/screen_wrapper.dart';
@@ -52,7 +51,7 @@ class SignUpSuccessScreen extends StatelessWidget {
               title: "Got It",
               onTap: () {
                 EasyLoading.showSuccess("App will Close");
-                Future.delayed(Duration(seconds: 3)).then((value) {
+                Future.delayed(const Duration(seconds: 3)).then((value) {
                   exit(0);
                 });
               },

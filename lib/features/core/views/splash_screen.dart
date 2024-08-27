@@ -33,6 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return ScreenWrapper(
       child: Center(
+        // child: Image.asset("assets/images/driver_app_top_logo.png"),
+        // child: Image.asset("assets/images/driver_app_top_logo.png"),
         child: Hero(
           tag: 'logo',
           child: Image.asset(
