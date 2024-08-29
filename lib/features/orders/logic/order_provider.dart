@@ -25,10 +25,7 @@ final iOrderRepoProvider = Provider<IOrderRepo>((ref) {
 final totalOrderListProvider = StateNotifierProvider<TotalOrderListNotifier,
     ApiState<PendingOrderListModel>>((ref) {
   return TotalOrderListNotifier(
-      ref.watch(iOrderRepoProvider),
-      ref.watch(appOrderTabIndexProvider) < 2
-          ? ref.watch(appOrderTabIndexProvider).toString()
-          : '1');
+      ref.watch(iOrderRepoProvider), ref.watch(appOrderTabStatusProvider));
 });
 //
 //

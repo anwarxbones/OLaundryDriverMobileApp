@@ -28,6 +28,7 @@ class Order {
   List<Product>? products;
   Quantity? quantity;
   dynamic payment;
+  bool? isTypePickup;
 
   Order({
     this.id,
@@ -52,6 +53,7 @@ class Order {
     this.products,
     this.quantity,
     this.payment,
+    this.isTypePickup,
   });
 
   factory Order.fromMap(Map<String, dynamic> data) => Order(
@@ -85,6 +87,7 @@ class Order {
             ? null
             : Quantity.fromMap(data['quantity'] as Map<String, dynamic>),
         payment: data['payment'] as dynamic,
+        isTypePickup: data['is_type_pickup'] as bool?,
       );
 
   Map<String, dynamic> toMap() => {
@@ -110,6 +113,7 @@ class Order {
         'products': products?.map((e) => e.toMap()).toList(),
         'quantity': quantity?.toMap(),
         'payment': payment,
+        'is_type_pickup': isTypePickup,
       };
 
   /// `dart:convert`

@@ -1,12 +1,10 @@
 import 'package:dry_cleaners_driver/constants/app_colors.dart';
-import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
 import 'package:dry_cleaners_driver/features/core/views/widgets/order_tile_text_row.dart';
 import 'package:dry_cleaners_driver/features/orders/models/pending_order_list_model/order.dart';
 import 'package:dry_cleaners_driver/utils/global_functions.dart';
 import 'package:dry_cleaners_driver/widgets/misc_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderTile extends StatelessWidget {
   const OrderTile({
@@ -30,9 +28,19 @@ class OrderTile extends StatelessWidget {
             padding: EdgeInsets.all(10.h),
             child: Column(
               children: [
-                OrderTileTextRow(
-                  title: "Order ID:",
-                  content: order.orderCode ?? '',
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    OrderTileTextRow(
+                      title: "Order ID:",
+                      content: order.orderCode ?? '',
+                    ),
+                    OrderTileTextRow(
+                      title: "Order Type:",
+                      content:
+                          order.isTypePickup == true ? 'Pickup' : 'Delivery',
+                    ),
+                  ],
                 ),
                 AppSpacerH(10.h),
                 Row(
@@ -66,38 +74,38 @@ class OrderTile extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            top: 0.h,
-            right: 0,
-            child: Container(
-              decoration: BoxDecoration(
-                  color: orderStatus == OrderType.pickUp
-                      ? AppColors.goldenButton
-                      : orderStatus == OrderType.delivery
-                          ? AppColors.cardGreen
-                          : Colors.transparent,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(2.h),
-                      bottomLeft: Radius.circular(2.h))),
-              padding: EdgeInsets.all(4.h),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/svgs/icon_rider_bike.svg',
-                    height: 16.h,
-                    width: 14.w,
-                  ),
-                  AppSpacerW(2.w),
-                  Text(
-                    order.driverStatus != null
-                        ? AppGFunctions.capitalizeEveryWord(order.driverStatus!)
-                        : '',
-                    style: AppTextDecor.osRegular12White,
-                  )
-                ],
-              ),
-            ),
-          )
+          // Positioned(
+          //   top: 0.h,
+          //   right: 0,
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //         color: orderStatus == OrderType.pickUp
+          //             ? AppColors.goldenButton
+          //             : orderStatus == OrderType.delivery
+          //                 ? AppColors.cardGreen
+          //                 : Colors.transparent,
+          //         borderRadius: BorderRadius.only(
+          //             topRight: Radius.circular(2.h),
+          //             bottomLeft: Radius.circular(2.h))),
+          //     padding: EdgeInsets.all(4.h),
+          //     child: Row(
+          //       children: [
+          //         SvgPicture.asset(
+          //           'assets/svgs/icon_rider_bike.svg',
+          //           height: 16.h,
+          //           width: 14.w,
+          //         ),
+          //         AppSpacerW(2.w),
+          //         Text(
+          //           order.driverStatus != null
+          //               ? AppGFunctions.capitalizeEveryWord(order.driverStatus!)
+          //               : '',
+          //           style: AppTextDecor.osRegular12White,
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );

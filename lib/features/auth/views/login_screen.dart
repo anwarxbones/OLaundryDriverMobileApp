@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ); //Refresh This so That App Doesn't Auto Login
                                         //Refresh All Data
                                         ref.refresh(userDetailsProvider);
-                                        ref.refresh(totalOrderListProvider);
+
                                         ref.refresh(orderHistoriesProvider);
                                         ref.refresh(
                                             todaysPendingOrderListProvider);
@@ -160,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ref.refresh(userDetailsProvider);
                                         ref.refresh(userProfileUpdateProvider);
                                         ref.refresh(userPasswordUpdateProvider);
-                                        print("loaded");
+
                                         Future.delayed(
                                                 AppDurConst.buildDuration)
                                             .then((value) {

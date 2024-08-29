@@ -5,7 +5,11 @@ final appBottomBarIndexProvider = StateProvider<int>((ref) {
   return 0;
 });
 //Bottombar State
-final appOrderTabIndexProvider = StateProvider<int>((ref) {
+final appOrderTabStatusProvider = StateProvider<String>((ref) {
+  return 'pending';
+});
+
+final orderTabIndexProvider = StateProvider<int>((ref) {
   return 0;
 });
 

@@ -8,10 +8,10 @@ import 'package:dry_cleaners_driver/features/orders/models/todays_pending_order_
 import 'package:dry_cleaners_driver/services/api_service.dart';
 
 abstract class IOrderRepo {
-  Future<PendingOrderListModel> getTotalOrders({required String isAccepted});
+  Future<PendingOrderListModel> getTotalOrders({required String status});
   Future<TodaysPendingOrderModel> getTodaysPendingOrders();
   Future<TodaysJobModel> getTodaysJobs();
-  Future<void> acceptOrder({required String id, required String status});
+  Future<void> acceptOrder({required int orderId, required bool isAccepted});
   Future<StatusModel> getStatusList();
   Future<ThisWeekDeliveryModel> getThisWeekDeliveryList();
   Future<OrderUpdate> updateOrder({required String id, required String status});
@@ -21,10 +21,9 @@ abstract class IOrderRepo {
 class OrderRepo implements IOrderRepo {
   final _dio = getDio();
   @override
-  Future<PendingOrderListModel> getTotalOrders(
-      {required String isAccepted}) async {
-    var response = await _dio
-        .get('/driver/total-orders', queryParameters: {'isAccept': isAccepted});
+  Future<PendingOrderListModel> getTotalOrders({required String status}) async {
+    var response =
+        await _dio.get('/driver/orders', queryParameters: {'status': status});
 
     return PendingOrderListModel.fromMap(response.data);
   }
@@ -44,8 +43,10 @@ class OrderRepo implements IOrderRepo {
   }
 
   @override
-  Future<void> acceptOrder({required String id, required String status}) async {
-    await _dio.get('/driver/accept-order/$id?isAccept=$status');
+  Future<void> acceptOrder(
+      {required int orderId, required bool isAccepted}) async {
+    await _dio.get('/driver/order/accept/$orderId',
+        queryParameters: {'is_accepted': isAccepted});
   }
 
   @override

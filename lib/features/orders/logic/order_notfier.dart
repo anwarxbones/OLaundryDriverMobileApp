@@ -14,19 +14,18 @@ class TotalOrderListNotifier
     extends StateNotifier<ApiState<PendingOrderListModel>> {
   TotalOrderListNotifier(
     this._repo,
-    this.isAccepted,
+    this.status,
   ) : super(const ApiState.initial()) {
     getTotalOrderList();
   }
-  final String isAccepted;
+  final String status;
   final IOrderRepo _repo;
 
   Future<void> getTotalOrderList() async {
     state = const ApiState.loading();
 
     try {
-      state = ApiState.loaded(
-          data: await _repo.getTotalOrders(isAccepted: isAccepted));
+      state = ApiState.loaded(data: await _repo.getTotalOrders(status: status));
     } catch (e) {
       state = ApiState.error(error: NetworkExceptions.errorText(e));
     }
@@ -78,14 +77,13 @@ class OrderAcceptNotifier extends StateNotifier<ApiState<String>> {
   ) : super(const ApiState.initial());
   final IOrderRepo _repo;
 
-  Future<void> acceptOrder({required String id, required String status}) async {
+  Future<void> acceptOrder(
+      {required int orderId, required bool isAccepted}) async {
     state = const ApiState.loading();
 
     try {
-      await _repo.acceptOrder(id: id, status: status);
-      state = ApiState.loaded(
-          data:
-              status == '1' ? 'Succesfully Accepted ' : 'Succesfully Rejected');
+      await _repo.acceptOrder(orderId: orderId, isAccepted: isAccepted);
+      state = const ApiState.loaded(data: 'Succesfully Accepted');
     } catch (e) {
       state = ApiState.error(error: NetworkExceptions.errorText(e));
     }
