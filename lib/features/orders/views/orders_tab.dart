@@ -180,7 +180,6 @@ class OrdersTab extends ConsumerWidget {
       ref.watch(selectedDateProvider.notifier).update((state) => picked);
       ref.refresh(totalOrderListProvider);
       DateFormat('dd-MM-yyyy').format(picked);
-      print('picked: ${DateFormat('dd-MM-yyyy').format(picked)}');
     }
   }
 
