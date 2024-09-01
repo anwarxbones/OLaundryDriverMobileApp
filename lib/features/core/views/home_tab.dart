@@ -53,13 +53,13 @@ class _HomeTabState extends ConsumerState<HomeTab> {
           });
         });
     //For Total Accepted
-    ref.watch(totalAcceptedOrderListProvider).maybeWhen(
-        orElse: () {},
-        loaded: (_) {
-          setState(() {
-            totalAccepted = _.data?.total ?? 0;
-          });
-        });
+    // ref.watch(totalAcceptedOrderListProvider).maybeWhen(
+    //     orElse: () {},
+    //     loaded: (_) {
+    //       setState(() {
+    //         totalAccepted = _.data?.total ?? 0;
+    //       });
+    //     });
     return Column(
       children: [
         Container(

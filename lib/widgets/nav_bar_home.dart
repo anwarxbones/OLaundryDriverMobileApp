@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dry_cleaners_driver/constants/app_colors.dart';
 import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
 import 'package:dry_cleaners_driver/constants/hive_contants.dart';
@@ -14,8 +15,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 class AppNavbarHome extends ConsumerWidget {
   const AppNavbarHome({
     Key? key,
+    this.showCalendar = false,
+    this.onPressedCalendar,
+    this.selectedDate,
   }) : super(key: key);
-
+  final bool showCalendar;
+  final void Function()? onPressedCalendar;
+  final DateTime? selectedDate;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ValueListenableBuilder(
@@ -47,7 +53,7 @@ class AppNavbarHome extends ConsumerWidget {
                     style: AppTextDecor.osBold14black,
                   ),
                   Text(
-                    AppGFunctions.dfmt.format(DateTime.now()),
+                    AppGFunctions.dfmt.format(selectedDate ?? DateTime.now()),
                     // 'Fri, 20 Aug 2022',
                     style: AppTextDecor.osRegular10Navy,
                   ),
@@ -58,6 +64,13 @@ class AppNavbarHome extends ConsumerWidget {
                 alignment: Alignment.centerRight,
                 child: Row(
                   children: [
+                    Visibility(
+                      visible: showCalendar,
+                      child: IconButton(
+                        onPressed: onPressedCalendar,
+                        icon: const Icon(Icons.calendar_month),
+                      ),
+                    ),
                     GestureDetector(
                       onTap: () => ref.refresh(totalOrderListProvider),
                       child: Container(

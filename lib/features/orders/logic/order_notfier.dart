@@ -15,17 +15,20 @@ class TotalOrderListNotifier
   TotalOrderListNotifier(
     this._repo,
     this.status,
+    this.date,
   ) : super(const ApiState.initial()) {
     getTotalOrderList();
   }
   final String status;
   final IOrderRepo _repo;
+  final String date;
 
   Future<void> getTotalOrderList() async {
     state = const ApiState.loading();
 
     try {
-      state = ApiState.loaded(data: await _repo.getTotalOrders(status: status));
+      state = ApiState.loaded(
+          data: await _repo.getTotalOrders(status: status, date: date));
     } catch (e) {
       state = ApiState.error(error: NetworkExceptions.errorText(e));
     }

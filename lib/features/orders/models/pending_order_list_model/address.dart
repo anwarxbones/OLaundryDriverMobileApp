@@ -14,7 +14,9 @@ class Address {
   String? addressLine;
   String? addressLine2;
   String? deliveryNote;
-  String? postCode;
+  String? zipCode;
+  String? city;
+  String? state;
   String? latitude;
   String? longitude;
 
@@ -32,7 +34,9 @@ class Address {
     this.addressLine,
     this.addressLine2,
     this.deliveryNote,
-    this.postCode,
+    this.city,
+    this.state,
+    this.zipCode,
     this.latitude,
     this.longitude,
   });
@@ -51,7 +55,9 @@ class Address {
         addressLine: data['address_line'] as String?,
         addressLine2: data['address_line2'] as String?,
         deliveryNote: data['delivery_note'] as String?,
-        postCode: data['post_code'] as String?,
+        city: data['city'] as String?,
+        state: data['state'] as String?,
+        zipCode: data['zip_code'] as String?,
         latitude: data['latitude'] as String?,
         longitude: data['longitude'] as String?,
       );
@@ -70,7 +76,7 @@ class Address {
         'address_line': addressLine,
         'address_line2': addressLine2,
         'delivery_note': deliveryNote,
-        'post_code': postCode,
+        'zip_code': zipCode,
         'latitude': latitude,
         'longitude': longitude,
       };

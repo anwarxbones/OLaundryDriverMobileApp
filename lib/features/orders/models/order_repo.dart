@@ -8,7 +8,8 @@ import 'package:dry_cleaners_driver/features/orders/models/todays_pending_order_
 import 'package:dry_cleaners_driver/services/api_service.dart';
 
 abstract class IOrderRepo {
-  Future<PendingOrderListModel> getTotalOrders({required String status});
+  Future<PendingOrderListModel> getTotalOrders(
+      {required String status, required String date});
   Future<TodaysPendingOrderModel> getTodaysPendingOrders();
   Future<TodaysJobModel> getTodaysJobs();
   Future<void> acceptOrder({required int orderId, required bool isAccepted});
@@ -21,9 +22,10 @@ abstract class IOrderRepo {
 class OrderRepo implements IOrderRepo {
   final _dio = getDio();
   @override
-  Future<PendingOrderListModel> getTotalOrders({required String status}) async {
-    var response =
-        await _dio.get('/driver/orders', queryParameters: {'status': status});
+  Future<PendingOrderListModel> getTotalOrders(
+      {required String status, required String date}) async {
+    var response = await _dio.get('/driver/orders',
+        queryParameters: {'status': status, 'date': date});
 
     return PendingOrderListModel.fromMap(response.data);
   }

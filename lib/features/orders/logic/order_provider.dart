@@ -8,8 +8,10 @@ import 'package:dry_cleaners_driver/features/orders/models/status_model/status_m
 import 'package:dry_cleaners_driver/features/orders/models/this_week_delivery_model/this_week_delivery_model.dart';
 import 'package:dry_cleaners_driver/features/orders/models/todays_job_model/todays_job_model.dart';
 import 'package:dry_cleaners_driver/features/orders/models/todays_pending_order_model/todays_pending_order_model.dart';
+import 'package:dry_cleaners_driver/features/orders/views/orders_tab.dart';
 import 'package:dry_cleaners_driver/services/api_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 //
 //
@@ -25,16 +27,19 @@ final iOrderRepoProvider = Provider<IOrderRepo>((ref) {
 final totalOrderListProvider = StateNotifierProvider<TotalOrderListNotifier,
     ApiState<PendingOrderListModel>>((ref) {
   return TotalOrderListNotifier(
-      ref.watch(iOrderRepoProvider), ref.watch(appOrderTabStatusProvider));
+    ref.watch(iOrderRepoProvider),
+    ref.watch(appOrderTabStatusProvider),
+    DateFormat('dd-MM-yyyy').format(ref.watch(selectedDateProvider)),
+  );
 });
 //
 //
 //
 //
-final totalAcceptedOrderListProvider = StateNotifierProvider<
-    TotalOrderListNotifier, ApiState<PendingOrderListModel>>((ref) {
-  return TotalOrderListNotifier(ref.watch(iOrderRepoProvider), '1');
-});
+// final totalAcceptedOrderListProvider = StateNotifierProvider<
+//     TotalOrderListNotifier, ApiState<PendingOrderListModel>>((ref) {
+//   return TotalOrderListNotifier(ref.watch(iOrderRepoProvider), '1');
+// });
 //
 //
 //

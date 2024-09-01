@@ -1,4 +1,6 @@
+import 'package:dry_cleaners_driver/constants/app_colors.dart';
 import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
+import 'package:dry_cleaners_driver/features/orders/models/pending_order_list_model/address.dart';
 import 'package:dry_cleaners_driver/features/orders/models/pending_order_list_model/order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -121,8 +123,8 @@ class AppGFunctions {
     if (order.address?.addressLine2 != null) {
       address = '$address${order.address!.addressLine2}, ';
     }
-    if (order.address?.postCode != null) {
-      address = '$address${order.address!.postCode}';
+    if (order.address?.zipCode != null) {
+      address = '$address${order.address!.zipCode}';
     }
 
     return address;
@@ -145,7 +147,7 @@ class AppGFunctions {
       result = OrderType.pickUp;
     } else if (orderStatus?.toLowerCase() == 'processing') {
       result = OrderType.delivery;
-    } 
+    }
     return result;
   }
 
@@ -158,6 +160,48 @@ class AppGFunctions {
       }
     }
     return words.join(" ");
+  }
+
+  static String processAdAddess2(Address? address) {
+    List<String> addressLines = [];
+    if (address == null) return '';
+    for (var element in [
+      address.addressLine,
+      address.addressLine2,
+      address.city,
+      address.state,
+      address.zipCode
+    ]) {
+      if (element != null) {
+        addressLines.add(element);
+      }
+    }
+    return addressLines.join(', ');
+  }
+
+  static String pickUpOrDeliveryHour({required String? hour}) {
+    if (hour == null) {
+      return '';
+    }
+    DateTime time = DateFormat('HH:mm:ss').parse(hour);
+    return DateFormat('hh:mm a').format(time);
+  }
+
+  static Widget statusCard(String status) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 8.w),
+      decoration: BoxDecoration(
+        color: AppColors.gray,
+        borderRadius: BorderRadius.circular(8.r),
+        border: status == 'Accepted'
+            ? Border.all(color: AppColors.cardDeepGreen, width: 2)
+            : null,
+      ),
+      child: Text(
+        status == 'Accepted' ? 'Confirmed' : status,
+        style: AppTextDecor.osBold14black,
+      ),
+    );
   }
 }
 
