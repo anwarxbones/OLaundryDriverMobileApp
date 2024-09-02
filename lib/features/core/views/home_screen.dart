@@ -1,16 +1,16 @@
-import 'package:dry_cleaners_driver/constants/app_colors.dart';
-import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
-import 'package:dry_cleaners_driver/features/core/logic/misc_provider.dart';
-import 'package:dry_cleaners_driver/features/core/views/home_tab.dart';
-import 'package:dry_cleaners_driver/features/orders/logic/order_provider.dart';
-import 'package:dry_cleaners_driver/features/orders/views/orders_tab.dart';
-import 'package:dry_cleaners_driver/features/profile/views/profile_tab.dart';
-import 'package:dry_cleaners_driver/widgets/misc_widgets.dart';
-import 'package:dry_cleaners_driver/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:o_driver/constants/app_colors.dart';
+import 'package:o_driver/constants/app_text_decor.dart';
+import 'package:o_driver/features/core/logic/misc_provider.dart';
+import 'package:o_driver/features/core/views/home_tab.dart';
+import 'package:o_driver/features/orders/logic/order_provider.dart';
+import 'package:o_driver/features/orders/views/orders_tab.dart';
+import 'package:o_driver/features/profile/views/profile_tab.dart';
+import 'package:o_driver/widgets/misc_widgets.dart';
+import 'package:o_driver/widgets/screen_wrapper.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});

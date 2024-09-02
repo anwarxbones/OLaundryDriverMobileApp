@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:dry_cleaners_driver/constants/hive_contants.dart';
-import 'package:dry_cleaners_driver/utils/context_less_nav.dart';
-import 'package:dry_cleaners_driver/utils/routes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:o_driver/constants/hive_contants.dart';
+import 'package:o_driver/utils/context_less_nav.dart';
+import 'package:o_driver/utils/routes.dart';
 
 class ElTanvirInterceptors extends Interceptor {
   Box? authBox;

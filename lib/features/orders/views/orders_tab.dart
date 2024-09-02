@@ -1,19 +1,19 @@
-import 'package:dry_cleaners_driver/constants/app_colors.dart';
-import 'package:dry_cleaners_driver/constants/app_durations.dart';
-import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
-import 'package:dry_cleaners_driver/features/core/logic/misc_provider.dart';
-import 'package:dry_cleaners_driver/features/core/views/widgets/order_tile.dart';
-import 'package:dry_cleaners_driver/features/orders/logic/order_provider.dart';
-import 'package:dry_cleaners_driver/utils/context_less_nav.dart';
-import 'package:dry_cleaners_driver/utils/routes.dart';
-import 'package:dry_cleaners_driver/widgets/buttons/full_width_button.dart';
-import 'package:dry_cleaners_driver/widgets/misc_widgets.dart';
-import 'package:dry_cleaners_driver/widgets/nav_bar_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:o_driver/constants/app_colors.dart';
+import 'package:o_driver/constants/app_durations.dart';
+import 'package:o_driver/constants/app_text_decor.dart';
+import 'package:o_driver/features/core/logic/misc_provider.dart';
+import 'package:o_driver/features/core/views/widgets/order_tile.dart';
+import 'package:o_driver/features/orders/logic/order_provider.dart';
+import 'package:o_driver/utils/context_less_nav.dart';
+import 'package:o_driver/utils/routes.dart';
+import 'package:o_driver/widgets/buttons/full_width_button.dart';
+import 'package:o_driver/widgets/misc_widgets.dart';
+import 'package:o_driver/widgets/nav_bar_home.dart';
 
 class OrdersTab extends ConsumerWidget {
   const OrdersTab({Key? key}) : super(key: key);

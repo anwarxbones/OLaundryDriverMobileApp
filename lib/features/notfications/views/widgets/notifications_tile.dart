@@ -1,14 +1,14 @@
-import 'package:dry_cleaners_driver/constants/app_colors.dart';
-import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
-import 'package:dry_cleaners_driver/features/notfications/logic/notifications_providers.dart';
-import 'package:dry_cleaners_driver/features/notfications/models/notification_list_model/notification.dart'
-    as n;
-import 'package:dry_cleaners_driver/widgets/misc_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:o_driver/constants/app_colors.dart';
+import 'package:o_driver/constants/app_text_decor.dart';
+import 'package:o_driver/features/notfications/logic/notifications_providers.dart';
+import 'package:o_driver/features/notfications/models/notification_list_model/notification.dart'
+    as n;
+import 'package:o_driver/widgets/misc_widgets.dart';
 
 import '../../models/helper_functions.notification.dart';
 

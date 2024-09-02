@@ -1,5 +1,5 @@
-import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
 import 'package:flutter/material.dart';
+import 'package:o_driver/constants/app_text_decor.dart';
 
 class OrderTileTextRow extends StatelessWidget {
   const OrderTileTextRow({

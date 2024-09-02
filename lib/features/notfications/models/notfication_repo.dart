@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:dry_cleaners_driver/features/notfications/models/notification_list_model/notification_list_model.dart';
-import 'package:dry_cleaners_driver/services/api_service.dart';
+import 'package:o_driver/features/notfications/models/notification_list_model/notification_list_model.dart';
+import 'package:o_driver/services/api_service.dart';
 
 abstract class INotificationRepo {
   Future<NotificationListModel> getNotifications();

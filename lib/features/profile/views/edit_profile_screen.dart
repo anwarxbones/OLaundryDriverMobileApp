@@ -1,22 +1,22 @@
 import 'dart:io';
 
-import 'package:dry_cleaners_driver/constants/app_box_decoration.dart';
-import 'package:dry_cleaners_driver/constants/app_colors.dart';
-import 'package:dry_cleaners_driver/constants/app_durations.dart';
-import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
-import 'package:dry_cleaners_driver/constants/input_field_decorations.dart';
-import 'package:dry_cleaners_driver/features/auth/models/login_model/user.dart';
-import 'package:dry_cleaners_driver/features/profile/logic/profile_provider.dart';
-import 'package:dry_cleaners_driver/utils/context_less_nav.dart';
-import 'package:dry_cleaners_driver/widgets/buttons/full_width_button.dart';
-import 'package:dry_cleaners_driver/widgets/misc_widgets.dart';
-import 'package:dry_cleaners_driver/widgets/nav_bar.dart';
-import 'package:dry_cleaners_driver/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:o_driver/constants/app_box_decoration.dart';
+import 'package:o_driver/constants/app_colors.dart';
+import 'package:o_driver/constants/app_durations.dart';
+import 'package:o_driver/constants/app_text_decor.dart';
+import 'package:o_driver/constants/input_field_decorations.dart';
+import 'package:o_driver/features/auth/models/login_model/user.dart';
+import 'package:o_driver/features/profile/logic/profile_provider.dart';
+import 'package:o_driver/utils/context_less_nav.dart';
+import 'package:o_driver/widgets/buttons/full_width_button.dart';
+import 'package:o_driver/widgets/misc_widgets.dart';
+import 'package:o_driver/widgets/nav_bar.dart';
+import 'package:o_driver/widgets/screen_wrapper.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
   const EditProfileScreen({

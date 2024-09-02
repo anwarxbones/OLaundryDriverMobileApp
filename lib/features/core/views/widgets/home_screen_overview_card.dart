@@ -1,7 +1,7 @@
-import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
-import 'package:dry_cleaners_driver/widgets/misc_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:o_driver/constants/app_text_decor.dart';
+import 'package:o_driver/widgets/misc_widgets.dart';
 
 class HomeScreenOverviewCard extends StatelessWidget {
   const HomeScreenOverviewCard({

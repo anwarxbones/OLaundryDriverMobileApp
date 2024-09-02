@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:dry_cleaners_driver/constants/config.dart';
-import 'package:dry_cleaners_driver/services/interceptor.dart';
+import 'package:o_driver/constants/config.dart';
+import 'package:o_driver/services/interceptor.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 Dio getDio() {

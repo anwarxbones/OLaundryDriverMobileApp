@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dry_cleaners_driver/features/orders/models/pending_order_list_model/order.dart';
+import 'package:o_driver/features/orders/models/pending_order_list_model/order.dart';
 
 class Data {
   List<Order>? orders;

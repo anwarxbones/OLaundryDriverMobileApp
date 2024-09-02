@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:dry_cleaners_driver/constants/hive_contants.dart';
-import 'package:dry_cleaners_driver/features/profile/models/user_model/user_model.dart';
-import 'package:dry_cleaners_driver/services/api_service.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:o_driver/constants/hive_contants.dart';
+import 'package:o_driver/features/profile/models/user_model/user_model.dart';
+import 'package:o_driver/services/api_service.dart';
 
 abstract class IProfileRepo {
   Future<UserModel> getUserDetails();

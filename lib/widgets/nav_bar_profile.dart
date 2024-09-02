@@ -1,15 +1,15 @@
-import 'package:dry_cleaners_driver/constants/app_colors.dart';
-import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
-import 'package:dry_cleaners_driver/constants/hive_contants.dart';
-import 'package:dry_cleaners_driver/features/auth/models/login_model/user.dart';
-import 'package:dry_cleaners_driver/features/profile/logic/profile_provider.dart';
-import 'package:dry_cleaners_driver/utils/context_less_nav.dart';
-import 'package:dry_cleaners_driver/utils/routes.dart';
-import 'package:dry_cleaners_driver/widgets/misc_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:o_driver/constants/app_colors.dart';
+import 'package:o_driver/constants/app_text_decor.dart';
+import 'package:o_driver/constants/hive_contants.dart';
+import 'package:o_driver/features/auth/models/login_model/user.dart';
+import 'package:o_driver/features/profile/logic/profile_provider.dart';
+import 'package:o_driver/utils/context_less_nav.dart';
+import 'package:o_driver/utils/routes.dart';
+import 'package:o_driver/widgets/misc_widgets.dart';
 
 class AppNavbarProfile extends ConsumerWidget {
   AppNavbarProfile({

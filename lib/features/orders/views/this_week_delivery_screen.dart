@@ -1,15 +1,15 @@
-import 'package:dry_cleaners_driver/constants/app_colors.dart';
-import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
-import 'package:dry_cleaners_driver/features/core/views/widgets/order_tile.dart';
-import 'package:dry_cleaners_driver/features/orders/logic/order_provider.dart';
-import 'package:dry_cleaners_driver/utils/context_less_nav.dart';
-import 'package:dry_cleaners_driver/utils/routes.dart';
-import 'package:dry_cleaners_driver/widgets/misc_widgets.dart';
-import 'package:dry_cleaners_driver/widgets/nav_bar.dart';
-import 'package:dry_cleaners_driver/widgets/screen_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:o_driver/constants/app_colors.dart';
+import 'package:o_driver/constants/app_text_decor.dart';
+import 'package:o_driver/features/core/views/widgets/order_tile.dart';
+import 'package:o_driver/features/orders/logic/order_provider.dart';
+import 'package:o_driver/utils/context_less_nav.dart';
+import 'package:o_driver/utils/routes.dart';
+import 'package:o_driver/widgets/misc_widgets.dart';
+import 'package:o_driver/widgets/nav_bar.dart';
+import 'package:o_driver/widgets/screen_wrapper.dart';
 
 class ThisWeeKDeliveryScreen extends ConsumerWidget {
   const ThisWeeKDeliveryScreen({Key? key}) : super(key: key);

@@ -1,8 +1,8 @@
-import 'package:dry_cleaners_driver/features/auth/models/auth_repo.dart';
-import 'package:dry_cleaners_driver/features/auth/models/login_model/login_model.dart';
-import 'package:dry_cleaners_driver/features/auth/models/register_model/register_model.dart';
-import 'package:dry_cleaners_driver/services/api_state.dart';
-import 'package:dry_cleaners_driver/services/network_exceptions.dart';
+import 'package:o_driver/features/auth/models/auth_repo.dart';
+import 'package:o_driver/features/auth/models/login_model/login_model.dart';
+import 'package:o_driver/features/auth/models/register_model/register_model.dart';
+import 'package:o_driver/services/api_state.dart';
+import 'package:o_driver/services/network_exceptions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginNotifier extends StateNotifier<ApiState<LoginModel>> {

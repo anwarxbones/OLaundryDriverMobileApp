@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dry_cleaners_driver/features/core/models/cart_item_model.dart';
+import 'package:o_driver/features/core/models/cart_item_model.dart';
 
 class Quantity {
   List<CartItemModel> quantity;

@@ -1,12 +1,12 @@
-import 'package:dry_cleaners_driver/constants/app_colors.dart';
-import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
-import 'package:dry_cleaners_driver/features/orders/models/pending_order_list_model/address.dart';
-import 'package:dry_cleaners_driver/features/orders/models/pending_order_list_model/order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:o_driver/constants/app_colors.dart';
+import 'package:o_driver/constants/app_text_decor.dart';
+import 'package:o_driver/features/orders/models/pending_order_list_model/address.dart';
+import 'package:o_driver/features/orders/models/pending_order_list_model/order.dart';
 
 class AppGFunctions {
   AppGFunctions._();

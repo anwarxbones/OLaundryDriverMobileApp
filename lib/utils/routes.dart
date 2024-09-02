@@ -1,20 +1,19 @@
-import 'package:dry_cleaners_driver/constants/app_durations.dart';
-import 'package:dry_cleaners_driver/features/auth/models/login_model/user.dart';
-import 'package:dry_cleaners_driver/features/auth/views/login_screen.dart';
-import 'package:dry_cleaners_driver/features/auth/views/sign_up_screen.dart';
-import 'package:dry_cleaners_driver/features/auth/views/sign_up_succes.dart';
-import 'package:dry_cleaners_driver/features/core/views/home_screen.dart';
-import 'package:dry_cleaners_driver/features/core/views/splash_screen.dart';
-import 'package:dry_cleaners_driver/features/notfications/views/notifications_screen.dart';
-import 'package:dry_cleaners_driver/features/orders/models/pending_order_list_model/order.dart';
-import 'package:dry_cleaners_driver/features/orders/views/order_screen.dart';
-import 'package:dry_cleaners_driver/features/orders/views/this_week_delivery_screen.dart';
-import 'package:dry_cleaners_driver/features/orders/views/todays_job_screen.dart';
-import 'package:dry_cleaners_driver/features/orders/views/todays_pending_sceen.dart';
-
-import 'package:dry_cleaners_driver/features/profile/views/edit_password_screen.dart';
-import 'package:dry_cleaners_driver/features/profile/views/edit_profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:o_driver/constants/app_durations.dart';
+import 'package:o_driver/features/auth/models/login_model/user.dart';
+import 'package:o_driver/features/auth/views/login_screen.dart';
+import 'package:o_driver/features/auth/views/sign_up_screen.dart';
+import 'package:o_driver/features/auth/views/sign_up_succes.dart';
+import 'package:o_driver/features/core/views/home_screen.dart';
+import 'package:o_driver/features/core/views/splash_screen.dart';
+import 'package:o_driver/features/notfications/views/notifications_screen.dart';
+import 'package:o_driver/features/orders/models/pending_order_list_model/order.dart';
+import 'package:o_driver/features/orders/views/order_screen.dart';
+import 'package:o_driver/features/orders/views/this_week_delivery_screen.dart';
+import 'package:o_driver/features/orders/views/todays_job_screen.dart';
+import 'package:o_driver/features/orders/views/todays_pending_sceen.dart';
+import 'package:o_driver/features/profile/views/edit_password_screen.dart';
+import 'package:o_driver/features/profile/views/edit_profile_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Routes {

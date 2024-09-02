@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:dry_cleaners_driver/features/profile/models/profile_repo.dart';
-import 'package:dry_cleaners_driver/features/profile/models/user_model/user_model.dart';
-import 'package:dry_cleaners_driver/services/api_state.dart';
-import 'package:dry_cleaners_driver/services/network_exceptions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:o_driver/features/profile/models/profile_repo.dart';
+import 'package:o_driver/features/profile/models/user_model/user_model.dart';
+import 'package:o_driver/services/api_state.dart';
+import 'package:o_driver/services/network_exceptions.dart';
 
 class UserDetailsNotifier extends StateNotifier<ApiState<UserModel>> {
   UserDetailsNotifier(this._repo) : super(const ApiState.initial()) {

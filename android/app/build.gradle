@@ -44,7 +44,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.dry_cleaners_driver"
+        applicationId "com.example.o_driver"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 21
@@ -72,7 +72,7 @@ android {
             }
         }
     }
-    namespace 'com.example.dry_cleaners_driver'
+    namespace 'com.example.o_driver'
 }
 
 flutter {

@@ -1,9 +1,9 @@
-import 'package:dry_cleaners_driver/features/auth/logic/auth_notifier.dart';
-import 'package:dry_cleaners_driver/features/auth/models/auth_repo.dart';
-import 'package:dry_cleaners_driver/features/auth/models/login_model/login_model.dart';
-import 'package:dry_cleaners_driver/features/auth/models/register_model/register_model.dart';
-import 'package:dry_cleaners_driver/features/core/logic/misc_provider.dart';
-import 'package:dry_cleaners_driver/services/api_state.dart';
+import 'package:o_driver/features/auth/logic/auth_notifier.dart';
+import 'package:o_driver/features/auth/models/auth_repo.dart';
+import 'package:o_driver/features/auth/models/login_model/login_model.dart';
+import 'package:o_driver/features/auth/models/register_model/register_model.dart';
+import 'package:o_driver/features/core/logic/misc_provider.dart';
+import 'package:o_driver/services/api_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //

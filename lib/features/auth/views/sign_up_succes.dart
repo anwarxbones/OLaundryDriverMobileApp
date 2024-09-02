@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:dry_cleaners_driver/constants/app_colors.dart';
-import 'package:dry_cleaners_driver/constants/app_text_decor.dart';
-import 'package:dry_cleaners_driver/widgets/buttons/full_width_button.dart';
-import 'package:dry_cleaners_driver/widgets/misc_widgets.dart';
-import 'package:dry_cleaners_driver/widgets/screen_wrapper.dart';
+import 'package:o_driver/constants/app_colors.dart';
+import 'package:o_driver/constants/app_text_decor.dart';
+import 'package:o_driver/widgets/buttons/full_width_button.dart';
+import 'package:o_driver/widgets/misc_widgets.dart';
+import 'package:o_driver/widgets/screen_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

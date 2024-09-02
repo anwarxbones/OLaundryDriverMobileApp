@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dry_cleaners_driver/features/auth/models/login_model/user.dart';
+import 'package:o_driver/features/auth/models/login_model/user.dart';
 
 import 'address.dart';
 
