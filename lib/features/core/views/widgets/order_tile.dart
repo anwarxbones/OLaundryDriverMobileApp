@@ -36,7 +36,12 @@ class OrderTile extends StatelessWidget {
                         color: AppColors.navyText,
                       ),
                     ),
-                    const Icon(Icons.delivery_dining),
+                    Text(
+                      order.isTypePickup == true ? 'P' : 'D',
+                      style: AppTextDecor.osBold14black.copyWith(
+                          fontStyle: FontStyle.italic,
+                          color: AppColors.cardDeepGreen),
+                    ),
                     Text(
                       order.orderCode ?? '',
                       style: AppTextDecor.osBold14black.copyWith(

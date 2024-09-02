@@ -8,7 +8,7 @@ import 'package:o_driver/features/core/views/home_screen.dart';
 import 'package:o_driver/features/core/views/splash_screen.dart';
 import 'package:o_driver/features/notfications/views/notifications_screen.dart';
 import 'package:o_driver/features/orders/models/pending_order_list_model/order.dart';
-import 'package:o_driver/features/orders/views/order_screen.dart';
+import 'package:o_driver/features/orders/views/order_details_screen.dart';
 import 'package:o_driver/features/orders/views/this_week_delivery_screen.dart';
 import 'package:o_driver/features/orders/views/todays_job_screen.dart';
 import 'package:o_driver/features/orders/views/todays_pending_sceen.dart';
@@ -63,7 +63,7 @@ Route generatedRoutes(RouteSettings settings) {
       child = const HomeScreen();
       break;
     case Routes.orderScreen:
-      child = OrderScreen(
+      child = OrderDetailsScreen(
         order: settings.arguments as Order,
       );
       break;

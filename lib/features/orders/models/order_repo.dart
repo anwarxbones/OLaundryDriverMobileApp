@@ -17,6 +17,7 @@ abstract class IOrderRepo {
   Future<ThisWeekDeliveryModel> getThisWeekDeliveryList();
   Future<OrderUpdate> updateOrder({required String id, required String status});
   Future<OrderHistoriesModel> getOrderHistory();
+  Future<String> getOrderDetails({required int orderId});
 }
 
 class OrderRepo implements IOrderRepo {
@@ -78,5 +79,12 @@ class OrderRepo implements IOrderRepo {
     var response = await _dio.get('/driver/order-histories');
 
     return OrderHistoriesModel.fromMap(response.data);
+  }
+
+  @override
+  Future<String> getOrderDetails({required int orderId}) async {
+    var response = await _dio.get('/driver/orders/$orderId');
+    print(response.data);
+    return response.data['message'];
   }
 }

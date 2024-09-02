@@ -36,6 +36,18 @@ final totalOrderListProvider = StateNotifierProvider<TotalOrderListNotifier,
 //
 //
 //
+final orderDetailsProvider =
+    StateNotifierProvider.family<OrderDetailsNotifier, ApiState<String>, int>(
+        (ref, orderId) {
+  return OrderDetailsNotifier(
+    ref.watch(iOrderRepoProvider),
+    orderId,
+  );
+});
+//
+//
+//
+//
 // final totalAcceptedOrderListProvider = StateNotifierProvider<
 //     TotalOrderListNotifier, ApiState<PendingOrderListModel>>((ref) {
 //   return TotalOrderListNotifier(ref.watch(iOrderRepoProvider), '1');

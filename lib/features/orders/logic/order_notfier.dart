@@ -35,6 +35,28 @@ class TotalOrderListNotifier
   }
 }
 
+class OrderDetailsNotifier extends StateNotifier<ApiState<String>> {
+  OrderDetailsNotifier(
+    this._repo,
+    this.orderId,
+  ) : super(const ApiState.initial()) {
+    getOrderDetails();
+  }
+  final int orderId;
+  final IOrderRepo _repo;
+
+  Future<void> getOrderDetails() async {
+    state = const ApiState.loading();
+
+    try {
+      state =
+          ApiState.loaded(data: await _repo.getOrderDetails(orderId: orderId));
+    } catch (e) {
+      state = ApiState.error(error: NetworkExceptions.errorText(e));
+    }
+  }
+}
+
 class TodaysPendingOrderListNotifier
     extends StateNotifier<ApiState<TodaysPendingOrderModel>> {
   TodaysPendingOrderListNotifier(
