@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:o_driver/features/auth/models/login_model/login_model.dart';
 import 'package:o_driver/features/auth/models/register_model/register_model.dart';
 import 'package:o_driver/services/api_service.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 abstract class IAuthRepo {
   Future<LoginModel> login(

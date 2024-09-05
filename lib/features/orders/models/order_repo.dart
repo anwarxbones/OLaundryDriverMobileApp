@@ -1,5 +1,6 @@
 import 'package:o_driver/features/orders/models/order_histories_model/order_histories_model.dart';
 import 'package:o_driver/features/orders/models/order_update/order_update.dart';
+import 'package:o_driver/features/orders/models/pending_order_list_model/order.dart';
 import 'package:o_driver/features/orders/models/pending_order_list_model/pending_order_list_model.dart';
 import 'package:o_driver/features/orders/models/status_model/status_model.dart';
 import 'package:o_driver/features/orders/models/this_week_delivery_model/this_week_delivery_model.dart';
@@ -17,7 +18,7 @@ abstract class IOrderRepo {
   Future<ThisWeekDeliveryModel> getThisWeekDeliveryList();
   Future<OrderUpdate> updateOrder({required String id, required String status});
   Future<OrderHistoriesModel> getOrderHistory();
-  Future<String> getOrderDetails({required int orderId});
+  Future<Order> getOrderDetails({required int orderId});
 }
 
 class OrderRepo implements IOrderRepo {
@@ -82,9 +83,9 @@ class OrderRepo implements IOrderRepo {
   }
 
   @override
-  Future<String> getOrderDetails({required int orderId}) async {
+  Future<Order> getOrderDetails({required int orderId}) async {
     var response = await _dio.get('/driver/orders/$orderId');
-    print(response.data);
-    return response.data['message'];
+
+    return Order.fromMap(response.data['data']['order']);
   }
 }

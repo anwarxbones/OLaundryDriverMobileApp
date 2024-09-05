@@ -5,6 +5,7 @@ import 'package:o_driver/features/orders/logic/order_notfier.dart';
 import 'package:o_driver/features/orders/models/order_histories_model/order_histories_model.dart';
 import 'package:o_driver/features/orders/models/order_repo.dart';
 import 'package:o_driver/features/orders/models/order_update/order_update.dart';
+import 'package:o_driver/features/orders/models/pending_order_list_model/order.dart';
 import 'package:o_driver/features/orders/models/pending_order_list_model/pending_order_list_model.dart';
 import 'package:o_driver/features/orders/models/status_model/status_model.dart';
 import 'package:o_driver/features/orders/models/this_week_delivery_model/this_week_delivery_model.dart';
@@ -37,7 +38,7 @@ final totalOrderListProvider = StateNotifierProvider<TotalOrderListNotifier,
 //
 //
 final orderDetailsProvider =
-    StateNotifierProvider.family<OrderDetailsNotifier, ApiState<String>, int>(
+    StateNotifierProvider.family<OrderDetailsNotifier, ApiState<Order>, int>(
         (ref, orderId) {
   return OrderDetailsNotifier(
     ref.watch(iOrderRepoProvider),

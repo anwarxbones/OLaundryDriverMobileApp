@@ -33,6 +33,7 @@ dependencies:
   firebase_core: ^2.9.0
   firebase_messaging: ^14.4.1
   flutter_local_notifications: ^14.0.0
+  multicast_dns: ^0.3.2+7
 
 dev_dependencies:
   flutter_test:

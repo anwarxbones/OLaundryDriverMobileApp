@@ -1,3 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:o_driver/constants/app_colors.dart';
 import 'package:o_driver/constants/app_durations.dart';
 import 'package:o_driver/constants/hive_contants.dart';
@@ -11,12 +18,6 @@ import 'package:o_driver/utils/context_less_nav.dart';
 import 'package:o_driver/utils/routes.dart';
 import 'package:o_driver/widgets/buttons/full_width_button.dart';
 import 'package:o_driver/widgets/misc_widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -122,15 +123,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             builder: (context, WidgetRef ref, child) {
                               return ref.watch(loginProvider).map(
                                     error: (_) {
-                                      print("error");
                                       Future.delayed(AppDurConst.buildDuration)
                                           .then((value) {
                                         ref.refresh(loginProvider);
                                       });
-                                      return ErrorTextWidget(error: _.error);
+                                      EasyLoading.showError(_.error);
+                                      return const SizedBox.shrink();
                                     },
                                     loaded: (_) {
-                                      print("loaded");
                                       final Box box = Hive.box(
                                         AppHSC.authBox,
                                       ); //Stores Auth Data

@@ -131,6 +131,7 @@ void main() async {
   await Hive.openBox(AppHSC.userBox);
   await Hive.openBox(AppHSC.cartBox);
   HttpOverrides.global = MyHttpOverrides();
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -194,26 +195,27 @@ class MyApp extends ConsumerWidget {
     //   getPlayerID(ref);
     // }
     return ScreenUtilInit(
-        designSize: const Size(375, 812), // XD Design Size
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, child) {
-          return MaterialApp(
-            title: 'O Laundry Driver',
-            localizationsDelegates: const [
-              FormBuilderLocalizations.delegate,
-            ],
+      designSize: const Size(375, 812), // XD Design Size
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          title: 'O Laundry Driver',
+          localizationsDelegates: const [
+            FormBuilderLocalizations.delegate,
+          ],
 
-            theme: ThemeData(
-              fontFamily: "Open Sans",
-            ),
-            navigatorKey: ContextLess
-                .navigatorkey, //Setting Global navigator key to navigate from anywhere without Context
+          theme: ThemeData(
+            fontFamily: "Open Sans",
+          ),
+          navigatorKey: ContextLess
+              .navigatorkey, //Setting Global navigator key to navigate from anywhere without Context
 
-            onGenerateRoute: (settings) => generatedRoutes(settings),
-            initialRoute: Routes.splash,
-            builder: EasyLoading.init(),
-          );
-        });
+          onGenerateRoute: (settings) => generatedRoutes(settings),
+          initialRoute: Routes.splash,
+          builder: EasyLoading.init(),
+        );
+      },
+    );
   }
 }

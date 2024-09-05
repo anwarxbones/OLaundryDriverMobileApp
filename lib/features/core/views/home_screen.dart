@@ -32,7 +32,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             child: Consumer(builder: (context, ref, child) {
               return IndexedStack(
                 index: selectedIndex,
-                children: [const HomeTab(), OrdersTab(), const ProfileTab()],
+                children: const [HomeTab(), OrdersTab(), ProfileTab()],
               );
             }),
           ),

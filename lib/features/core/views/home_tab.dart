@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:o_driver/constants/app_colors.dart';
-import 'package:o_driver/constants/app_durations.dart';
 import 'package:o_driver/constants/app_text_decor.dart';
 import 'package:o_driver/features/core/views/widgets/home_screen_overview_card.dart';
 import 'package:o_driver/features/core/views/widgets/order_tile.dart';
@@ -114,93 +113,97 @@ class _HomeTabState extends ConsumerState<HomeTab> {
         ),
         AppSpacerH(8.h),
         Expanded(
-            child: Container(
-          padding: EdgeInsets.only(left: 20.w, right: 20.w),
-          color: AppColors.white,
-          child: Column(
-            children: [
-              AppSpacerH(10.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Today's Job",
-                        style: AppTextDecor.osBold14black,
-                      ),
-                      AppSpacerW(4.w),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 4.w, vertical: 2.h),
-                        decoration: BoxDecoration(
-                            color: AppColors.red.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(4.h)),
-                        child: Text(
-                          todaysjob.toString(),
-                          style: AppTextDecor.osBold10red,
-                        ),
-                      )
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      context.nav.pushNamed(Routes.todaysjobScreen);
-                    },
-                    child: Row(
+          child: Container(
+            padding: EdgeInsets.only(left: 20.w, right: 20.w),
+            color: AppColors.white,
+            child: Column(
+              children: [
+                AppSpacerH(10.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
                       children: [
                         Text(
-                          "View All",
+                          "Today's Job",
                           style: AppTextDecor.osBold14black,
                         ),
-                        const Icon(Icons.arrow_forward)
+                        AppSpacerW(4.w),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 4.w, vertical: 2.h),
+                          decoration: BoxDecoration(
+                              color: AppColors.red.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(4.h)),
+                          child: Text(
+                            todaysjob.toString(),
+                            style: AppTextDecor.osBold10red,
+                          ),
+                        )
                       ],
                     ),
-                  )
-                ],
-              ),
-              AppSpacerH(10.h),
-              Expanded(
-                  child: ref.watch(todaysJobListProvider).map(
-                      initial: (_) => const LoadingWidget(),
-                      loading: (_) => const LoadingWidget(),
-                      loaded: (_) {
-                        if (_.data.data!.orders!.isNotEmpty) {
-                          return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            itemCount: _.data.data!.orders!.length >= 5
-                                ? 5
-                                : _.data.data!.orders!.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: EdgeInsets.only(top: 10.h),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    context.nav.pushNamed(Routes.orderScreen,
-                                        arguments: _.data.data!.orders![index]);
-                                  },
-                                  child: OrderTile(
-                                      order: _.data.data!.orders![index]),
-                                ),
-                              );
-                            },
-                          );
-                        } else {
-                          return const MessageTextWidget(
-                              msg: 'No Job Available');
-                        }
+                    GestureDetector(
+                      onTap: () {
+                        context.nav.pushNamed(Routes.todaysjobScreen);
                       },
-                      error: (_) {
-                        Future.delayed(AppDurConst.buildDuration).then(
-                          (value) {
-                            ref.refresh(todaysJobListProvider);
-                          },
-                        );
-                        return ErrorTextWidget(error: _.error);
-                      }))
-            ],
+                      child: Row(
+                        children: [
+                          Text(
+                            "View All",
+                            style: AppTextDecor.osBold14black,
+                          ),
+                          const Icon(Icons.arrow_forward)
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                AppSpacerH(10.h),
+                Expanded(
+                  child: ref.watch(todaysJobListProvider).map(
+                        initial: (_) => const LoadingWidget(),
+                        loading: (_) => const LoadingWidget(),
+                        loaded: (_) {
+                          if (_.data.data!.orders!.isNotEmpty) {
+                            return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: _.data.data!.orders!.length >= 5
+                                  ? 5
+                                  : _.data.data!.orders!.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.only(top: 10.h),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      context.nav.pushNamed(Routes.orderScreen,
+                                          arguments:
+                                              _.data.data!.orders![index]);
+                                    },
+                                    child: OrderTile(
+                                        order: _.data.data!.orders![index]),
+                                  ),
+                                );
+                              },
+                            );
+                          } else {
+                            return const MessageTextWidget(
+                                msg: 'No Job Available');
+                          }
+                        },
+                        error: (_) {
+                          // Future.delayed(AppDurConst.buildDuration).then(
+                          //   (value) {
+                          //     ref.refresh(todaysJobListProvider);
+                          //   },
+                          // );
+                          return ErrorTextWidget(error: _.error);
+                        },
+                      ),
+                )
+              ],
+            ),
           ),
-        ))
+        )
       ],
     );
   }
