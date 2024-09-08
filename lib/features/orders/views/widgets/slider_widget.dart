@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SlideToStartWidget extends StatefulWidget {
+  final String pickAndDeliveryStatus;
   final VoidCallback onSlideCompleted;
 
-  const SlideToStartWidget({Key? key, required this.onSlideCompleted})
-      : super(key: key);
+  const SlideToStartWidget({
+    Key? key,
+    required this.onSlideCompleted,
+    required this.pickAndDeliveryStatus,
+  }) : super(key: key);
 
   @override
   _SlideToStartWidgetState createState() => _SlideToStartWidgetState();
@@ -29,11 +33,11 @@ class _SlideToStartWidgetState extends State<SlideToStartWidget> {
       ),
       child: Stack(
         children: [
-          const Positioned.fill(
+          Positioned.fill(
             child: Center(
               child: Text(
-                "Slide to Start",
-                style: TextStyle(
+                "Slide to ${getNextStatus(status: widget.pickAndDeliveryStatus)}",
+                style: const TextStyle(
                   fontSize: 22,
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.bold,
@@ -94,5 +98,20 @@ class _SlideToStartWidgetState extends State<SlideToStartWidget> {
         ],
       ),
     );
+  }
+
+  String getNextStatus({required String status}) {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return 'Confirme';
+      case 'confirmed':
+        return 'Start';
+      case 'started':
+        return 'Arrive';
+      case 'arrived':
+        return 'Success';
+      default:
+        return 'Unknown';
+    }
   }
 }

@@ -28,6 +28,7 @@ class Order {
   List<Product>? products;
   Quantity? quantity;
   dynamic payment;
+  String? pickAndDelivaryStatus;
   bool? isTypePickup;
   String? customerName;
   String? phone;
@@ -56,6 +57,7 @@ class Order {
     this.products,
     this.quantity,
     this.payment,
+    this.pickAndDelivaryStatus,
     this.isTypePickup,
     this.customerName,
     this.phone,
@@ -93,6 +95,7 @@ class Order {
             ? null
             : Quantity.fromMap(data['quantity'] as Map<String, dynamic>),
         payment: data['payment'] as dynamic,
+        pickAndDelivaryStatus: data['pickanddelivary_status'] as String?,
         isTypePickup: data['is_type_pickup'] as bool?,
         customerName: data['customer_name'] as String?,
         phone: data['phone'] as String?,
@@ -122,6 +125,7 @@ class Order {
         'products': products?.map((e) => e.toMap()).toList(),
         'quantity': quantity?.toMap(),
         'payment': payment,
+        'pickanddelivary_status': pickAndDelivaryStatus,
         'is_type_pickup': isTypePickup,
         'customer_name': customerName,
         'phone': phone,

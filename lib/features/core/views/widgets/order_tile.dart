@@ -75,8 +75,8 @@ class OrderTile extends StatelessWidget {
                       fit: FlexFit.tight,
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child:
-                            AppGFunctions.statusCard(order.orderStatus ?? ''),
+                        child: AppGFunctions.statusCard(
+                            order.pickAndDelivaryStatus ?? ''),
                       ),
                     ),
                   ],

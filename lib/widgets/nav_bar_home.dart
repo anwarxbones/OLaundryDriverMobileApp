@@ -6,7 +6,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:o_driver/constants/app_colors.dart';
 import 'package:o_driver/constants/app_text_decor.dart';
 import 'package:o_driver/constants/hive_contants.dart';
-import 'package:o_driver/features/orders/logic/order_provider.dart';
 import 'package:o_driver/utils/context_less_nav.dart';
 import 'package:o_driver/utils/global_functions.dart';
 import 'package:o_driver/utils/routes.dart';
@@ -18,10 +17,12 @@ class AppNavbarHome extends ConsumerWidget {
     this.showCalendar = false,
     this.onPressedCalendar,
     this.selectedDate,
+    this.onPressed,
   }) : super(key: key);
   final bool showCalendar;
   final void Function()? onPressedCalendar;
   final DateTime? selectedDate;
+  final VoidCallback? onPressed;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ValueListenableBuilder(
@@ -72,7 +73,7 @@ class AppNavbarHome extends ConsumerWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => ref.refresh(totalOrderListProvider),
+                      onTap: onPressed,
                       child: Container(
                         height: 40.h,
                         width: 40.h,

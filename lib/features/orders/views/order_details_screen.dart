@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:o_driver/constants/app_colors.dart';
 import 'package:o_driver/constants/app_durations.dart';
 import 'package:o_driver/constants/app_text_decor.dart';
@@ -19,6 +22,7 @@ class OrderDetailsScreen extends ConsumerWidget {
   final Order order;
   final TextEditingController _controller =
       TextEditingController(text: 'This is an instruction for delivery');
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ScreenWrapper(
@@ -111,18 +115,38 @@ class OrderDetailsScreen extends ConsumerWidget {
                                                   fontStyle: FontStyle.italic),
                                         ),
                                       ),
-                                      const Flexible(
+                                      Flexible(
                                         flex: 1,
                                         fit: FlexFit.tight,
                                         child: Align(
                                           alignment: Alignment.center,
-                                          child: CircleAvatar(
-                                            backgroundColor:
-                                                AppColors.cardDeepGreen,
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.directions,
-                                                color: AppColors.white,
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              List<Location> locations =
+                                                  await getLatLngFromAddress(
+                                                address: AppGFunctions
+                                                    .processAdAddess2(
+                                                  details.address,
+                                                ),
+                                              );
+
+                                              if (locations.isNotEmpty) {
+                                                final double lat =
+                                                    locations.first.latitude;
+                                                final double lng =
+                                                    locations.first.longitude;
+                                                launchGoogleMaps(
+                                                    lat: lat, lng: lng);
+                                              }
+                                            },
+                                            child: const CircleAvatar(
+                                              backgroundColor:
+                                                  AppColors.cardDeepGreen,
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.directions,
+                                                  color: AppColors.white,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -161,7 +185,7 @@ class OrderDetailsScreen extends ConsumerWidget {
                                         ],
                                       ),
                                       AppGFunctions.statusCard(
-                                          details.orderStatus ?? '')
+                                          details.pickAndDelivaryStatus ?? '')
                                     ],
                                   ),
                                   Padding(
@@ -218,21 +242,162 @@ class OrderDetailsScreen extends ConsumerWidget {
                                     ),
                                   ),
                                   AppSpacerH(40.h),
-                                  SlideToStartWidget(onSlideCompleted: () {
-                                    print('completed');
-                                  })
-                                  // Container(
-                                  //   padding: EdgeInsets.symmetric(
-                                  //     horizontal: 8.w,
-                                  //     vertical: 6.h,
-                                  //   ),
-                                  //   width: double.infinity,
-                                  //   decoration: BoxDecoration(
-                                  //     border: Border.all(color: AppColors.gray, width: 2),
-                                  //     borderRadius: BorderRadius.circular(2.h),
-                                  //   ),
-                                  //   child: const Text('This is an instructions.'),
-                                  // )
+                                  details.pickAndDelivaryStatus == 'Success' ||
+                                          details.pickAndDelivaryStatus ==
+                                              'Failed'
+                                      ? const SizedBox.shrink()
+                                      : ref
+                                          .watch(orderProcessUpdaterProvider)
+                                          .map(
+                                            initial: (_) => SlideToStartWidget(
+                                              pickAndDeliveryStatus: details
+                                                      .pickAndDelivaryStatus ??
+                                                  '',
+                                              onSlideCompleted: () {
+                                                ref
+                                                    .read(
+                                                        orderProcessUpdaterProvider
+                                                            .notifier)
+                                                    .updateOrderProcess(
+                                                      orderId: details.id,
+                                                      status: getNextStatus(
+                                                          status: details
+                                                              .pickAndDelivaryStatus),
+                                                    );
+                                              },
+                                            ),
+                                            loading: (_) => const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ),
+                                            loaded: (_) {
+                                              EasyLoading.showSuccess(_.data);
+                                              Future.delayed(
+                                                      AppDurConst.buildDuration)
+                                                  .then((value) {
+                                                ref.refresh(
+                                                    orderProcessUpdaterProvider);
+                                                ref.refresh(
+                                                    orderDetailsProvider(
+                                                        order.id!));
+                                              });
+                                              return SlideToStartWidget(
+                                                pickAndDeliveryStatus: details
+                                                        .pickAndDelivaryStatus ??
+                                                    '',
+                                                onSlideCompleted: () {
+                                                  ref
+                                                      .read(
+                                                          orderProcessUpdaterProvider
+                                                              .notifier)
+                                                      .updateOrderProcess(
+                                                        orderId: details.id,
+                                                        status: getNextStatus(
+                                                            status: details
+                                                                .pickAndDelivaryStatus),
+                                                      );
+                                                },
+                                              );
+                                            },
+                                            error: (error) {
+                                              EasyLoading.showError(
+                                                  error.error);
+                                              return SlideToStartWidget(
+                                                pickAndDeliveryStatus: details
+                                                        .pickAndDelivaryStatus ??
+                                                    '',
+                                                onSlideCompleted: () {
+                                                  ref
+                                                      .read(
+                                                          orderProcessUpdaterProvider
+                                                              .notifier)
+                                                      .updateOrderProcess(
+                                                        orderId: details.id,
+                                                        status: getNextStatus(
+                                                            status: details
+                                                                .pickAndDelivaryStatus),
+                                                      );
+                                                },
+                                              );
+                                            },
+                                          ),
+                                  SizedBox(height: 20.h),
+                                  details.pickAndDelivaryStatus == 'Success' ||
+                                          details.pickAndDelivaryStatus ==
+                                              'Failed'
+                                      ? const SizedBox.shrink()
+                                      : ref
+                                          .watch(orderProcessUpdaterProvider)
+                                          .map(
+                                            initial: (value) => OutlinedButton(
+                                              style: ButtonStyle(
+                                                  side:
+                                                      MaterialStateProperty.all(
+                                                    const BorderSide(
+                                                        color: Colors.red,
+                                                        width:
+                                                            1.0), // Set the border color and width
+                                                  ),
+                                                  minimumSize:
+                                                      MaterialStateProperty.all(
+                                                    Size.fromHeight(45.h),
+                                                  )),
+                                              onPressed: () {
+                                                ref
+                                                    .read(
+                                                        orderProcessUpdaterProvider
+                                                            .notifier)
+                                                    .updateOrderProcess(
+                                                      orderId: details.id,
+                                                      status: 'Failed',
+                                                    );
+                                              },
+                                              child: Text(
+                                                'Cencel',
+                                                style: AppTextDecor
+                                                    .osBold14black
+                                                    .copyWith(
+                                                        fontSize: 18,
+                                                        color: AppColors.red),
+                                              ),
+                                            ),
+                                            loading: (_) =>
+                                                const SizedBox.shrink(),
+                                            loaded: (_) =>
+                                                const SizedBox.shrink(),
+                                            error: (error) => OutlinedButton(
+                                              style: ButtonStyle(
+                                                side: MaterialStateProperty.all(
+                                                  const BorderSide(
+                                                      color: Colors.red,
+                                                      width:
+                                                          1.0), // Set the border color and width
+                                                ),
+                                                minimumSize:
+                                                    MaterialStateProperty.all(
+                                                  Size.fromHeight(45.h),
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                ref
+                                                    .read(
+                                                        orderProcessUpdaterProvider
+                                                            .notifier)
+                                                    .updateOrderProcess(
+                                                      orderId: details.id,
+                                                      status: 'Failed',
+                                                    );
+                                              },
+                                              child: Text(
+                                                'Cencel',
+                                                style: AppTextDecor
+                                                    .osBold14black
+                                                    .copyWith(
+                                                        fontSize: 18,
+                                                        color: AppColors.red),
+                                              ),
+                                            ),
+                                          )
                                 ],
                               ),
                             ),
@@ -262,5 +427,93 @@ class OrderDetailsScreen extends ConsumerWidget {
       path: phoneNumber,
     );
     await launchUrl(launchUri);
+  }
+
+  Future<List<Location>> getLatLngFromAddress({required String address}) async {
+    try {
+      List<Location> locations = await locationFromAddress(address);
+      if (locations.isNotEmpty) {
+        double lat = locations.first.latitude;
+        double lng = locations.first.longitude;
+        print('Latitude: $lat, Longitude: $lng');
+      } else {
+        print('No coordinates found for the given address.');
+      }
+      return locations;
+    } catch (error) {
+      print('Error: $error');
+      rethrow;
+    }
+  }
+
+  Future<Position> getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      EasyLoading.showError('Location services are disabled.');
+      return Future.error('Location services are disabled.');
+    }
+
+    // Check for location permission
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        EasyLoading.showError('Location permissions are denied.');
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      EasyLoading.showError(
+          'Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    // When permission are granted, get the current position
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
+
+  Future<void> launchGoogleMaps(
+      {required double lat, required double lng}) async {
+    try {
+      // Get current position
+      final position = await getCurrentLocation();
+      double currentLat = position.latitude;
+      double currentLng = position.longitude;
+
+      // Create a Google Maps URL
+      String googleMapsUrl =
+          'https://www.google.com/maps/dir/?api=1&origin=$currentLat,$currentLng&destination=$lat,$lng&travelmode=driving';
+
+      // Launch the Google Maps app
+      if (await canLaunchUrl(Uri.parse(googleMapsUrl))) {
+        await launchUrl(Uri.parse(googleMapsUrl),
+            mode: LaunchMode.externalApplication);
+      } else {
+        throw 'Could not launch $googleMapsUrl';
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
+  String getNextStatus({required String? status}) {
+    switch (status?.toLowerCase()) {
+      case 'pending':
+        return 'Confirme';
+      case 'confirmed':
+        return 'Started';
+      case 'started':
+        return 'Arrived';
+      case 'arrived':
+        return 'Success';
+      default:
+        return 'Unknown';
+    }
   }
 }

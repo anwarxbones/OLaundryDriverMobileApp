@@ -180,10 +180,11 @@ class AppGFunctions {
   }
 
   static String pickUpOrDeliveryHour({required String? hour}) {
+    print(hour);
     if (hour == null) {
       return '';
     }
-    DateTime time = DateFormat('HH:mm:ss').parse(hour);
+    DateTime time = DateFormat('HH:mm').parse(hour);
     return DateFormat('hh:mm a').format(time);
   }
 

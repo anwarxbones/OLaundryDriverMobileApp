@@ -68,7 +68,11 @@ class _HomeTabState extends ConsumerState<HomeTab> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppSpacerH(44.h),
-              const AppNavbarHome(),
+              AppNavbarHome(
+                onPressed: () {
+                  ref.refresh(todaysJobListProvider);
+                },
+              ),
               AppSpacerH(18.h),
               Text(
                 'Overview',

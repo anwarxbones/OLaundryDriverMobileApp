@@ -37,9 +37,8 @@ final totalOrderListProvider = StateNotifierProvider<TotalOrderListNotifier,
 //
 //
 //
-final orderDetailsProvider =
-    StateNotifierProvider.family<OrderDetailsNotifier, ApiState<Order>, int>(
-        (ref, orderId) {
+final orderDetailsProvider = StateNotifierProvider.family
+    .autoDispose<OrderDetailsNotifier, ApiState<Order>, int>((ref, orderId) {
   return OrderDetailsNotifier(
     ref.watch(iOrderRepoProvider),
     orderId,
@@ -84,6 +83,16 @@ final acceptOrderProvider =
     ref.watch(iOrderRepoProvider),
   );
 });
+//
+//
+//
+//
+final orderProcessUpdaterProvider =
+    StateNotifierProvider<OrderProcessNotifer, ApiState<String>>(
+  (ref) => OrderProcessNotifer(
+    ref.watch(iOrderRepoProvider),
+  ),
+);
 //
 //
 //

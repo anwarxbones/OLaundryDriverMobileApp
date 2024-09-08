@@ -53,6 +53,7 @@ class OrdersTab extends ConsumerWidget {
       showCalendar: true,
       selectedDate: ref.watch(selectedDateProvider),
       onPressedCalendar: () => _selectDate(context, ref),
+      onPressed: () => ref.refresh(totalOrderListProvider),
     );
   }
 

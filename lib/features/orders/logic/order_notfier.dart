@@ -116,6 +116,25 @@ class OrderAcceptNotifier extends StateNotifier<ApiState<String>> {
   }
 }
 
+class OrderProcessNotifer extends StateNotifier<ApiState<String>> {
+  OrderProcessNotifer(
+    this._repo,
+  ) : super(const ApiState.initial());
+  final IOrderRepo _repo;
+
+  Future<void> updateOrderProcess(
+      {required int? orderId, required String? status}) async {
+    state = const ApiState.loading();
+    try {
+      state = ApiState.loaded(
+          data:
+              await _repo.updateOrderProcess(orderId: orderId, status: status));
+    } catch (e) {
+      state = ApiState.error(error: NetworkExceptions.errorText(e));
+    }
+  }
+}
+
 class StatusListNotifier extends StateNotifier<ApiState<StatusModel>> {
   StatusListNotifier(
     this._repo,
