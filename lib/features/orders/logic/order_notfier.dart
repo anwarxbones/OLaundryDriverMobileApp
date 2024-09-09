@@ -123,12 +123,16 @@ class OrderProcessNotifer extends StateNotifier<ApiState<String>> {
   final IOrderRepo _repo;
 
   Future<void> updateOrderProcess(
-      {required int? orderId, required String? status}) async {
+      {required int? orderId, required String? status, String? note}) async {
     state = const ApiState.loading();
     try {
       state = ApiState.loaded(
-          data:
-              await _repo.updateOrderProcess(orderId: orderId, status: status));
+        data: await _repo.updateOrderProcess(
+          orderId: orderId,
+          status: status,
+          note: note,
+        ),
+      );
     } catch (e) {
       state = ApiState.error(error: NetworkExceptions.errorText(e));
     }

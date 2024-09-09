@@ -108,7 +108,7 @@ class OrdersTab extends ConsumerWidget {
       case 1:
         return 'Accepted';
       case 2:
-        return 'History';
+        return 'Completed';
       default:
         return '';
     }
@@ -175,7 +175,7 @@ class OrdersTab extends ConsumerWidget {
       context: context,
       initialDate: ref.watch(selectedDateProvider),
       firstDate: DateTime(2015, 8),
-      lastDate: DateTime.now(),
+      lastDate: DateTime(2101),
     );
     if (picked != null && picked != ref.watch(selectedDateProvider)) {
       ref.watch(selectedDateProvider.notifier).update((state) => picked);

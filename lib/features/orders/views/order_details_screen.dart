@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:o_driver/constants/app_colors.dart';
@@ -12,9 +13,10 @@ import 'package:o_driver/constants/input_field_decorations.dart';
 import 'package:o_driver/features/orders/logic/order_provider.dart';
 import 'package:o_driver/features/orders/models/pending_order_list_model/order.dart';
 import 'package:o_driver/features/orders/views/widgets/slider_widget.dart';
+import 'package:o_driver/utils/context_less_nav.dart';
 import 'package:o_driver/utils/global_functions.dart';
+import 'package:o_driver/widgets/buttons/full_width_button.dart';
 import 'package:o_driver/widgets/misc_widgets.dart';
-import 'package:o_driver/widgets/screen_wrapper.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailsScreen extends ConsumerWidget {
@@ -22,11 +24,14 @@ class OrderDetailsScreen extends ConsumerWidget {
   final Order order;
   final TextEditingController _controller =
       TextEditingController(text: 'This is an instruction for delivery');
+  final TextEditingController _failureNoteController = TextEditingController();
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ScreenWrapper(
-      child: Column(
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Column(
         children: [
           AppBar(
             backgroundColor: AppColors.white,
@@ -343,17 +348,16 @@ class OrderDetailsScreen extends ConsumerWidget {
                                                     Size.fromHeight(45.h),
                                                   )),
                                               onPressed: () {
-                                                ref
-                                                    .read(
-                                                        orderProcessUpdaterProvider
-                                                            .notifier)
-                                                    .updateOrderProcess(
-                                                      orderId: details.id,
-                                                      status: 'Failed',
-                                                    );
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      _buildCancelReasonDialog(
+                                                          ref: ref,
+                                                          orderId: details.id),
+                                                );
                                               },
                                               child: Text(
-                                                'Cencel',
+                                                'Fail',
                                                 style: AppTextDecor
                                                     .osBold14black
                                                     .copyWith(
@@ -379,17 +383,16 @@ class OrderDetailsScreen extends ConsumerWidget {
                                                 ),
                                               ),
                                               onPressed: () {
-                                                ref
-                                                    .read(
-                                                        orderProcessUpdaterProvider
-                                                            .notifier)
-                                                    .updateOrderProcess(
-                                                      orderId: details.id,
-                                                      status: 'Failed',
-                                                    );
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        _buildCancelReasonDialog(
+                                                            ref: ref,
+                                                            orderId:
+                                                                details.id));
                                               },
                                               child: Text(
-                                                'Cencel',
+                                                'Fail',
                                                 style: AppTextDecor
                                                     .osBold14black
                                                     .copyWith(
@@ -515,5 +518,72 @@ class OrderDetailsScreen extends ConsumerWidget {
       default:
         return 'Unknown';
     }
+  }
+
+  Widget _buildCancelReasonDialog({
+    required WidgetRef ref,
+    required int? orderId,
+  }) {
+    return Dialog(
+      backgroundColor: AppColors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.r),
+          color: AppColors.white,
+        ),
+        child: FormBuilder(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FormBuilderTextField(
+                autofocus: true,
+                name: 'instructions',
+                minLines: 4,
+                maxLines: 4,
+                controller: _failureNoteController,
+                decoration: AppInputDecor.loginPageInputDecor.copyWith(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(3),
+                    borderSide: const BorderSide(color: AppColors.gray),
+                  ),
+                  hintText: 'Write a reason for cancellation',
+                  enabled: true,
+                  errorMaxLines: 2,
+                ),
+                validator: FormBuilderValidators.compose(
+                  [
+                    FormBuilderValidators.required(),
+                    FormBuilderValidators.minWordsCount(6),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20.h),
+              AppTextButton(
+                title: 'Submit',
+                buttonColor: AppColors.goldenButton,
+                titleColor: AppColors.white,
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    ref
+                        .read(orderProcessUpdaterProvider.notifier)
+                        .updateOrderProcess(
+                          orderId: orderId,
+                          status: 'Failed',
+                          note: _failureNoteController.text,
+                        );
+                    Navigator.pop(ContextLess.context);
+                  }
+                },
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

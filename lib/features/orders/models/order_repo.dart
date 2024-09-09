@@ -20,7 +20,7 @@ abstract class IOrderRepo {
   Future<OrderHistoriesModel> getOrderHistory();
   Future<Order> getOrderDetails({required int orderId});
   Future<String> updateOrderProcess(
-      {required int? orderId, required String? status});
+      {required int? orderId, required String? status, required String? note});
 }
 
 class OrderRepo implements IOrderRepo {
@@ -28,8 +28,12 @@ class OrderRepo implements IOrderRepo {
   @override
   Future<PendingOrderListModel> getTotalOrders(
       {required String status, required String date}) async {
-    var response = await _dio.get('/driver/orders',
-        queryParameters: {'status': status, 'date': date});
+    final url =
+        status == 'history' ? '/driver/order-histories' : '/driver/orders';
+    bool isHistory = status == 'history';
+    var response = await _dio.get(url,
+        queryParameters:
+            isHistory ? {'date': date} : {'status': status, 'date': date});
 
     return PendingOrderListModel.fromMap(response.data);
   }
@@ -93,9 +97,17 @@ class OrderRepo implements IOrderRepo {
 
   @override
   Future<String> updateOrderProcess(
-      {required int? orderId, required String? status}) async {
-    var response = await _dio.get('/driver/order/process',
-        queryParameters: {'id': orderId, 'status': status});
+      {required int? orderId,
+      required String? status,
+      required String? note}) async {
+    var response = await _dio.get(
+      '/driver/order/process',
+      queryParameters: {
+        'id': orderId,
+        'status': status,
+        'note': note,
+      },
+    );
 
     return response.data['message'];
   }
