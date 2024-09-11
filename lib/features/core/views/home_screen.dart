@@ -58,7 +58,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 //   },
                 // ),
                 BottomMenuItem(
-                  title: 'Jobs',
+                  title: 'Tasks',
                   icon: 'assets/svgs/icon_rider.svg',
                   selected: selectedIndex == 0,
                   ontap: () {
