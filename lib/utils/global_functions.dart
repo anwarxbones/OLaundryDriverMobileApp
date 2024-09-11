@@ -25,7 +25,7 @@ class AppGFunctions {
     );
   }
 
-  static DateFormat dfmt = DateFormat("EEE, MM MMM y");
+  static DateFormat dfmt = DateFormat("EEE, d MMM y");
 
   static Logger log() {
     final logger = Logger();

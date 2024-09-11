@@ -1,23 +1,29 @@
 import 'dart:convert';
 
 import 'package:o_driver/features/orders/models/pending_order_list_model/order.dart';
+import 'package:o_driver/features/orders/models/pending_order_list_model/total_count.dart';
 
 class Data {
   int? total;
   List<Order>? orders;
+  TotalCout? totalCout;
 
-  Data({this.total, this.orders});
+  Data({this.total, this.orders, this.totalCout});
 
   factory Data.fromMap(Map<String, dynamic> data) => Data(
         total: data['total'] as int?,
         orders: (data['orders'] as List<dynamic>?)
             ?.map((e) => Order.fromMap(e as Map<String, dynamic>))
             .toList(),
+        totalCout: data['total_count'] == null
+            ? null
+            : TotalCout.fromMap(data['total_count'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toMap() => {
         'total': total,
         'orders': orders?.map((e) => e.toMap()).toList(),
+        'total_count': totalCout?.toMap(),
       };
 
   /// `dart:convert`

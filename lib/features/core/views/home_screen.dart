@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:o_driver/constants/app_colors.dart';
 import 'package:o_driver/constants/app_text_decor.dart';
 import 'package:o_driver/features/core/logic/misc_provider.dart';
-import 'package:o_driver/features/core/views/home_tab.dart';
 import 'package:o_driver/features/orders/logic/order_provider.dart';
 import 'package:o_driver/features/orders/views/orders_tab.dart';
 import 'package:o_driver/features/profile/views/profile_tab.dart';
@@ -32,7 +31,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             child: Consumer(builder: (context, ref, child) {
               return IndexedStack(
                 index: selectedIndex,
-                children: const [HomeTab(), OrdersTab(), ProfileTab()],
+                children: const [
+                  // HomeTab(),
+                  OrdersTab(),
+                  ProfileTab(),
+                ],
               );
             }),
           ),
@@ -44,9 +47,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                // BottomMenuItem(
+                //   title: 'DashBoard',
+                //   icon: 'assets/svgs/icon_grid.svg',
+                //   selected: selectedIndex == 0,
+                //   ontap: () {
+                //     setState(() {
+                //       selectedIndex = 0;
+                //     });
+                //   },
+                // ),
                 BottomMenuItem(
-                  title: 'DashBoard',
-                  icon: 'assets/svgs/icon_grid.svg',
+                  title: 'Jobs',
+                  icon: 'assets/svgs/icon_rider.svg',
                   selected: selectedIndex == 0,
                   ontap: () {
                     setState(() {
@@ -55,22 +68,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   },
                 ),
                 BottomMenuItem(
-                  title: 'Jobs',
-                  icon: 'assets/svgs/icon_rider.svg',
+                  title: 'Profile',
+                  icon: 'assets/svgs/icon_profile.svg',
                   selected: selectedIndex == 1,
                   ontap: () {
                     setState(() {
                       selectedIndex = 1;
-                    });
-                  },
-                ),
-                BottomMenuItem(
-                  title: 'Profile',
-                  icon: 'assets/svgs/icon_profile.svg',
-                  selected: selectedIndex == 2,
-                  ontap: () {
-                    setState(() {
-                      selectedIndex = 2;
                     });
                   },
                 ),

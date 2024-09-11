@@ -15,11 +15,19 @@ import 'package:o_driver/widgets/buttons/full_width_button.dart';
 import 'package:o_driver/widgets/misc_widgets.dart';
 import 'package:o_driver/widgets/nav_bar_home.dart';
 
-class OrdersTab extends ConsumerWidget {
+class OrdersTab extends ConsumerStatefulWidget {
   const OrdersTab({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<OrdersTab> createState() => _OrdersTabState();
+}
+
+class _OrdersTabState extends ConsumerState<OrdersTab> {
+  int pending = 0;
+  int accepted = 0;
+  int history = 0;
+  @override
+  Widget build(BuildContext context) {
     ref.watch(totalOrderListProvider);
     return Column(
       children: [
@@ -60,20 +68,22 @@ class OrdersTab extends ConsumerWidget {
   Widget _buildTabSelector(WidgetRef ref) {
     return SizedBox(
       width: 335.w,
-      height: 40.h,
-      child: Consumer(builder: (context, ref, child) {
-        return Center(
-          child: ListView.builder(
-            itemCount: 3,
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return _buildTabItem(ref, index);
-            },
-          ),
-        );
-      }),
+      height: 65.h,
+      child: Consumer(
+        builder: (context, ref, child) {
+          return Center(
+            child: ListView.builder(
+              itemCount: 3,
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return _buildTabItem(ref, index);
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -85,17 +95,30 @@ class OrdersTab extends ConsumerWidget {
       padding: EdgeInsets.all(5.w),
       child: GestureDetector(
         onTap: () => _onTabSelected(ref, index),
-        child: Container(
-          padding: EdgeInsets.only(bottom: 6.h),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: isSelected ? AppColors.goldenButton : Colors.transparent,
-                width: 3.h,
+        child: Column(
+          children: [
+            Text(
+                index == 0
+                    ? pending.toString()
+                    : index == 1
+                        ? accepted.toString()
+                        : history.toString(),
+                style: AppTextDecor.osBold14black),
+            Container(
+              padding: EdgeInsets.only(bottom: 6.h),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: isSelected
+                        ? AppColors.goldenButton
+                        : Colors.transparent,
+                    width: 3.h,
+                  ),
+                ),
               ),
+              child: Text(tabName),
             ),
-          ),
-          child: Text(tabName),
+          ],
         ),
       ),
     );
@@ -128,7 +151,14 @@ class OrdersTab extends ConsumerWidget {
         child: ref.watch(totalOrderListProvider).map(
               initial: (_) => const LoadingWidget(),
               loading: (_) => const LoadingWidget(),
-              loaded: (_) => _buildOrderItemsList(context, ref, _),
+              loaded: (_) {
+                setState(() {
+                  pending = _.data.data!.totalCout!.pending;
+                  accepted = _.data.data!.totalCout!.accepted;
+                  history = _.data.data!.totalCout!.completed;
+                });
+                return _buildOrderItemsList(context, ref, _);
+              },
               error: (_) => ErrorTextWidget(error: _.error),
             ),
       ),
