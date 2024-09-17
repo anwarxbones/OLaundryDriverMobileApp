@@ -185,7 +185,13 @@ class _OrdersTabState extends ConsumerState<OrdersTab> {
     return Padding(
       padding: EdgeInsets.only(top: 10.h),
       child: GestureDetector(
-        onTap: () => _onOrderItemTap(context, ref, order),
+        onTap: () async {
+          final data =
+              await context.nav.pushNamed(Routes.orderScreen, arguments: order);
+          if (data == null) {
+            ref.refresh(totalOrderListProvider.notifier);
+          }
+        },
         child: OrderTile(order: order),
       ),
     );

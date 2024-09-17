@@ -195,11 +195,6 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                           }
                         },
                         error: (_) {
-                          // Future.delayed(AppDurConst.buildDuration).then(
-                          //   (value) {
-                          //     ref.refresh(todaysJobListProvider);
-                          //   },
-                          // );
                           return ErrorTextWidget(error: _.error);
                         },
                       ),

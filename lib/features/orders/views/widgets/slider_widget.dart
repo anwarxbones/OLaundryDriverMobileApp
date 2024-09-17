@@ -103,7 +103,7 @@ class _SlideToStartWidgetState extends State<SlideToStartWidget> {
   String getNextStatus({required String status}) {
     switch (status.toLowerCase()) {
       case 'pending':
-        return 'Confirme';
+        return 'Confirm';
       case 'confirmed':
         return 'Start';
       case 'started':

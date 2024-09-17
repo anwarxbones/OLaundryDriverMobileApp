@@ -95,11 +95,9 @@ class OrderTile extends StatelessWidget {
                         const Icon(Icons.schedule, color: AppColors.navyText),
                         AppSpacerW(5.w),
                         Text(
-                          AppGFunctions.pickUpOrDeliveryHour(
-                            hour: order.isTypePickup == true
-                                ? order.pickHour
-                                : order.deliveryHour,
-                          ),
+                          order.isTypePickup == true
+                              ? order.pickHour ?? ''
+                              : order.deliveryHour ?? '',
                           style: AppTextDecor.osBold14black.copyWith(
                             color: AppColors.navyText,
                           ),

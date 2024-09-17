@@ -177,11 +177,9 @@ class OrderDetailsScreen extends ConsumerWidget {
                                               color: AppColors.navyText),
                                           AppSpacerW(5.w),
                                           Text(
-                                            AppGFunctions.pickUpOrDeliveryHour(
-                                              hour: details.isTypePickup == true
-                                                  ? details.pickHour
-                                                  : details.deliveryHour,
-                                            ),
+                                            details.isTypePickup == true
+                                                ? details.pickHour ?? ''
+                                                : details.deliveryHour ?? '',
                                             style: AppTextDecor.osBold14black
                                                 .copyWith(
                                               color: AppColors.navyText,
@@ -259,16 +257,33 @@ class OrderDetailsScreen extends ConsumerWidget {
                                                       .pickAndDelivaryStatus ??
                                                   '',
                                               onSlideCompleted: () {
-                                                ref
-                                                    .read(
-                                                        orderProcessUpdaterProvider
-                                                            .notifier)
-                                                    .updateOrderProcess(
-                                                      orderId: details.id,
-                                                      status: getNextStatus(
-                                                          status: details
-                                                              .pickAndDelivaryStatus),
-                                                    );
+                                                if (details
+                                                        .pickAndDelivaryStatus ==
+                                                    'Pending') {
+                                                  ref
+                                                      .read(acceptOrderProvider
+                                                          .notifier)
+                                                      .acceptOrder(
+                                                        orderId: details.id!,
+                                                        isAccepted: true,
+                                                      )
+                                                      .then((value) {
+                                                    ref.refresh(
+                                                        orderDetailsProvider(
+                                                            details.id!));
+                                                  });
+                                                } else {
+                                                  ref
+                                                      .read(
+                                                          orderProcessUpdaterProvider
+                                                              .notifier)
+                                                      .updateOrderProcess(
+                                                        orderId: details.id,
+                                                        status: getNextStatus(
+                                                            status: details
+                                                                .pickAndDelivaryStatus),
+                                                      );
+                                                }
                                               },
                                             ),
                                             loading: (_) => const Center(
@@ -329,7 +344,9 @@ class OrderDetailsScreen extends ConsumerWidget {
                                   SizedBox(height: 20.h),
                                   details.pickAndDelivaryStatus == 'Success' ||
                                           details.pickAndDelivaryStatus ==
-                                              'Failed'
+                                              'Failed' ||
+                                          details.pickAndDelivaryStatus ==
+                                              'Pending'
                                       ? const SizedBox.shrink()
                                       : ref
                                           .watch(orderProcessUpdaterProvider)
@@ -347,15 +364,13 @@ class OrderDetailsScreen extends ConsumerWidget {
                                                       MaterialStateProperty.all(
                                                     Size.fromHeight(45.h),
                                                   )),
-                                              onPressed: () {
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      _buildCancelReasonDialog(
-                                                          ref: ref,
-                                                          orderId: details.id),
-                                                );
-                                              },
+                                              onPressed: () => showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    _buildCancelReasonDialog(
+                                                        ref: ref,
+                                                        orderId: details.id),
+                                              ),
                                               child: Text(
                                                 'Fail',
                                                 style: AppTextDecor
