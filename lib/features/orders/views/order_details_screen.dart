@@ -25,6 +25,7 @@ class OrderDetailsScreen extends ConsumerWidget {
   final TextEditingController _controller =
       TextEditingController(text: 'This is an instruction for delivery');
   final TextEditingController _failureNoteController = TextEditingController();
+  final TextEditingController _smsController = TextEditingController();
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
 
   @override
@@ -217,13 +218,22 @@ class OrderDetailsScreen extends ConsumerWidget {
                                           ),
                                         ),
                                       ),
-                                      const CircleAvatar(
-                                        backgroundColor:
-                                            AppColors.cardDeepGreen,
-                                        child: Center(
-                                          child: Icon(
-                                            Icons.email_outlined,
-                                            color: AppColors.white,
+                                      GestureDetector(
+                                        onTap: () => _showSmsBottomSheet(
+                                          context: context,
+                                          ref: ref,
+                                          number: details.phone ?? '',
+                                          controller: _smsController,
+                                          formKey: _formKey,
+                                        ),
+                                        child: const CircleAvatar(
+                                          backgroundColor:
+                                              AppColors.cardDeepGreen,
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.email_outlined,
+                                              color: AppColors.white,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -601,4 +611,96 @@ class OrderDetailsScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+void _showSmsBottomSheet({
+  required BuildContext context,
+  required WidgetRef ref,
+  required TextEditingController controller,
+  required String number,
+  required GlobalKey<FormBuilderState> formKey,
+}) {
+  showModalBottomSheet(
+    isScrollControlled: true,
+    context: context,
+    builder: (BuildContext context) {
+      return Consumer(builder: (context, WidgetRef ref, child) {
+        return FormBuilder(
+          key: formKey,
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context)
+                  .viewInsets
+                  .bottom, // Adjust for the keyboard
+            ),
+            child: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.all(20.0),
+                // height: 300.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 16.h),
+                    Text(
+                      'Send SMS',
+                      style: AppTextDecor.osBold18black,
+                    ),
+                    SizedBox(height: 24.h),
+                    FormBuilderTextField(
+                      maxLines: 3,
+                      controller: controller,
+                      name: 'test',
+                      decoration: AppInputDecor.loginPageInputDecor.copyWith(
+                        hintText: 'Enter your message',
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      validator: FormBuilderValidators.compose(
+                        [FormBuilderValidators.required()],
+                      ),
+                    ),
+                    SizedBox(height: 40.h),
+                    ref.watch(sendSmsProvider).map(
+                          initial: (value) {
+                            return AppTextButton(
+                              title: "Send",
+                              onTap: () {
+                                if (formKey.currentState!.validate()) {
+                                  ref.read(sendSmsProvider.notifier).sendSms(
+                                        number: number,
+                                        message: controller.text,
+                                      );
+                                }
+                              },
+                            );
+                          },
+                          loaded: (data) {
+                            Future.delayed(const Duration(milliseconds: 500))
+                                .then((value) {
+                              ref.refresh(sendSmsProvider);
+                              controller.clear();
+                            });
+                            return const MessageTextWidget(
+                              msg: 'Success',
+                            );
+                          },
+                          error: (_) {
+                            Future.delayed(const Duration(milliseconds: 500))
+                                .then((value) {
+                              ref.refresh(sendSmsProvider);
+                            });
+                            EasyLoading.showError(_.error);
+                            return const SizedBox.shrink();
+                          },
+                          loading: (_) => const LoadingWidget(),
+                        )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      });
+    },
+  );
 }

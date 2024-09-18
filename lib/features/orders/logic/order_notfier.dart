@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:o_driver/features/orders/models/order_histories_model/order_histories_model.dart';
 import 'package:o_driver/features/orders/models/order_repo.dart';
@@ -210,6 +211,27 @@ class OrderHistoriesNotifier
     try {
       state = ApiState.loaded(data: await _repo.getOrderHistory());
     } catch (e) {
+      state = ApiState.error(error: NetworkExceptions.errorText(e));
+    }
+  }
+}
+
+class SendSmsNotifier extends StateNotifier<ApiState<bool>> {
+  SendSmsNotifier(
+    this._repo,
+  ) : super(const ApiState.initial());
+  final IOrderRepo _repo;
+
+  Future<void> sendSms(
+      {required String? number, required String? message}) async {
+    try {
+      state = const ApiState.loading();
+      final response = await _repo.sendSms(number: number, message: message);
+      debugPrint("sendsms responseCode ${response.statusCode}");
+      debugPrint("sendsms response $response");
+      state = const ApiState.loaded(data: true);
+    } catch (e) {
+      debugPrint("sendsms error $e");
       state = ApiState.error(error: NetworkExceptions.errorText(e));
     }
   }

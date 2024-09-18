@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:o_driver/features/orders/models/order_histories_model/order_histories_model.dart';
 import 'package:o_driver/features/orders/models/order_update/order_update.dart';
 import 'package:o_driver/features/orders/models/pending_order_list_model/order.dart';
@@ -21,6 +22,7 @@ abstract class IOrderRepo {
   Future<Order> getOrderDetails({required int orderId});
   Future<String> updateOrderProcess(
       {required int? orderId, required String? status, required String? note});
+  Future<Response> sendSms({required String? number, required String? message});
 }
 
 class OrderRepo implements IOrderRepo {
@@ -110,5 +112,14 @@ class OrderRepo implements IOrderRepo {
     );
 
     return response.data['message'];
+  }
+
+  @override
+  Future<Response> sendSms(
+      {required String? number, required String? message}) async {
+    final response = await _dio
+        .get('/twiliohook', queryParameters: {'From': number, 'Body': message});
+
+    return response;
   }
 }

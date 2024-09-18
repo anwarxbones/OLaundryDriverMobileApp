@@ -133,3 +133,12 @@ final orderHistoriesProvider = StateNotifierProvider<OrderHistoriesNotifier,
     ref.watch(iOrderRepoProvider),
   );
 });
+//
+//
+//
+//
+final sendSmsProvider = StateNotifierProvider<SendSmsNotifier, ApiState<bool>>(
+  (ref) => SendSmsNotifier(
+    ref.watch(iOrderRepoProvider),
+  ),
+);
