@@ -204,20 +204,55 @@ class OrderDetailsScreen extends ConsumerWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      GestureDetector(
-                                        onTap: () =>
-                                            makePhoneCall(details.phone ?? ''),
-                                        child: const CircleAvatar(
-                                          backgroundColor:
-                                              AppColors.cardDeepGreen,
-                                          child: Center(
-                                            child: Icon(
-                                              Icons.phone,
-                                              color: AppColors.white,
-                                            ),
+                                      ref.watch(makeCallProvider).map(
+                                            error: (_) {
+                                              Future.delayed(const Duration(
+                                                      milliseconds: 500))
+                                                  .then((value) {
+                                                ref.refresh(makeCallProvider);
+                                              });
+                                              EasyLoading.showError(_.error);
+                                              return const SizedBox.shrink();
+                                            },
+                                            loading: (_) =>
+                                                const LoadingWidget(),
+                                            initial: (_) {
+                                              return GestureDetector(
+                                                onTap: () => ref
+                                                    .read(makeCallProvider
+                                                        .notifier)
+                                                    .makeCall(
+                                                        orderId: details.id!),
+                                                child: const CircleAvatar(
+                                                  backgroundColor:
+                                                      AppColors.cardDeepGreen,
+                                                  child: Center(
+                                                    child: Icon(
+                                                      Icons.phone,
+                                                      color: AppColors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            loaded: (data) {
+                                              if (data.data == true) {
+                                                EasyLoading.showSuccess(
+                                                  "Call Sent Successfully",
+                                                );
+                                              } else {
+                                                EasyLoading.showError(
+                                                  "Call Not Sent, Please try Again",
+                                                );
+                                              }
+                                              Future.delayed(
+                                                      AppDurConst.buildDuration)
+                                                  .then((value) {
+                                                ref.refresh(makeCallProvider);
+                                              });
+                                              return const SizedBox.shrink();
+                                            },
                                           ),
-                                        ),
-                                      ),
                                       GestureDetector(
                                         onTap: () => _showSmsBottomSheet(
                                           context: context,
@@ -449,13 +484,13 @@ class OrderDetailsScreen extends ConsumerWidget {
     return ErrorTextWidget(error: error);
   }
 
-  void makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-    await launchUrl(launchUri);
-  }
+  // void makePhoneCall(String phoneNumber) async {
+  //   final Uri launchUri = Uri(
+  //     scheme: 'tel',
+  //     path: phoneNumber,
+  //   );
+  //   await launchUrl(launchUri);
+  // }
 
   Future<List<Location>> getLatLngFromAddress({required String address}) async {
     try {

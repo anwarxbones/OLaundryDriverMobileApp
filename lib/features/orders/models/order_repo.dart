@@ -23,6 +23,7 @@ abstract class IOrderRepo {
   Future<String> updateOrderProcess(
       {required int? orderId, required String? status, required String? note});
   Future<Response> sendSms({required String? number, required String? message});
+  Future<Response> makeCall({required int orderId});
 }
 
 class OrderRepo implements IOrderRepo {
@@ -119,6 +120,13 @@ class OrderRepo implements IOrderRepo {
       {required String? number, required String? message}) async {
     final response = await _dio
         .get('/twiliohook', queryParameters: {'From': number, 'Body': message});
+
+    return response;
+  }
+
+  @override
+  Future<Response> makeCall({required int orderId}) async {
+    final response = await _dio.get('/order/callcustomer/$orderId');
 
     return response;
   }

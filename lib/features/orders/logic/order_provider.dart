@@ -142,3 +142,13 @@ final sendSmsProvider = StateNotifierProvider<SendSmsNotifier, ApiState<bool>>(
     ref.watch(iOrderRepoProvider),
   ),
 );
+//
+//
+//
+//
+final makeCallProvider =
+    StateNotifierProvider<MakeCallNotifier, ApiState<bool>>(
+  (ref) => MakeCallNotifier(
+    ref.watch(iOrderRepoProvider),
+  ),
+);

@@ -236,3 +236,27 @@ class SendSmsNotifier extends StateNotifier<ApiState<bool>> {
     }
   }
 }
+
+class MakeCallNotifier extends StateNotifier<ApiState<bool>> {
+  MakeCallNotifier(
+    this._repo,
+  ) : super(const ApiState.initial());
+  final IOrderRepo _repo;
+
+  Future<void> makeCall({required int orderId}) async {
+    try {
+      state = const ApiState.loading();
+      final response = await _repo.makeCall(orderId: orderId);
+      debugPrint("makecall responseCode ${response.statusCode}");
+      if (response.statusCode == 200) {
+        state = const ApiState.loaded(data: true);
+      } else {
+        state = const ApiState.loaded(data: false);
+      }
+      debugPrint("makecall response $response");
+    } catch (e) {
+      debugPrint("makecall error $e");
+      state = ApiState.error(error: NetworkExceptions.errorText(e));
+    }
+  }
+}

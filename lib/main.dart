@@ -111,6 +111,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await setupFlutterNotifications();
+  // await PermissionService().requestPermission();
   // Set the background messaging handler early on, as a named top-level function
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   FirebaseMessaging.onMessage.listen((event) {
