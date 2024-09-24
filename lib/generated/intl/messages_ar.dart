@@ -25,7 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "abt": MessageLookupByLibrary.simpleMessage("من نحن"),
         "abtus": MessageLookupByLibrary.simpleMessage("المزيد عنا"),
         "acceptTermsAndConditions": MessageLookupByLibrary.simpleMessage(
-            "يجب عليك القبول بالشروط والاحكام",),
+            "يجب عليك القبول بالشروط والاحكام"),
         "actvordr": MessageLookupByLibrary.simpleMessage("الطلب الحالي"),
         "adadres": MessageLookupByLibrary.simpleMessage("اإضافة عنوان"),
         "add": MessageLookupByLibrary.simpleMessage("اضافة"),
@@ -39,7 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "adrsline": MessageLookupByLibrary.simpleMessage("العنوان"),
         "adrsline_two": MessageLookupByLibrary.simpleMessage("سطر العنوان 2"),
         "adrsname": MessageLookupByLibrary.simpleMessage(
-            "وصف للمكان ( منزل/مكتب/عمل...)",),
+            "وصف للمكان ( منزل/مكتب/عمل...)"),
         "alreadyHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("لديك حساب بالفعل؟"),
         "altrntvphn":
@@ -82,7 +82,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("بريد اليكتروني"),
         "entrotp": MessageLookupByLibrary.simpleMessage("أدخل OTP"),
         "entrpswrdorphn": MessageLookupByLibrary.simpleMessage(
-            "أدخل بريدك الإلكتروني أو رقم هاتفك لاستعادة كلمة المرور",),
+            "أدخل بريدك الإلكتروني أو رقم هاتفك لاستعادة كلمة المرور"),
         "female": MessageLookupByLibrary.simpleMessage("انثي"),
         "flat": MessageLookupByLibrary.simpleMessage("رقم الشقة"),
         "forgotPassword":
@@ -122,7 +122,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myorder": MessageLookupByLibrary.simpleMessage("قائمة طلباتي"),
         "myordr": MessageLookupByLibrary.simpleMessage("طلبي"),
         "ndgtotp": MessageLookupByLibrary.simpleMessage(
-            "تم إرسال رمز مكون من 4 أرقام إلى",),
+            "تم إرسال رمز مكون من 4 أرقام إلى"),
         "no": MessageLookupByLibrary.simpleMessage("لا"),
         "nointrntcnctn":
             MessageLookupByLibrary.simpleMessage("لا يوجد اتصال بالإنترنت"),
@@ -132,7 +132,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("لا توجد اي طلبات حالية"),
         "noordrfound": MessageLookupByLibrary.simpleMessage("لا توجد طلبات"),
         "noslctavlbl": MessageLookupByLibrary.simpleMessage(
-            "لايمكن الاستلام في هذا الموعد ، اختر موعد اخر",),
+            "لايمكن الاستلام في هذا الموعد ، اختر موعد اخر"),
         "nosrvcavlbl": MessageLookupByLibrary.simpleMessage("الخدمة غير متاحة"),
         "ntfctn": MessageLookupByLibrary.simpleMessage("إشعار"),
         "ntfctns": MessageLookupByLibrary.simpleMessage("إشعارات"),
@@ -153,21 +153,21 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("سوف ترسل OTP في الداخل"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
         "payonlinewithcard": MessageLookupByLibrary.simpleMessage(
-            "ادفع عبر الإنترنت باستخدام بطاقتك",),
+            "ادفع عبر الإنترنت باستخدام بطاقتك"),
         "pckup": MessageLookupByLibrary.simpleMessage("يلتقط"),
         "phoneNumber": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
         "pickedYourOrder":
             MessageLookupByLibrary.simpleMessage("تم استلام طلبك"),
         "pickupat": MessageLookupByLibrary.simpleMessage("موعد الاستلام منك"),
         "plcdplsmkpymnttocnfrmit": MessageLookupByLibrary.simpleMessage(
-            "تم إدخاله ، يرجى إجراء الدفع لتأكيده",),
+            "تم إدخاله ، يرجى إجراء الدفع لتأكيده"),
         "plslctanimg":
             MessageLookupByLibrary.simpleMessage("الرجاء تحديد صورة"),
         "plslgin": MessageLookupByLibrary.simpleMessage("برجاء تسجيل الدحول"),
         "plsslctalflds":
             MessageLookupByLibrary.simpleMessage("الرجاء تحديد كافة الحقول"),
         "plsslctpckupschdl": MessageLookupByLibrary.simpleMessage(
-            "برجاء اختيار موعد الاستلام اولاً",),
+            "برجاء اختيار موعد الاستلام اولاً"),
         "postcode":
             MessageLookupByLibrary.simpleMessage("الرمز البريدي ان وجد"),
         "prfl": MessageLookupByLibrary.simpleMessage("حساب تعريفي"),
@@ -187,7 +187,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إستعادة كلمة المرور"),
         "removeCoupon": MessageLookupByLibrary.simpleMessage("حذف كود الخصم"),
         "rmladrs": MessageLookupByLibrary.simpleMessage(
-            "البريد الاليكتروني (اختياري)",),
+            "البريد الاليكتروني (اختياري)"),
         "rsndotp": MessageLookupByLibrary.simpleMessage("إعادة إرسال OTP"),
         "rstpswrd":
             MessageLookupByLibrary.simpleMessage("إعادة تعيين كلمة المرور"),
@@ -202,21 +202,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "signUp": MessageLookupByLibrary.simpleMessage("إنشاء حساب جديد"),
         "skip": MessageLookupByLibrary.simpleMessage("تخطي"),
         "skipiwluldltr": MessageLookupByLibrary.simpleMessage(
-            "تخطي ، سأقوم بالتحميل لاحقًا",),
+            "تخطي ، سأقوم بالتحميل لاحقًا"),
         "slctvarient": MessageLookupByLibrary.simpleMessage("حدد متغير"),
         "sndotp": MessageLookupByLibrary.simpleMessage("أرسل OTP"),
         "srvc": MessageLookupByLibrary.simpleMessage("خدمة"),
         "srvctgrs": MessageLookupByLibrary.simpleMessage(" الخدمات"),
         "status": MessageLookupByLibrary.simpleMessage("الحالة"),
         "surewnttocnclordr": MessageLookupByLibrary.simpleMessage(
-            "هل انت متأكد\nهل تريد الالغاء؟",),
+            "هل انت متأكد\nهل تريد الالغاء؟"),
         "termsAndConditions":
             MessageLookupByLibrary.simpleMessage("الشروط والاحكام"),
         "trmsofsrvc": MessageLookupByLibrary.simpleMessage("شروط الخدمة"),
         "ttl": MessageLookupByLibrary.simpleMessage("الاجمالي"),
         "ttlpybl": MessageLookupByLibrary.simpleMessage("إجمالي المدفوعات"),
         "ucnupldajpgorpng": MessageLookupByLibrary.simpleMessage(
-            "يمكنك تحميل ملف JPG أو PNG كصورة لملف تعريف المستخدم",),
+            "يمكنك تحميل ملف JPG أو PNG كصورة لملف تعريف المستخدم"),
         "uhvscsflysgndupon":
             MessageLookupByLibrary.simpleMessage("لقد قمت بالتسجيل بنجاح في"),
         "unslctd": MessageLookupByLibrary.simpleMessage("غير محدد"),
@@ -229,7 +229,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "urabttolgot":
             MessageLookupByLibrary.simpleMessage("كنت على وشك تسجيل الخروج"),
         "urfdbckwillhlp": MessageLookupByLibrary.simpleMessage(
-            "رأيك يهمنا وسيساعدنا في تحسين تجربتك",),
+            "رأيك يهمنا وسيساعدنا في تحسين تجربتك"),
         "urordrhsbncnfmrd":
             MessageLookupByLibrary.simpleMessage("لقد تم تأكيد طلبك"),
         "urordrhsbnplcd": MessageLookupByLibrary.simpleMessage("لقد كان طلبك"),
@@ -237,13 +237,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "vewall": MessageLookupByLibrary.simpleMessage("عرض الكل"),
         "vrfyotp": MessageLookupByLibrary.simpleMessage("تحقق من OTP"),
         "wecvlclctattime": MessageLookupByLibrary.simpleMessage(
-            "هنستلم منك ونسلمك وقت ما تحب ! ",),
+            "هنستلم منك ونسلمك وقت ما تحب ! "),
         "wertrnclnclothes":
             MessageLookupByLibrary.simpleMessage("حاجتك هترجع كاملة ونضيفة!"),
         "wrprcsngprvsdlvry": MessageLookupByLibrary.simpleMessage(
-            "نقوم بمعالجة طلبك السابق.  n الرجاء الانتظار",),
+            "نقوم بمعالجة طلبك السابق.  n الرجاء الانتظار"),
         "y": MessageLookupByLibrary.simpleMessage("نعم"),
         "yourntsignedin": MessageLookupByLibrary.simpleMessage(
-            "لم تقم بتسجيل الدخول!\nبرجاء تسجيل الدخول للمتابعة",),
+            "لم تقم بتسجيل الدخول!\nبرجاء تسجيل الدخول للمتابعة")
       };
 }
