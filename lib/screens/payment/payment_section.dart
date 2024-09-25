@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_braintree/flutter_braintree.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:laundry_customer/constants/app_box_decoration.dart';
 import 'package:laundry_customer/constants/app_text_decor.dart';
+import 'package:laundry_customer/constants/config.dart';
 import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/generated/l10n.dart';
 import 'package:laundry_customer/misc/misc_global_variables.dart';
@@ -166,22 +168,79 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
                                     );
 
                                     print(orderPlaceModelNew.toJson());
+                                    final total = getTotal(
+                                      cartItems: cartItems,
+                                      fee: fee,
+                                      deliveryCharge: deliveryCharge,
+                                    );
 
-                                    await ref
-                                        .watch(placeOrdersProvider.notifier)
-                                        .addOrder(orderPlaceModelNew);
+                                    // Display Braintree Drop-in UI for payment
+                                    final request = BraintreeDropInRequest(
+                                      tokenizationKey: AppConfig
+                                          .tokenizationKey, // Replace with your tokenizationKey
+                                      collectDeviceData: true,
+                                      vaultManagerEnabled: true,
+                                      requestThreeDSecureVerification: true,
+                                      // email: "test@email.com",
+                                      googlePaymentRequest:
+                                          BraintreeGooglePaymentRequest(
+                                        totalPrice: total.toStringAsFixed(2),
+                                        currencyCode: 'USD',
+                                        billingAddressRequired: false,
+                                      ),
+                                      paypalRequest: BraintreePayPalRequest(
+                                        amount: total.toStringAsFixed(2),
+                                        //  displayName: 'Your Company Name',
+                                      ),
+                                    );
+
+                                    final result =
+                                        await BraintreeDropIn.start(request);
+
+                                    if (result != null) {
+                                      final nonce =
+                                          result.paymentMethodNonce.nonce;
+                                      EasyLoading.showSuccess(nonce);
+
+                                      // Send the nonce and order details to your backend
+                                      // final response = await sendNonceToBackend(nonce, orderPlaceModelNew);
+
+                                      // if (response.isSuccessful) {
+                                      //   // Mark order as paid
+                                      //   isPaid = true;
+
+                                      //   // // Proceed to order success screen
+                                      //   // context.nav.pushNamedAndRemoveUntil(
+                                      //   //   Routes.orderSuccessScreen,
+                                      //   //   arguments: {
+                                      //   //     'id': response.orderId,
+                                      //   //     'amount': amount,
+                                      //   //     'couponID': couponID.toString(),
+                                      //   //     'isCOD': widget.selectedPaymentType == PaymentType.cod,
+                                      //   //     'isPaidOnline': true,
+                                      //   //   },
+                                      //   //   (route) => false,
+                                      //   // );
+                                      // } else {
+                                      //   EasyLoading.showError("Payment failed");
+                                      // }
+
+                                      // await ref
+                                      //     .watch(placeOrdersProvider.notifier)
+                                      //     .addOrder(orderPlaceModelNew);
+                                    } else {
+                                      EasyLoading.showError(
+                                        S.of(context).plsslctalflds,
+                                      );
+                                    }
+                                    ref
+                                        .watch(orderProcessingProvider.notifier)
+                                        .state = false;
                                   } else {
                                     EasyLoading.showError(
-                                      S.of(context).plsslctalflds,
+                                      S.of(context).wrprcsngprvsdlvry,
                                     );
                                   }
-                                  ref
-                                      .watch(orderProcessingProvider.notifier)
-                                      .state = false;
-                                } else {
-                                  EasyLoading.showError(
-                                    S.of(context).wrprcsngprvsdlvry,
-                                  );
                                 }
                               },
                             ),
@@ -325,4 +384,31 @@ class _PaymentSectionState extends ConsumerState<PaymentSection> {
         .map((addOn) => addOn.id)
         .toList();
   }
+
+  double getTotal({
+    required List<CartModel> cartItems,
+    required double? fee,
+    required double? deliveryCharge,
+  }) {
+    if (LocalService().calculateTotal(cartItems: cartItems) < fee!) {
+      return LocalService().calculateTotal(cartItems: cartItems) +
+          deliveryCharge! -
+          ref.watch(discountAmountProvider);
+    }
+    return LocalService().calculateTotal(cartItems: cartItems) -
+        ref.watch(discountAmountProvider);
+  }
+
+//   Future<Response> sendNonceToBackend(String nonce, OrderPlaceModelNew order) async {
+//   // Assuming you have an API client setup
+//   final response = await ref.watch(dioProvider).post(
+//     '/payments/process',
+//     data: {
+//       'nonce': nonce,
+//       'order': order.toJson(),
+//     },
+//   );
+
+//   return response;
+// }
 }

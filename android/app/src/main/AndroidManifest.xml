@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.razinsoft.laundry">
+    package="com.razinsoft.laundry"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
     <uses-permission android:name="android.permission.INTERNET"/>
         <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
         <uses-permission android:name="android.permission.CAMERA" />
@@ -22,7 +24,9 @@
    <application
         android:label="O Laundry"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        tools:replace="android:label"
+        >
         <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
                  android:resource="@drawable/ic_stat_launcher" />
         <activity
@@ -47,7 +51,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name="com.dexterous.flutterlocalnotifications.ForegroundService"        
+            android:name="com.dexterous.flutterlocalnotifications.ForegroundService"
             android:exported="false"
             android:stopWithTask="false"/>
             <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver" />
@@ -56,5 +60,23 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <activity android:name="com.braintreepayments.api.DropInActivity"
+            android:launchMode="singleTask">
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="${applicationId}.braintree" />
+    </intent-filter>
+        </activity>
+        <activity
+         android:name="com.braintreepayments.api.ThreeDSecureActivity"
+         android:theme="@style/Theme.AppCompat.Light"
+         android:exported="true"
+         tools:replace="android:theme"
+         >
+        </activity>
+    <meta-data android:name="com.google.android.gms.wallet.api.enabled" android:value="true"/>
     </application>
 </manifest>

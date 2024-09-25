@@ -22,4 +22,8 @@ class AppConfig {
       '+88017xxxxxxxx'; // whats app Number with Country Code
   static const String ctPhone = '+88017xxxxxxxx'; // Contact Phone Numbers
   static const String ctMail = 'support@razinsoft.com '; // Contact Mail
+
+
+// Braintree Keys
+  static const String tokenizationKey = 'sandbox_8hxpnkht_kzdtzv2btm4p7s5j';
 }

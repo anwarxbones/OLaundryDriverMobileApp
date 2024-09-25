@@ -17,6 +17,7 @@ import flutter_local_notifications
       UNUserNotificationCenter.current().delegate = self as UNUserNotificationCenterDelegate
     }
     GeneratedPluginRegistrant.register(with: self)
+    BTAppContextSwitcher.setReturnURLScheme("com.razinsoft.laundry.payments")
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

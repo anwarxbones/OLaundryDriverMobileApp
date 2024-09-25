@@ -15,6 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:laundry_customer/braintree.dart';
 import 'package:laundry_customer/constants/config.dart';
 import 'package:laundry_customer/constants/hive_contants.dart';
 import 'package:laundry_customer/firebase_options.dart';
@@ -323,7 +324,8 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
               ),
               navigatorKey: ContextLess.navigatorkey,
               onGenerateRoute: (settings) => generatedRoutes(settings),
-              initialRoute: Routes.splash,
+                initialRoute: Routes.splash,
+             // home: const BraintreePaymentScreen(),
               builder: EasyLoading.init(),
             );
           },
