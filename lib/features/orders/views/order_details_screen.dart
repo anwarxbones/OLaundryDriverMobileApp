@@ -12,6 +12,7 @@ import 'package:o_driver/constants/app_text_decor.dart';
 import 'package:o_driver/constants/input_field_decorations.dart';
 import 'package:o_driver/features/orders/logic/order_provider.dart';
 import 'package:o_driver/features/orders/models/pending_order_list_model/order.dart';
+import 'package:o_driver/features/orders/views/widgets/phone_num_picker_dialog.dart';
 import 'package:o_driver/features/orders/views/widgets/slider_widget.dart';
 import 'package:o_driver/utils/context_less_nav.dart';
 import 'package:o_driver/utils/global_functions.dart';
@@ -218,11 +219,21 @@ class OrderDetailsScreen extends ConsumerWidget {
                                                 const LoadingWidget(),
                                             initial: (_) {
                                               return GestureDetector(
-                                                onTap: () => ref
-                                                    .read(makeCallProvider
-                                                        .notifier)
-                                                    .makeCall(
-                                                        orderId: details.id!),
+                                                onTap: () {
+                                                  // TODO: Need to show dialog here
+                                                  // ref
+                                                  //     .read(makeCallProvider
+                                                  //         .notifier)
+                                                  //     .makeCall(
+                                                  //         orderId: details.id!);
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        PhoneNumPickerDialog(
+                                                      orderId: details.id!,
+                                                    ),
+                                                  );
+                                                },
                                                 child: const CircleAvatar(
                                                   backgroundColor:
                                                       AppColors.cardDeepGreen,

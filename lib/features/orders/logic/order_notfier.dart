@@ -243,10 +243,10 @@ class MakeCallNotifier extends StateNotifier<ApiState<bool>> {
   ) : super(const ApiState.initial());
   final IOrderRepo _repo;
 
-  Future<void> makeCall({required int orderId}) async {
+  Future<void> makeCall({required int orderId, required String? number}) async {
     try {
       state = const ApiState.loading();
-      final response = await _repo.makeCall(orderId: orderId);
+      final response = await _repo.makeCall(orderId: orderId, number: number);
       debugPrint("makecall responseCode ${response.statusCode}");
       if (response.statusCode == 200) {
         state = const ApiState.loaded(data: true);
