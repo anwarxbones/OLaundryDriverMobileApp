@@ -1,81 +1,64 @@
 {
   "project_info": {
-    "project_number": "887141294942",
-    "project_id": "laundry-49a80",
-    "storage_bucket": "laundry-49a80.appspot.com"
+    "project_number": "723120410068",
+    "project_id": "olaundry-mobile-notification",
+    "storage_bucket": "olaundry-mobile-notification.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:887141294942:android:902aae09311906ad44a5cf",
+        "mobilesdk_app_id": "1:723120410068:android:54ca290a3c5eb110255a41",
         "android_client_info": {
-          "package_name": "com.example.o_driver"
+          "package_name": "com.olaundry.customer"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "887141294942-il9m0vu1rtp4rnnq2tfld6gtjuc9iuk5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.o_driver",
-            "certificate_hash": "86a7e77e268ec3d485ff366bbc6a341a466d8012"
-          }
-        },
-        {
-          "client_id": "887141294942-id5kqd9sebjrepc2s3aprniega3bfvpo.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBaa89PQC7Q_L-H6qareht__aey5Dfsbrs"
+          "current_key": "AIzaSyDJR2OqPqY2t4JhLFVAjyJiH3CzRcpuJSQ"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "887141294942-id5kqd9sebjrepc2s3aprniega3bfvpo.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:887141294942:android:689f9fd5aae74ecb44a5cf",
+        "mobilesdk_app_id": "1:723120410068:android:0a8358d594253dc6255a41",
         "android_client_info": {
-          "package_name": "com.razinsoft.laundry_driver"
+          "package_name": "com.olaundry.driver"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "887141294942-gfi58ku2i9jfvddrbfp3i9nqsdi68uj9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.razinsoft.laundry_driver",
-            "certificate_hash": "86a7e77e268ec3d485ff366bbc6a341a466d8012"
-          }
-        },
-        {
-          "client_id": "887141294942-id5kqd9sebjrepc2s3aprniega3bfvpo.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBaa89PQC7Q_L-H6qareht__aey5Dfsbrs"
+          "current_key": "AIzaSyDJR2OqPqY2t4JhLFVAjyJiH3CzRcpuJSQ"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "887141294942-id5kqd9sebjrepc2s3aprniega3bfvpo.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723120410068:android:72b1b3008c49442d255a41",
+        "android_client_info": {
+          "package_name": "com.razinsoft.laundry"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJR2OqPqY2t4JhLFVAjyJiH3CzRcpuJSQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     }

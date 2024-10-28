@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBaa89PQC7Q_L-H6qareht__aey5Dfsbrs',
-    appId: '1:887141294942:android:689f9fd5aae74ecb44a5cf',
-    messagingSenderId: '887141294942',
-    projectId: 'foldz-b8c32',
-    storageBucket: 'laundry-49a80.appspot.com',
+    apiKey: 'AIzaSyDJR2OqPqY2t4JhLFVAjyJiH3CzRcpuJSQ',
+    appId: '1:723120410068:android:0a8358d594253dc6255a41',
+    messagingSenderId: '723120410068',
+    projectId: 'olaundry-mobile-notification',
+    storageBucket: 'olaundry-mobile-notification.appspot.com',
   );
 
-  // static const FirebaseOptions ios = FirebaseOptions(
-  //   apiKey: 'AIzaSyC7o8mIfW1Eu1rAb9m4B-T65qPFHJSZDsA',
-  //   appId: '1:685585446573:ios:a888c89783bcb7690e7824',
-  //   messagingSenderId: '685585446573',
-  //   projectId: 'foldz-b8c32',
-  //   storageBucket: 'foldz-b8c32.appspot.com',
-  //   iosClientId: '685585446573-kbt9qecf4bjs5ef7r59l6dsq291om58p.apps.googleusercontent.com',
-  //   iosBundleId: 'com.foldz',
-  // );
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyB_WOBKDgFKEudvD3ASCDI0S0li_k-F29Q',
+    appId: '1:723120410068:ios:4dd67593e6fde6c7255a41',
+    messagingSenderId: '723120410068',
+    projectId: 'olaundry-mobile-notification',
+    storageBucket: 'olaundry-mobile-notification.appspot.com',
+    iosBundleId: 'com.olaundry.driver',
+  );
+
 }

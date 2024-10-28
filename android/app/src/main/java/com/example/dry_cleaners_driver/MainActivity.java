@@ -1,4 +1,4 @@
-package com.example.o_driver;
+package com.olaundry.driver;
 
 import io.flutter.embedding.android.FlutterActivity;
 

@@ -111,12 +111,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await setupFlutterNotifications();
-  // await PermissionService().requestPermission();
-  // Set the background messaging handler early on, as a named top-level function
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   FirebaseMessaging.onMessage.listen((event) {
-    print(event.data);
-    print(event);
     debugPrint('Handling a ForeGround message ${event.messageId}');
     debugPrint('Handling a ForeGround message ${event.notification}');
 
@@ -135,47 +132,6 @@ void main() async {
 
   runApp(const ProviderScope(child: MyApp()));
 }
-
-// Future<void> oneSignalHandler() async {
-//   await OneSignal.shared
-//       .setAppId('96fa9ec8-39bc-4395-9f3b-2c30fd9fdc3e')
-//       .then((value) {
-//     // _userctrl.setPlayerID();
-//   });
-//   OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
-//     debugPrint("Accepted permission: $accepted");
-//   });
-
-//   OneSignal.shared.setNotificationWillShowInForegroundHandler(
-//       (OSNotificationReceivedEvent event) {
-//     // if (event.notification.body != null) {
-//     //   final FlutterTts flutterTts = FlutterTts();
-//     //   flutterTts.speak(event.notification.body!);
-//     // }
-//     debugPrint('FOREGROUND HANDLER CALLED WITH: ${event.notification.body!}');
-
-//     /// Display Notification, send null to not display
-//     event.complete(event.notification);
-//   });
-
-//   OneSignal.shared
-//       .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-//     // Get.off(() => MainPage());
-//     // _userctrl.pageController.value.jumpToPage(1);
-//     debugPrint('${result.notification.title} ${result.notification.body}');
-//   });
-// }
-
-// Future<void> getPlayerID(WidgetRef ref) async {
-//   final OSDeviceState? deviciestate = await OneSignal.shared.getDeviceState();
-
-//   if (deviciestate?.userId == null) {
-//     return getPlayerID(ref);
-//   } else {
-//     debugPrint(deviciestate!.userId!);
-//     ref.watch(onesignalDeviceIDProvider.notifier).state = deviciestate.userId!;
-//   }
-// }
 
 class MyHttpOverrides extends HttpOverrides {
   @override

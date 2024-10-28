@@ -44,7 +44,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.o_driver"
+        applicationId "com.olaundry.driver"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 21
@@ -72,7 +72,7 @@ android {
             }
         }
     }
-    namespace 'com.example.o_driver'
+    namespace 'com.olaundry.driver'
 }
 
 flutter {

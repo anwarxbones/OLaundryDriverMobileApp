@@ -1,9 +1,9 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:o_driver/features/auth/models/auth_repo.dart';
 import 'package:o_driver/features/auth/models/login_model/login_model.dart';
 import 'package:o_driver/features/auth/models/register_model/register_model.dart';
 import 'package:o_driver/services/api_state.dart';
 import 'package:o_driver/services/network_exceptions.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginNotifier extends StateNotifier<ApiState<LoginModel>> {
   LoginNotifier(this._repo, this.deviceKey) : super(const ApiState.initial());
