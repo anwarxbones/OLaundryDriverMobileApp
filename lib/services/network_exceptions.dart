@@ -114,8 +114,11 @@ abstract class NetworkExceptions with _$NetworkExceptions {
   static NetworkExceptions getDioException(error) {
     if (error is Exception) {
       try {
-        NetworkExceptions networkExceptions;
-        if (error is DioError) {
+        NetworkExceptions networkExceptions = const NetworkExceptions
+            .unexpectedError(); // Initialize with a default value
+
+        if (error is DioException) {
+          // Updated from DioError to DioException
           String? msg =
               // ignore: avoid_dynamic_calls
               error.response?.data['message'] as String?;
@@ -126,20 +129,21 @@ abstract class NetworkExceptions with _$NetworkExceptions {
           });
 
           switch (error.type) {
-            case DioErrorType.cancel:
+            // Updated to DioExceptionType
+            case DioExceptionType.cancel:
               networkExceptions = const NetworkExceptions.requestCancelled();
               break;
-            case DioErrorType.connectTimeout:
+            case DioExceptionType.connectionTimeout:
               networkExceptions = const NetworkExceptions.requestTimeout();
               break;
-            case DioErrorType.other:
+            case DioExceptionType.unknown:
               networkExceptions =
                   const NetworkExceptions.noInternetConnection();
               break;
-            case DioErrorType.receiveTimeout:
+            case DioExceptionType.receiveTimeout:
               networkExceptions = const NetworkExceptions.sendTimeout();
               break;
-            case DioErrorType.response:
+            case DioExceptionType.badResponse:
               switch (error.response!.statusCode) {
                 case 302:
                   networkExceptions = NetworkExceptions.defaultError(
@@ -148,7 +152,7 @@ abstract class NetworkExceptions with _$NetworkExceptions {
                   break;
                 case 400:
                   networkExceptions = NetworkExceptions.defaultError(
-                    msg ?? 'UnExpected Error Occured',
+                    msg ?? 'Unexpected Error Occurred',
                   );
                   break;
                 case 401:
@@ -189,8 +193,12 @@ abstract class NetworkExceptions with _$NetworkExceptions {
                   );
               }
               break;
-            case DioErrorType.sendTimeout:
+            case DioExceptionType.sendTimeout:
               networkExceptions = const NetworkExceptions.sendTimeout();
+              break;
+            case DioExceptionType.connectionError:
+              networkExceptions =
+                  const NetworkExceptions.noInternetConnection();
               break;
           }
         } else if (error is SocketException) {
@@ -199,9 +207,7 @@ abstract class NetworkExceptions with _$NetworkExceptions {
           networkExceptions = const NetworkExceptions.unexpectedError();
         }
         return networkExceptions;
-        // ignore: unused_catch_clause
-      } on FormatException catch (e) {
-        // Helper.printError(e.toString());
+      } on FormatException {
         return const NetworkExceptions.formatException();
       } catch (_) {
         return const NetworkExceptions.unexpectedError();

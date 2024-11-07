@@ -8,8 +8,8 @@ Dio getDio() {
 
   //Basic Configuration
   dio.options.baseUrl = AppConfig.baseUrl;
-  dio.options.connectTimeout = 10000;
-  dio.options.receiveTimeout = 10000;
+  dio.options.connectTimeout = const Duration(milliseconds: 10000);
+  dio.options.receiveTimeout = const Duration(milliseconds: 10000);
   // _dio.options.headers = {'Content-Type': 'application/json'};
   dio.options.headers = {'Accept': 'application/json'};
   dio.options.headers = {'accept': 'application/json'};

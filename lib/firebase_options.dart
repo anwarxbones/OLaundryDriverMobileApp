@@ -59,11 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyB_WOBKDgFKEudvD3ASCDI0S0li_k-F29Q',
-    appId: '1:723120410068:ios:4dd67593e6fde6c7255a41',
+    appId: '1:723120410068:ios:a419a4bbb3503350255a41',
     messagingSenderId: '723120410068',
     projectId: 'olaundry-mobile-notification',
-    storageBucket: 'olaundry-mobile-notification.appspot.com',
-    iosBundleId: 'com.olaundry.driver',
+    storageBucket: 'olaundry-mobile-notification.firebasestorage.app',
+    iosBundleId: 'com.olaundry.driverdemo101',
   );
 
 }
