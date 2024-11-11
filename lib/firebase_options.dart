@@ -25,8 +25,8 @@ class DefaultFirebaseOptions {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
-      // case TargetPlatform.iOS:
-      //   return ios;
+      case TargetPlatform.iOS:
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -65,5 +65,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'olaundry-mobile-notification.firebasestorage.app',
     iosBundleId: 'com.olaundry.driverdemo101',
   );
-
 }

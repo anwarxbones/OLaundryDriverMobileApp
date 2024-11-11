@@ -200,6 +200,9 @@ abstract class NetworkExceptions with _$NetworkExceptions {
               networkExceptions =
                   const NetworkExceptions.noInternetConnection();
               break;
+            case DioExceptionType.badCertificate:
+              // TODO: Handle this case.
+              break;
           }
         } else if (error is SocketException) {
           networkExceptions = const NetworkExceptions.noInternetConnection();

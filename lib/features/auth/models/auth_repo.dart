@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:o_driver/features/auth/models/login_model/login_model.dart';
@@ -20,7 +22,9 @@ class AuthRepo implements IAuthRepo {
       {required String contact,
       required String password,
       required String deviceKey}) async {
-    final token = await FirebaseMessaging.instance.getToken();
+    final token = Platform.isAndroid
+        ? await FirebaseMessaging.instance.getToken()
+        : await FirebaseMessaging.instance.getAPNSToken();
     var response = await _dio.post('/driver/login',
         data: {'contact': contact, 'password': password, 'device_key': token});
 
@@ -29,14 +33,18 @@ class AuthRepo implements IAuthRepo {
 
   @override
   Future<void> logout({required String deviceKey}) async {
-    final deviceKey = await FirebaseMessaging.instance.getToken();
+    final deviceKey = Platform.isAndroid
+        ? await FirebaseMessaging.instance.getToken()
+        : await FirebaseMessaging.instance.getAPNSToken();
     await _dio
         .get('/driver/logout', queryParameters: {'device_key': deviceKey});
   }
 
   @override
   Future<RegisterModel> register({required Map<String, dynamic> data}) async {
-    final token = await FirebaseMessaging.instance.getToken();
+    final token = Platform.isAndroid
+        ? await FirebaseMessaging.instance.getToken()
+        : await FirebaseMessaging.instance.getAPNSToken();
     var response =
         await _dio.post('/driver/register', data: FormData.fromMap(data));
 

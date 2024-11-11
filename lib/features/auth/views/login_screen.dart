@@ -20,7 +20,7 @@ import 'package:o_driver/widgets/buttons/full_width_button.dart';
 import 'package:o_driver/widgets/misc_widgets.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();

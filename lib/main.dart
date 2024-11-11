@@ -120,8 +120,8 @@ void main() async {
     showFlutterNotification(event);
   });
 
-  final token = await FirebaseMessaging.instance.getToken();
-  debugPrint('Token : $token');
+  // final token = await FirebaseMessaging.instance.getToken();
+  // debugPrint('Token : $token');
   // await oneSignalHandler();
   await Hive.initFlutter();
   await Hive.openBox(AppHSC.appSettingsBox);
@@ -143,7 +143,7 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 class MyApp extends ConsumerWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
