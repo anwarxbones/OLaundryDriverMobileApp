@@ -1,1 +1,29 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"olaundry-mobile-notification","appId":"1:723120410068:android:0a8358d594253dc6255a41","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"olaundry-mobile-notification","appId":"1:723120410068:ios:a419a4bbb3503350255a41","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"olaundry-mobile-notification","configurations":{"ios":"1:723120410068:ios:a419a4bbb3503350255a41"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "olaundry-mobile-notification",
+          "appId": "1:723120410068:android:0a8358d594253dc6255a41",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "olaundry-mobile-notification",
+          "appId": "1:723120410068:ios:a419a4bbb3503350255a41",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "olaundry-mobile-notification",
+          "configurations": {
+            "ios": "1:723120410068:ios:a419a4bbb3503350255a41"
+          }
+        }
+      }
+    }
+  }
+}

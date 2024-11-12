@@ -13,8 +13,8 @@ import 'package:o_driver/widgets/misc_widgets.dart';
 
 class AppNavbarProfile extends ConsumerWidget {
   AppNavbarProfile({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   User? _user;
 
   @override
@@ -33,17 +33,14 @@ class AppNavbarProfile extends ConsumerWidget {
             width: 345.w,
             child: Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(35.h),
-                  child: Container(
-                    height: 70.h,
-                    width: 70.h,
-                    padding: const EdgeInsets.all(4),
-                    child: userbox.get(AppHSC.userPhoto) != null
-                        ? Image.network(userbox.get(AppHSC.userPhoto))
-                        : Image.asset('assets/images/02.tutorial.png'),
-                  ),
-                ),
+                CircleAvatar(
+                    backgroundColor: AppColors.white,
+                    radius: 35.r,
+                    backgroundImage: userbox.get(AppHSC.userPhoto) != null
+                        ? Image.network(userbox.get(AppHSC.userPhoto),
+                                fit: BoxFit.cover)
+                            .image
+                        : Image.asset('assets/images/02.tutorial.png').image),
                 AppSpacerW(16.w),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

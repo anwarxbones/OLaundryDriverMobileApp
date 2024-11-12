@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:o_driver/constants/app_colors.dart';
 import 'package:o_driver/constants/app_durations.dart';
 import 'package:o_driver/constants/app_text_decor.dart';
@@ -8,14 +13,9 @@ import 'package:o_driver/utils/context_less_nav.dart';
 import 'package:o_driver/utils/routes.dart';
 import 'package:o_driver/widgets/buttons/full_width_button.dart';
 import 'package:o_driver/widgets/misc_widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();

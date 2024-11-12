@@ -16,8 +16,8 @@ import 'package:o_driver/widgets/nav_bar_profile.dart';
 
 class ProfileTab extends ConsumerWidget {
   const ProfileTab({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,15 +56,10 @@ class ProfileTab extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // const ProfileTabTile(
-                          //   title: "Passport/Driving Licence:",
-                          //   content: "8569 8785 589",
-                          // ),
                           ProfileTabTile(
                             title: "Email:",
                             content: userbox.get(AppHSC.userEmail) ?? '',
                           ),
-
                           ProfileTabTile(
                             title: "Join date:",
                             content: userbox.get(AppHSC.joinDate) ?? '',
@@ -333,11 +328,11 @@ class ProfileTab extends ConsumerWidget {
 
 class ProfileTabTile extends StatelessWidget {
   const ProfileTabTile({
-    Key? key,
+    super.key,
     required this.title,
     required this.content,
     this.lastItem = false,
-  }) : super(key: key);
+  });
   final String title;
   final String content;
   final bool lastItem;

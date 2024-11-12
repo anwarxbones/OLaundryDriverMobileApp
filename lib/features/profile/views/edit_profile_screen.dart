@@ -13,6 +13,7 @@ import 'package:o_driver/constants/input_field_decorations.dart';
 import 'package:o_driver/features/auth/models/login_model/user.dart';
 import 'package:o_driver/features/profile/logic/profile_provider.dart';
 import 'package:o_driver/utils/context_less_nav.dart';
+import 'package:o_driver/utils/image_compress_helper.dart';
 import 'package:o_driver/widgets/buttons/full_width_button.dart';
 import 'package:o_driver/widgets/misc_widgets.dart';
 import 'package:o_driver/widgets/nav_bar.dart';
@@ -20,9 +21,9 @@ import 'package:o_driver/widgets/screen_wrapper.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
   const EditProfileScreen({
-    Key? key,
+    super.key,
     required this.user,
-  }) : super(key: key);
+  });
   final User user;
 
   @override
@@ -104,16 +105,13 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                     backgroundColor: AppColors.white,
                                     radius: 50,
                                     backgroundImage: FileImage(_upimage!),
-
-                                    //Text
                                   )
-                                : const CircleAvatar(
+                                : CircleAvatar(
                                     backgroundColor: AppColors.white,
                                     radius: 50,
-                                    backgroundImage: AssetImage(
-                                      'assets/images/app_icon.png',
-                                    ),
-                                    //Text
+                                    backgroundImage: Image.network(
+                                      widget.user.profilePhotoPath ?? '',
+                                    ).image,
                                   ),
                           ),
                           Positioned(
@@ -173,8 +171,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 ref.watch(userProfileUpdateProvider).map(
                     initial: (_) => AppTextButton(
                           title: 'Update Profile',
-                          onTap: () {
+                          onTap: () async {
                             if (_formKey.currentState!.saveAndValidate()) {
+                              final File? compressedImage =
+                                  await ImageCompressHelper()
+                                      .compressedImage(_upimage);
                               ref
                                   .watch(
                                 userProfileUpdateProvider.notifier,
@@ -183,7 +184,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                                 data: {
                                   ..._formKey.currentState!.value,
                                 },
-                                file: _upimage,
+                                file: compressedImage,
                               );
                             }
                           },
@@ -215,14 +216,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
 class EditProfileTextField extends StatelessWidget {
   const EditProfileTextField({
-    Key? key,
+    super.key,
     required this.title,
     required this.fieldName,
     this.validator,
     this.keyboardType,
     this.textInputAction,
     required this.hintText,
-  }) : super(key: key);
+  });
   final String title;
   final String fieldName;
   final String hintText;
